@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!--加载配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!--引入其他主配置-->
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--配置session工厂-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!--加载mybatis主配置文件-->
+        <property name="configLocation" value="classpath:mybatis-cfg.xml"></property>
+        <property name="plugins">
+            <array>
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor"
+                      class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"/>
+                <!-- 性能拦截器，兼打印sql，不建议生产环境配置-->
+                <bean id="performanceInterceptor"
+                      class="com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor"/>
+            </array>
+        </property>
+
+        <!--在 sqlSessionFactoryBean 下添加这个 globalConfig 这个属性-->
+        <!-- 添加MP的全局配置策略 -->
+        <property name="globalConfig" ref="globalConfig"></property>
+    </bean>
+
+    <!--创建一个 GlobalConfig 的bean：-->
+    <!-- 定义MybatisPlus的全局策略配置 -->
+    <bean id="globalConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig">
+        <property name="dbConfig" ref="dbConfig"></property>
+    </bean>
+
+    <!-- 定义dbConfig -->
+    <bean id="dbConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig.DbConfig">
+        <property name="idType" value="AUTO"></property>
+    </bean>
+
+    <!--mapper批量扫描-->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hy.ssm.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--开启事务注解扫描-->
+    <tx:annotation-driven/>
+
+    <!--扫描包-->
+    <context:component-scan base-package="com.hy.crm.wry.service,com.hy.crm.lsy.service,com.hy.crm.kw.service"/>
+</beans>
