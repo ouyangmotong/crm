@@ -5,6 +5,7 @@ import com.hy.crm.mapper.EmpMapper;
 import com.hy.crm.service.IEmpService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 2020-08-28
  */
 @Service
+@Transactional
 public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpService {
 
 }

@@ -5,6 +5,7 @@ import com.hy.crm.mapper.ForumReplyMapper;
 import com.hy.crm.service.IForumReplyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 2020-08-28
  */
 @Service
+@Transactional
 public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumReply> implements IForumReplyService {
 
 }
