@@ -63,5 +63,5 @@
     </bean>
 
     <mvc:annotation-driven />
-    <context:component-scan base-package="com.hy.crm.lsy.controller,com.hy.crm.kw.controller,com.hy.crm.wry.controller"/>
+    <context:component-scan base-package="com.hy.crm.controller"/>
 </beans>
