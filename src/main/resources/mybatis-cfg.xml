@@ -8,11 +8,6 @@
 
     <!--定义别名-->
     <typeAliases>
-        <package name="com.hy.crm.kw.entity"></package>
-        <package name="com.hy.crm.kw.bo"></package>
-        <package name="com.hy.crm.lsy.entity"></package>
-        <package name="com.hy.crm.lsy.bo"></package>
-        <package name="com.hy.crm.wry.entity"></package>
-        <package name="com.hy.crm.wry.bo"></package>
+        <package name="com.hy.crm.entity"></package>
     </typeAliases>
 </configuration>

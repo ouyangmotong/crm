@@ -59,7 +59,7 @@
 
     <!--mapper批量扫描-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.hy.ssm.mapper"></property>
+        <property name="basePackage" value="com.hy.crm.mapper"></property>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 

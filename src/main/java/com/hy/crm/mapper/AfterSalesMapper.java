@@ -1,7 +1,7 @@
 package com.hy.crm.mapper;
 
-import com.hy.crm.entity.AfterSales;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crm.entity.AfterSales;
 
 /**
  * <p>
