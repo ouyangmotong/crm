@@ -2,6 +2,7 @@ package com.hy.crm.kw.mapper;
 
 import com.hy.crm.kw.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Jackson
  * @since 2020-08-28
  */
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }
