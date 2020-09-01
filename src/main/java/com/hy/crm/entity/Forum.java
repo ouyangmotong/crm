@@ -2,10 +2,11 @@ package com.hy.crm.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -49,6 +50,11 @@ public class Forum implements Serializable {
      * 所属商机id
      */
     private Integer businessId;
+
+    /**
+     * 发帖时间
+     */
+    private String forumDate;
 
     /**
      * 点击量
