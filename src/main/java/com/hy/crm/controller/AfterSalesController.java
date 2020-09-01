@@ -17,4 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/crm/after-sales")
 public class AfterSalesController {
 
+    @RequestMapping("/select.do")
+    public String select(){
+        System.out.println("========");
+        return "aaaa";
+    }
+
 }
