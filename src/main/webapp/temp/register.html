@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>crm客户管理系统注册</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/layui.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            width:100vw;
+            height:100vh;
+
+        }
+        .register{
+            width:55%;
+            height: 100%;
+            margin:0 auto;
+
+        }
+        .register .title{
+            width:100%;
+            height:79px;
+            line-height: 79px;
+        }
+        .register .title h3{
+            color:#ddd
+        }
+        .register .line{
+            width:100%;
+            height: 1px;
+            background: #ccc;
+        }
+        .down-line{
+            width:100%;
+            height: 1px;
+            background: #ccc;
+            margin-top: 20px;
+        }
+        .register .content{
+            width:100%;
+            height: auto;
+            text-align: left;
+        }
+        .register .content .form-item{
+            margin-top: 20px;
+            width:100%;
+            vertical-align: middle;
+        }
+        .content .form-item input{
+            width:500px;
+            height: 40px;
+            padding-left:10px ;
+            border-radius: 8px;
+            border: 0px;
+            outline: none;
+            border: 1px solid #ccc;
+        }
+        .form-item-radio{
+            text-align: left;
+            margin: 20px 0px;
+            vertical-align: center;
+        }
+        .form-item-radio input{
+            width:25px;
+            height:25px;
+            margin-left: 20px;
+            vertical-align: middle;
+        }
+
+        .form-item-btn{
+            width:100%;
+            margin-top: 20px;
+        }
+        .form-item-btn input{
+            text-align: center;
+            width:120px;
+            height:40px;
+            border: 0;
+            border-radius: 8px;
+            outline: none;
+            color:#fff;
+        }
+        .form-item-btn input:nth-of-type(1){
+            background-color: #094;
+            margin-right: 10px;
+
+        }
+        .form-item-btn input:nth-of-type(2){
+            background-color:#596275;
+            margin-right: 10px;
+
+        }
+        .form-item-btn input:nth-of-type(1):hover{
+            background-color: #096;
+
+
+        }
+        .form-item-btn input:nth-of-type(2):hover{
+            background-color:#353b48 ;
+
+
+        }
+        .form-item-btn input:nth-of-type(3):hover{
+            background-color:#ccc;
+
+
+        }
+        .footer {
+            width:100%;
+            margin-top:25px;
+            text-align: center;
+            font-size: 13px;
+            color:#ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="register">
+        <div class="title"><h3>CRM客户管理系统注册信息</h3></div>
+        <div class="line"></div>
+        <form id="form">
+        <div class="content">
+            <div class="form-item">
+                <label>用户账号:</label>
+                <input type="text" name="username" required placeholder="请输入">
+                <small>备注：手机、姓名、邮箱</small>
+            </div>
+            <div class="form-item">
+                <label>用户密码:</label>
+                <input type="password" name="username" required placeholder="请输入">
+            </div>
+            <div class="form-item-radio">
+                    <label>性别:</label>
+                    <input type="radio" name="sex" value="男" title="男">男
+                    <input type="radio" name="sex" value="女" title="女" checked>女
+            </div>
+            <div class="form-item-radio">
+                <label>角色:</label>
+                <input type="checkbox" name="checkbox" required >管理员
+                <input type="checkbox" name="checkbox" required >普通员工
+            </div>
+            <div class="form-item">
+                <label>年龄:</label>
+                <input type="text" name="username" required placeholder="请输入">
+            </div>
+            <div class="form-item">
+                <label>电话:</label>
+                <input type="text" name="username" required placeholder="请输入">
+            </div>
+            <div class="form-item">
+                <label>生日:</label>
+                <input type="date" name="username" required >
+            </div>
+            <div class="form-item">
+                <label>邮箱:</label>
+                <input type="text" name="username" required placeholder="请输入">
+            </div>
+            <div class="form-item">
+                <label>图片:</label>
+                <input type="file" name="file" required placeholder="请输入">
+            </div>
+            <div class="down-line"></div>
+            <div class="form-item-btn">
+                <input type="button" class="btn" value="注册">
+                <input type="submit" value="重置">
+                <input type="button" class="btn-exit" value="返回">
+            </div>
+        </div>
+        </form>
+        <div class="footer">
+            <footer>Copyright &copy;2020 kw</footer>
+        </div>
+
+    </div>
+
+</body>
+</html>
