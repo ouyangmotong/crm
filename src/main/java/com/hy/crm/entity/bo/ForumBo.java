@@ -18,5 +18,6 @@ public class ForumBo {
     private String forumDate;//发帖时间
     private Integer forumClicks;//点击量
     private Integer forumStatic;//状态(1001成功,1002删除)
+    private Integer forumReplyBoNum;//回复量
     private List<ForumReplyBo> forumReplyBos;//回复
 }

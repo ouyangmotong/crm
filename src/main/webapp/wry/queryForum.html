@@ -8,32 +8,42 @@
 </head>
 <body>
 <div>
-    <form class="layui-form">
-        <div class="layui-inline">
-            <label class="layui-form-label"></label>
-            <div class="layui-input-block">
-                <select name="dept">
-                    <option value=""></option>
-                    <option value="1001">按主题</option>
-                    <option value="1002">按用户</option>
-                    <option value="1003">按点击</option>
-                </select>
-            </div>
+    <div>
+        <div>
+            <img src="../img/main.png">
+            <span>全部讨论贴子</span>
+            <form class="layui-form">
+                <div class="layui-inline">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <select name="dept">
+                            <option value=""></option>
+                            <option value="1001">按主题</option>
+                            <option value="1002">按用户</option>
+                            <option value="1003">按点击</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+                <a class="layui-btn" lay-submit lay-filter="formDemo" href="saveForum.html" target="_top">发帖</a>
+            <button class="layui-btn" lay-submit lay-filter="formDemo">刷新</button>
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label"></label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required placeholder="请输入" autocomplete="off" class="layui-input">
-            </div>
+        <div>
+            <table id="demo" lay-filter="test"></table>
         </div>
-        <div class="layui-inline">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-    </form>
-    <table id="demo" lay-filter="test"></table>
+    </div>
 </div>
 
 <script src="../js/jquery-3.4.1.js"></script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--suppress ALL-->
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8">
     <title>帖子</title>
@@ -11,59 +11,73 @@
 <div>
     <div style="width: 60%;margin: 0 auto">
         <div>
-            <div style="float: left;">有关方案与报价</div>
+            <div style="float: left;"><h1><span th:text="${forumBo.forumClassify}"/></h1></div>
             <div style="float: right;">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">删除</button>
-                <button class="layui-btn" lay-submit lay-filter="formDemo">刷新</button>
+                <!--<button class="layui-btn" lay-submit lay-filter="formDemo">删除</button>-->
+                <form class="layui-form" action="/crm/forum-reply/flush.do">
+                    <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">刷新</button>
+                </form>
             </div>
             <hr/>
         </div>
         <div>
             <div>
-                主题:
-                点击(0) 回复(0)
+                主题:<span th:text="${forumBo.headline}"/>
+                点击(<span th:text="${forumBo.forumClicks}"/>) 回复(<span th:text="${forumBo.forumReplyBoNum}"/>)
             </div>
-            <div>
-                <div style="float: left;width: 20%">头像</div>
+            <div th:each="forumReplyBo : ${list}">
+                <div style="float: left;width: 20%">
+                    <span th:text="${forumBo.emp.empImg}"/>
+                    <img th:src="${forumBo.emp.empImg}">
+                </div>
                 <div style="width: 80%">
-                    <span th:text="${name}"/>
+                    <div>
+                        <span th:text="${forumReplyBo.emp.empName}"/>发布与:<span th:text="${forumReplyBo.finallyDate}"/>
+                    </div>
+                    <div>
+                        <span th:text="${forumReplyBo.principalPart}"/>
+                        <input type="button" value="回复" onclick="littleReply()">
+                        <div th:each="forumReplyBos : ${forumReplyBo.forumReplyBos}">
+                            <div>
+                                <span th:text="${forumReplyBos.emp.empName}"/>回复:<span th:text="${forumReplyBos.principalPart}"/>
+                            </div>
+                        </div>
+                        <div>
+                            <form class="layui-form" action="/crm/forum-reply/saveForumReply.do">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-block">
+                                        <input type="text" th:name="principalPart" name="title" required  lay-verify="required" placeholder="回复内容" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
+                                <input type="hidden" th:name="replyId" th:value="${forumReplyBo.forumReplyId}">
+                                <button class="layui-btn" lay-submit lay-filter="sendMessage">发送</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div>
             <hr/>
+            <form class="layui-form" action="/crm/forum-reply/saveForumReply.do">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">文本域</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" placeholder="请输入内容" th:name="principalPart" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
+                <input type="hidden" th:name="replyId" th:value="-1">
+                <button class="layui-btn" lay-submit lay-filter="replyMessage">评论</button>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../../../layui/layui.js"></script>
-<script>
-    $(function () {
-
-    });
-
-    /*layui.use(['table','form','tree','jquery'], function(){
-        var table = layui.table;
-        var form = layui.form;
-        var $ = layui.jquery;
-        var tree = layui.tree;
-
-        //监听提交
-        form.on('submit(formDemo)', function(data){
-            console.log(data.field)
-            table.reload('demo', {
-                url: '/crm/forum/queryForum.do'
-                ,where: {
-                    dept:data.field.dept
-                    ,name:data.field.name
-                } //设定异步数据接口的额外参数
-            });
-            return false;
-        });
-
-    });*/
-
-</script>
 </body>
 </html>

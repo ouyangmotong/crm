@@ -1,5 +1,6 @@
 package com.hy.crm.controller;
 
+import com.hy.crm.entity.Forum;
 import com.hy.crm.service.IEmpService;
 import com.hy.crm.service.IForumService;
 import com.hy.crm.util.LayUIData;
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>
@@ -37,4 +41,28 @@ public class ForumController {
     public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name){
         return forumService.queryForum(page,limit,dept,name);
     }
+
+    /**
+     * 发帖
+     * @param headline
+     * @param principalPart
+     * @return
+     */
+    @RequestMapping("/saveForum.do")
+    public String saveForum( String headline, String principalPart){
+        //Integer forumClassifyId,分类
+        Forum forum = new Forum();
+        forum.setForumClassifyId(1001);//下拉框出不来，给个默认值
+        forum.setHeadline(headline);
+        forum.setPrincipalPart(principalPart);
+        forum.setEmpId(1001);//没有当前用户id，给个默认值
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+        forum.setForumDate(dateFormat.format(date));
+        forum.setForumClicks(0);
+        forum.setForumStatic(1001);
+        forumService.save(forum);
+        return "redirect:../../wry/queryForum.html";
+    }
+
 }

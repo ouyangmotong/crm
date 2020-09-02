@@ -34,6 +34,11 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
     @Autowired
     private IEmpService empService;
 
+    /**
+     * 根据帖子id查询帖子及所有回复
+     * @param forumId
+     * @return
+     */
     public ForumBo queryByIdForumReply(Integer forumId){
         QueryWrapper qw = new QueryWrapper<>();
         qw.eq("forum_id",forumId);//根据帖子id查询帖子
@@ -62,6 +67,40 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
         qw.eq("forum_reply_static",1001);//回复是可用状态
         List<ForumReply> list = list(qw);//根据主贴id查询对应回复
         forumBo.setForumReplyBos(queryForumReplyBos(list));//回复
+        return forumBo;
+    }
+
+    /**
+     * 根据id查询帖子
+     * @param forumId
+     * @return
+     */
+    public ForumBo queryByIdForumReply2(Integer forumId){
+        QueryWrapper qw = new QueryWrapper<>();
+        qw.eq("forum_id",forumId);//根据帖子id查询帖子
+        Forum forum = forumService.getOne(qw);
+        ForumBo forumBo = new ForumBo();
+        BeanUtils.copyProperties(forum , forumBo);
+        if(forum.getForumClassifyId() == 1001){//分类名称
+            forumBo.setForumClassify("商机讨论板");
+        }else if(forum.getForumClassifyId() == 1002){
+            forumBo.setForumClassify("合理化建议");
+        }
+        else if(forum.getForumClassifyId() == 1003){//分类名称
+            forumBo.setForumClassify("技术交流");
+        }
+        else if(forum.getForumClassifyId() == 1004){//分类名称
+            forumBo.setForumClassify("企业文化");
+        }
+        else if(forum.getForumClassifyId() == 1005){//分类名称
+            forumBo.setForumClassify("生活娱乐");
+        }
+        qw = new QueryWrapper();
+        qw.eq("emp_id",forum.getEmpId());
+        forumBo.setEmp(empService.getOne(qw));//发帖人
+        qw = new QueryWrapper();
+        qw.eq("forum_id",forumId);
+        qw.eq("forum_reply_static",1001);//回复是可用状态
         return forumBo;
     }
 
