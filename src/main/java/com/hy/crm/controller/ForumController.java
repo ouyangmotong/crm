@@ -1,13 +1,12 @@
 package com.hy.crm.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.hy.crm.entity.Forum;
-import com.hy.crm.service.impl.EmpServiceImpl;
+import com.hy.crm.service.IEmpService;
+import com.hy.crm.service.IForumService;
 import com.hy.crm.util.LayUIData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -17,36 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jackson
  * @since 2020-08-28
  */
-@RestController
+@Controller
 @RequestMapping("/crm/forum")
 public class ForumController {
-    /*@Autowired
-    private ForumServiceImpl forumService;*/
     @Autowired
-    private EmpServiceImpl empService;
+    private IForumService forumService;
+    @Autowired
+    private IEmpService empService;
 
+    /**
+     * 按条件分页查询所有帖子
+     * @param page 当前页
+     * @param limit 每页显示条数
+     * @param dept 条件编号
+     * @param name 条件内容
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/queryForum.do")
-    public LayUIData queryForum(int page, int limit/*, Forum forum*/){
-        LayUIData layUIData = new LayUIData();
-        QueryWrapper<Forum> queryWrapper = new QueryWrapper<>();
-        System.out.println(123);
-        /*if(!StringUtils.isEmpty(forum)){
-            if(!StringUtils.isEmpty(emp.getEname())){
-                queryWrapper.eq("ename",emp.getEname());
-            }
-            if (!StringUtils.isEmpty(emp.getDeptno())){
-                queryWrapper.eq("deptno",emp.getDeptno());
-            }
-        }*/
-        //分页查询
-        /*IPage iPage= forumService.page(new Page<Forum>(page, limit),queryWrapper);
-        layUIData.setCode(0);
-        layUIData.setMsg("查询成功");
-        layUIData.setCount((int)iPage.getTotal());
-        layUIData.setData(iPage.getRecords());
-        System.out.println("查询成功!");*/
-        return layUIData;
+    public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name){
+        return forumService.queryForum(page,limit,dept,name);
     }
-
 }
