@@ -61,6 +61,7 @@
         table.render({
             elem: '#demo'
             ,height: 500
+            ,width:1200
             ,url: '/crm/forum/queryForum.do' //数据接口
             ,limit:5
             ,page: true //开启分页
@@ -69,11 +70,14 @@
                 [ //表头
                     // /*templet:'{{d.empno}}'*/
                     {field: 'forumId',type:'checkbox', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field:'forumClassifyId', width:80, title: '分类'}
-                    ,{width:80, title: '主题' ,templet: '<div><a href="../crm/forum-reply/queryByIdForumReply.do?forumId={{d.forumId}}" target="_blank">{{d.headline}}</a></div>'}
-                    ,{field:'empId', width:80, title: '作者', sort: true}
-                    ,{field:'businessId', width:80, title: '所属商机'}
-                    ,{field:'forumClicks', title: '点击'}
+                    ,{field:'forumClassify', width:100, title: '分类'}
+                    ,{width:80, title: '主题',width:200 ,templet: '<div><a href="../crm/forum-reply/queryByIdForumReply.do?forumId={{d.forumId}}" target="_blank">{{d.headline}}</a></div>'}
+                    ,{field:'emp', width:100, title: '作者',templet:'<div>{{d.emp.empName}}</div>'}
+                    ,{field:'forumDate', width:180, title: '发布时间'}
+                    ,{field:'business', width:200, title: '所属商机',templet:'<div>{{d.business.businessName}}</div>'}
+                    ,{field:'forumClicks', width:80,title: '点击量'}
+                    ,{field:'forumReplyBoNum', width:80,title: '回复量'}
+                    ,{field:'finalReplyDate', width:180,title: '最后回复'}
                 ]
             ]
         });

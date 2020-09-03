@@ -19,13 +19,12 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择框</label>
                     <div class="layui-input-block">
-                        <select lay-verify="required">
-                            <option value=""></option>
-                            <option value="0">北京</option>
-                            <option value="1">上海</option>
-                            <option value="2">广州</option>
-                            <option value="3">深圳</option>
-                            <option value="4">杭州</option>
+                        <select th:name="forumClassifyId">
+                            <option value="1001">商机讨论板</option>
+                            <option value="1002">合理化建议</option>
+                            <option value="1003">技术交流</option>
+                            <option value="1004">企业文化</option>
+                            <option value="1005">生活娱乐</option>
                         </select>
                     </div>
                 </div>
@@ -54,5 +53,11 @@
 
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../../../layui/layui.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+
+    });
+</script>
 </body>
 </html>

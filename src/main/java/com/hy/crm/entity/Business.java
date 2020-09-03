@@ -1,12 +1,13 @@
 package com.hy.crm.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -109,6 +110,11 @@ public class Business implements Serializable {
      * 优先级(1001高,1002中,1003低)
      */
     private Integer priorityId;
+
+    /**
+     * 跟单状态(1001待跟单,1002跟单中,1003跟单完成,1004弃单/搁置)
+     */
+    private Integer documentaryId;
 
     /**
      * 当前状态(1001初期沟通,1002方案与报价,1003竞争或投标,1004商务谈判,1005成交,1006丢单,1007搁置)

@@ -47,7 +47,6 @@ public class ForumReplyController {
         forumBo.setForumReplyBoNum(forumReplyService.list(qw).size());//根据主贴id查询回复数
         model.addAttribute("forumBo",forumBo);
         model.addAttribute("list",list);
-        model.addAttribute("name","张三");
         return "/wry/queryForumReply.html";
     }
 

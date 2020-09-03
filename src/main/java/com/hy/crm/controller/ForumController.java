@@ -44,15 +44,15 @@ public class ForumController {
 
     /**
      * 发帖
+     * @param forumClassifyId
      * @param headline
      * @param principalPart
      * @return
      */
     @RequestMapping("/saveForum.do")
-    public String saveForum( String headline, String principalPart){
-        //Integer forumClassifyId,分类
+    public String saveForum(Integer forumClassifyId, String headline, String principalPart){
         Forum forum = new Forum();
-        forum.setForumClassifyId(1001);//下拉框出不来，给个默认值
+        forum.setForumClassifyId(forumClassifyId);
         forum.setHeadline(headline);
         forum.setPrincipalPart(principalPart);
         forum.setEmpId(1001);//没有当前用户id，给个默认值
