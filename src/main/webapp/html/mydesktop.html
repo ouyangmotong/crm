@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>我的桌面</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+    function baidu(){
+        window.open("http://www.baidu.com/", "_blank");
+    }
+</script>
+
+<style type="text/css">
+    .exp {
+        border-radius: 3px 4px 5px 6px;
+        border: 2px solid #DBDBDB
+    }
+</style>
+
+<body bgcolor="#2B93AF">
+<div style="width: 1300px;height: 750px;display: inline-block;background-color: white;">
+    <br/><br/>
+    <!--左菜单-->
+    <div style="float: left;width: 35%">
+        <img src="../img/main.png">
+        <span style="font-size: 20px;">
+            &nbsp;&nbsp;我的桌面
+        </span>
+        <!--左上div，显示边框-->
+        <div style="width: 95%;height: 300px;" class="exp">
+            <!--待处理的事务-->
+            <div class="layui-bg-gray" style="height: 27px;">
+                <span style="margin:20px;text-align: center;font-weight:bold;color: #000000;">
+                    待处理的事务
+                </span>
+                <span style="margin-right:20px;float:right;text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">3</span>
+            </div>
+            <!--所有分类-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;所有分类
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #FF0F1D;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#FF0F1D'">员工培训安排-王娜-10000980</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #FF0F1D;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#FF0F1D'">用车申请</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--已撤销的事务-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">已撤销的事务</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--本周新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本周新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--上周新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上周新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--本月新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本月新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--上月新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上月新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--本季度新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本季度新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <!--上季度新增-->
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上季度新增</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+        </div>
+
+        <br/>
+        <div style="width: 95%;height: 300px;" class="exp">
+            <!--信息公告-->
+            <div class="layui-bg-gray" style="height: 27px;">
+                <span style="margin:20px;text-align: center;font-weight:bold;color: #000000;">
+                    信息公告
+                </span>
+                <span style="margin-right:20px;float:right;text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">20</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">Colloa签约倍科电器，助力世界500强</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">BPM替换案例：二进制携手中兴恒业</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">如何选择企业自身的BPM需求?</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">BPM运营平台助企业打造全面运营管理</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">Colloa系统陪伴《省老年体协》5个年头</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">资产管理制度(2019.8修订版)</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">公司公务用车管理办法</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">公司人事部人事管理制度</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">公司财务管理制度</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">关于召开BPM启用准备会议的通知</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+        </div>
+    </div>
+
+    <!--右菜单-->
+    <div style="float: right;width: 63%">
+        <br/><br/>
+        <!--右上div-->
+        <div style="width: 98%;height: 300px;" class="exp">
+            <div class="layui-bg-gray" style="height: 27px;">
+                <span style="margin:20px;text-align: center;font-weight:bold;color: #000000;">
+                    客户关系
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 3;margin-left:140px;color: #707070;">
+                    全部客户
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 3;color: #707070;margin-left:180px;">
+                    全部商机
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 3;color: #707070;margin-left:170px;">
+                    全部合同
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 1;margin-left:155px;color: #000000;">
+                    24
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 1;color: #000000;margin-left:225px;">
+                    24
+                </span>
+            </div>
+            <div class="layui-inline">
+                <span style="font-size: 14px;line-height: 1;color: #000000;margin-left:210px;">
+                    24
+                </span>
+            </div>
+            <!--横线-->
+            <hr>
+
+        </div>
+        <br/>
+        <div style="width: 50%;height: 300px;" class="exp layui-inline">
+            <!--我关注的知识-->
+            <div class="layui-bg-gray" style="height: 27px;">
+                <span style="margin:20px;text-align: center;font-weight:bold;color: #000000;">
+                    我关注的知识
+                </span>
+                <span style="margin-right:20px;float:right;text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">16</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">BPM系统管理员岗位职责都有哪些?</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">怎样的BPM系统容易被企业CIO接收</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">小企业如何低成本地采购BPM系统?</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">Colloa支持内外网同时登录同一套数据?</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">推动十九大发展建设新闻稿</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">公司十周年庆典活动介绍</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">周六爬山公益活动</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">如何有步骤的开发区域市场</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">现代销售即网络销售</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+            <div>
+                <span style="font-size: 13px;line-height: 2;margin:20px;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">java和C++性能比较</a>
+                </span>
+                <span style="float:right;margin-right:20px;color: #707070;" >5/7</span>
+            </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <div style="width: 45%;height: 300px;" class="layui-inline">
+            <div style="height: 100px;" class="exp">
+                <!--友情链接-->
+                <div class="layui-bg-gray" style="height: 27px;">
+                    <span style="margin:20px;text-align: center;font-weight:bold;color: #000000;">
+                        友情链接
+                    </span>
+                </div>
+                <div>
+                    <span style="font-size: 13px;line-height: 2;margin:20px;">
+                        &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">关于我们</a>
+                    </span>
+                </div>
+                <div>
+                    <span style="font-size: 13px;line-height: 2;margin:20px;">
+                        &nbsp;&nbsp;<a onclick="baidu()" style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">百度官网</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

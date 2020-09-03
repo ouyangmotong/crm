@@ -1,7 +1,8 @@
 package com.hy.crm.service;
 
-import com.hy.crm.entity.AfterSales;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.crm.entity.AfterSales;
+import com.hy.crm.util.LayUIData;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-28
  */
 public interface IAfterSalesService extends IService<AfterSales> {
-
+    LayUIData queryAll(int page, int limit, int kind, String content);
 }

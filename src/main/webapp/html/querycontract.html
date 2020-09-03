@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>查询所有合同</title>
+    <title>售后服务</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 
@@ -18,32 +18,48 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            , url: '../crm/contract/queryAllByStatic.do' //数据接口
+            , url: '../crm/after-sales/queryAll.do?kind=0' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
                 {
                     title: '主题'
                     , width: 300
                     , fixed: 'left'
-                    ,templet: '<div><a href="../index.jsp" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.contractName}}</a></div>'
+                    ,templet: '<div><a href="afterSales.html" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.headline}}</a></div>'
                 }
-                , {field: 'technicalClause', title: '服务类型', width: 150}
-                , {field: 'signDate', title: '开始时间', width: 170, sort: true}
-                , {field: 'contacts', title: '服务人员', width: 190}
-                , {field: 'contractStatic', title: '服务评分', width: 180}
+                , {field: 'serviceClassify', title: '服务类型', width: 150}
+                , {field: 'beginDate', title: '开始时间', width: 170, sort: true}
+                , {field: 'serviceStaff', title: '服务人员', width: 190}
+                , {field: 'serviceScore', title: '服务评分', width: 180}
             ]]
         });
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            return false;
+            alert(data.field.kind)
+            if(data.field.kind == null || data.field.kind == '' || data.field.kind == undefined){
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/after-sales/queryAll.do'
+                });
+            }else{
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/after-sales/queryAll.do'
+                    , where: {
+                        "kind": data.field.kind//这里kind引不引都可以,kind为下拉框value
+                        , "content": data.field.content//content为文本框值
+                    } //设定异步数据接口的额外参数
+                });
+            }
+            return false;//阻止表格跳转
         });
 
     });
 
     function addContract(){
-        window.open("../index.jsp");
+        window.open("addaftersales.html");
+    }
+    function refresh(){
+        location.reload();
     }
 </script>
 
@@ -57,6 +73,7 @@
 <body>
 
 <div style="display: inline-block;width: 100%">
+    <br/><br/>
     <!--左菜单-->
     <div style="float: left;width: 19%">
         <img src="../img/main.png">
@@ -160,7 +177,7 @@
         <form class="layui-form" action="">
             <!--下拉框-->
             <div class="layui-form-item layui-inline">
-                <select name="city">
+                <select name="kind">
                     <option value="" ></option>
                     <option value="1">按主题</option>
                     <option value="2">按服务类型</option>
@@ -169,9 +186,9 @@
                     <option value="5">按服务评分</option>
                 </select>
             </div>
-            <!--请输入标题-->
+            <!--请输入内容-->
             <div class="layui-form-item layui-inline">
-                <input type="text" name="title" required placeholder="请输入标题" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                <input type="text" name="content" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
             </div>
             <!--查找-->
             <div class="layui-form-item layui-inline">
@@ -182,13 +199,13 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <!--新增售后服务-->
             <div class="layui-form-item layui-inline">
-                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo" onclick="addContract()">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addContract()">
                     <i class="layui-icon layui-icon-add-1"></i>新增售后服务
                 </button>
             </div>
             <!--刷新-->
             <div class="layui-form-item layui-inline">
-                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
                     <i class="layui-icon layui-icon-refresh-1"></i>刷新
                 </button>
             </div>
