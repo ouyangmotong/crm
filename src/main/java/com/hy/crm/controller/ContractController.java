@@ -37,7 +37,7 @@ public class ContractController {
     @GetMapping("/queryAllByStatic.do")
     public List<Contract> queryAllByStatic(){
         UpdateWrapper<Contract> updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("contractStatic","1001");
+        updateWrapper.eq("contract_static","1001");
         List<Contract> list=contractService.list(updateWrapper);
         return list;
     }
