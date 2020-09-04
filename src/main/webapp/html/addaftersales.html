@@ -11,15 +11,20 @@
 <script src="../js/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
-    layui.use(['rate','form','laydate','upload'], function(){
+    layui.use(['rate','form','laydate','upload','jquery'], function(){
         let rate = layui.rate;
         let form = layui.form;
         let laydate = layui.laydate;
         var upload = layui.upload;
+        var $ = layui.$;
 
         //渲染
         let ins1 = rate.render({
             elem: '#pingfen'  //绑定元素
+            ,choose: function(value){
+                alert("评分："+value)
+                $("#serviceScore").val(value);
+            }
         });
 
         //执行一个laydate实例
@@ -39,12 +44,15 @@
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
+                    console.log("index:"+index); //得到文件索引
+                    console.log("file:"+file); //得到文件对象
+                    console.log("result:"+result); //得到文件base64编码，比如图片
+                    $('#demo1').attr('src', result); //图片链接（base64）,将图片放到下面框中
                 });
             }
             ,done: function(res){
                 //图片的名字
-                $("#stuImgName").val(res.data);
+                $("#file").val(res.data);
                 //如果上传成功
                 if(res.code == 0){
                     return layer.msg('上传成功',{icon:6});
@@ -72,6 +80,10 @@
            console.log(kehu)
            $("#clienteleName").html(kehu);
        });
+
+       $("#clienteleName").change(function(){
+           alert($("#clienteleName").val())
+       });
     });
 
     //返回
@@ -86,7 +98,7 @@
 
 <body bgcolor="#2B93AF">
 
-<form class="layui-form" method="post" action="">
+<form class="layui-form" method="post" action="../crm/after-sales/addAfterSales.do" enctype="multipart/form-data">
     <!--页面div-->
     <div style="margin-left:75px;margin-top: 0px;width: 1000px;height: 1600px;display: inline-block;background-color: white;">
         <br/>
@@ -127,7 +139,8 @@
         </div>
         <!---->
         <div style="margin-left: 108px;line-height: 2;">
-            步骤：<input style="border:none;" value="服务登记" name="aftStatic"/>
+            步骤：<input style="border:none;" value="服务登记" name="aftStatic1"/>
+            <input type="hidden" style="border:none;" value="1001" name="aftStatic"/>
             责任人：<input style="border:none;" name="dutyPerson"/>
             参与人：<input style="border:none;" name="participant"/>
         </div>
@@ -143,8 +156,8 @@
             <div class="layui-inline">
                 客户名称&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
-            <div  class="layui-inline">
-                <select id="clienteleName" name="clienteleName" style="width: 300px;height: 30px;" lay-search>
+            <div class="layui-inline">
+                <select id="clienteleName" name="clienteleId" style="width: 300px;height: 30px;display: block;" lay-search>
 
                 </select>
             </div>
@@ -154,7 +167,7 @@
                 合同编号&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div class="layui-inline">
-                <input type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+                <input type="text" name="contractNo" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
             </div>
         </div>
         <br/>
@@ -244,7 +257,7 @@
                 开始时间&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div class="layui-inline">
-                <input name="beginDate1" id="shijian1" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+                <input name="beginDate" id="shijian1" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -252,7 +265,7 @@
                 结束时间&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div class="layui-inline">
-                <input name="endDate1" id="shijian2" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+                <input name="endDate" id="shijian2" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
             </div>
         </div>
 
@@ -291,6 +304,7 @@
             <div class="layui-inline">
                 服务评分&nbsp;&nbsp;&nbsp;&nbsp;
                 <div id="pingfen"></div>
+                <input type="hidden" id="serviceScore" name="serviceScore" />
             </div>
         </div>
 
@@ -303,21 +317,14 @@
                         <i class="layui-icon">&#xe67c;</i>上传图片
                     </button>
                     <div class="layui-upload-list">
-                        <input type="hidden" name="img" id="stuImgName" />
+                        <input type="hidden" name="img" id="file" />
                         <img class="layui-upload-img" style="height: 100px;width: 115px;margin-left:110px;" id="demo1">
-                        <p id="demoText"></p>
+                        <p id="demoText"></p><!--上传失败-->
                     </div>
                 </div>
             </div>
-            <!--<div class="layui-inline">
-                附件&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="layui-inline">
-                <div style="border:2px solid #DBDBDB;border-radius:8px;width: 300px;height: 30px;" class="layui-inline">
-                    <input type="file" name="file" />
-                </div>
-            </div>-->
         </div>
+
         <!--处理流程日志-->
         <div style="margin-left:50px;margin-right: 50px;background-color: #F9FFDB;font-size: 15px;">
             <hr>

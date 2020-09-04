@@ -50,16 +50,22 @@ public class AfterSalesController {
     }
 
     /**
-     * 添加售后信息
+     * 添加售后服务
+     * @param afterSales    售后的实体类
+     * @param img   售后的附件
+     * @param contractNo    合同的编号
+     * @return
      */
     @PostMapping("/addAfterSales.do")
-    public void addAfterSales(AfterSales afterSales){
-        System.out.println("--"+afterSales);
+    public String addAfterSales(AfterSales afterSales,String img,String contractNo){
+        iAfterSalesService.addAfterSales(afterSales,img,contractNo);
+        return "redirect:/html/querycontract.html";
     }
 
-    @RequestMapping("fileUpload.do")
+    @RequestMapping("/fileUpload.do")
     @ResponseBody
     public ImgUtils fileUpload(@RequestParam("file") MultipartFile pictureFile, HttpServletRequest request) throws IOException {
+        System.out.println("进fileupload----");
         // 图片上传设置图片名称，不能重复，可以使用uuid
         String picName = UUID.randomUUID().toString();
         // 获取文件名
@@ -75,9 +81,11 @@ public class AfterSalesController {
         if (!uploadFile.exists()) {
             uploadFile.mkdir();
         }
+        System.out.println("开始上传");
         // 开始上传
         pictureFile.transferTo(new File(webpath + File.separator + "upload" + File.separator + picName + extName));
         String imgName=File.separator + "upload" + File.separator + picName + extName;
+        System.out.println("上传成功");
         ImgUtils imgUtils=new ImgUtils();
         imgUtils.setCode(0);
         imgUtils.setMsg("图片上传成功");
