@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * <p>
  * 售后服务表 服务实现类
@@ -48,13 +51,13 @@ public class AfterSalesServiceImpl extends ServiceImpl<AfterSalesMapper, AfterSa
             if(kind == 1){
                 queryWrapper.like("headline",content);
             }else if(kind == 2){
-                queryWrapper.like("serviceClassify",content);
+                queryWrapper.like("service_classify",content);
             }else if(kind == 3){
-                queryWrapper.like("beginDate",content);
+                queryWrapper.like("begin_date",content);
             }else if(kind == 4){
-                queryWrapper.like("serviceStaff",content);
+                queryWrapper.like("service_staff",content);
             }else if(kind == 5){
-                queryWrapper.like("serviceScore",content);
+                queryWrapper.like("service_score",content);
             }
         }
         IPage iPage1 = iAfterSalesService.page(iPage, queryWrapper);
@@ -66,16 +69,22 @@ public class AfterSalesServiceImpl extends ServiceImpl<AfterSalesMapper, AfterSa
     }
 
     @Override
-    public String addAfterSales(AfterSales afterSales,String img,String contractNo){
+    public Boolean addAfterSales(AfterSales afterSales,String img,String contractNo){
+        //设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // new Date()为获取当前系统时间
+        String date=df.format(new Date());
         //根据合同编号查询合同的id
         QueryWrapper<Contract> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("contractNo",contractNo);
+        queryWrapper.eq("contract_no",contractNo);
         Contract contract=iContractService.getOne(queryWrapper);
         //把得到的id赋值进去
         afterSales.setFile(img);
         //把查询出来的id赋值进去
         afterSales.setContractId(contract.getContractId());
-        iAfterSalesService.save(afterSales);
-        return "redirect:/html/querycontract.html";
+        //添加最后修改时间
+        afterSales.setLastTime(date);
+        Boolean b=iAfterSalesService.save(afterSales);
+        return b;
     }
 }

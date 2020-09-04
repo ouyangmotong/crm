@@ -14,5 +14,5 @@ import com.hy.crm.util.LayUIData;
  */
 public interface IAfterSalesService extends IService<AfterSales> {
     LayUIData queryAll(int page, int limit, int kind, String content);
-    String addAfterSales(AfterSales afterSales,String img,String contractNo);
+    Boolean addAfterSales(AfterSales afterSales,String img,String contractNo);
 }

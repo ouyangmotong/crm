@@ -58,8 +58,13 @@ public class AfterSalesController {
      */
     @PostMapping("/addAfterSales.do")
     public String addAfterSales(AfterSales afterSales,String img,String contractNo){
-        iAfterSalesService.addAfterSales(afterSales,img,contractNo);
-        return "redirect:/html/querycontract.html";
+        System.out.println("img:"+img+"--contractNo："+contractNo);
+        System.out.println("afterSales:"+afterSales);
+        Boolean b=iAfterSalesService.addAfterSales(afterSales,img,contractNo);
+        if(b == true){
+            return "redirect:/html/querycontract.html";
+        }
+        return "error";
     }
 
     @RequestMapping("/fileUpload.do")
