@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>跟單</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['table','form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            , url: '../crm/documentary/queryDocumentary.do' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'documentaryDate', title: '跟单时间', width: 150}
+                , {
+                    title: '跟单主题'
+                    , width: 300
+                    ,templet: '<div><a href="../crm/documentary/queryBusinessName.do?businessId={{d.businessId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.businessName}}</a></div>'
+                }
+                , {field: 'empName', title: '跟单人', width: 150}
+                , {field: 'documentaryData', title: '详细内容', width: 300, sort: true}
+            ]]
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            if(data.field.dept == null || data.field.dept == '' || data.field.dept == undefined){
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/documentary/queryDocumentary.do'
+                });
+            }else{
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/documentary/queryDocumentary.do'
+                    , where: {
+                        dept:data.field.dept
+                        ,name:data.field.name
+                    } //设定异步数据接口的额外参数
+                });
+            }
+            return false;//阻止表格跳转
+        });
+
+    });
+
+    function addContract(){
+        window.open("addaftersales.html");
+    }
+    function refresh(){
+        location.reload();
+    }
+</script>
+<body>
+    <div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-inline">
+                <img src="../img/main.png">
+                <span style="font-size: 20px;">
+                    &nbsp;&nbsp;全部跟单
+                </span>
+                <span th:text="${forumBo.emp.empImg}"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <!--下拉框-->
+            <div class="layui-form-item layui-inline">
+                <select name="dept">
+                    <option value="" ></option>
+                    <option value="1001">跟单时间</option>
+                    <option value="1002">跟单主题</option>
+                    <option value="1003">跟单人</option>
+                </select>
+            </div>
+            <!--请输入内容-->
+            <div class="layui-form-item layui-inline">
+                <input type="text" name="name" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+            </div>
+            <!--查找-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
+                    <i class="layui-icon layui-icon-search"></i>查找
+                </button>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--新增售后服务-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addContract()">
+                    <i class="layui-icon layui-icon-add-1"></i>新增跟单
+                </button>
+            </div>
+            <!--刷新-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                    <i class="layui-icon layui-icon-refresh-1"></i>刷新
+                </button>
+            </div>
+        </form>
+        <!--查询表格-->
+        <table id="demo" class="layui-table" lay-skin="line" lay-size="sm" lay-even lay-skin="nob">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+            </colgroup>
+        </table>
+    </div>
+</body>
+</html>

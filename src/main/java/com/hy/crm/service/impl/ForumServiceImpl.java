@@ -61,11 +61,12 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
                 queryWrapper.eq("emp_name",name);
                 List<Emp> elist = empService.list(queryWrapper);
                 if(elist.size() > 0){//能查出作者就可以按作者查询
-                    int[] empIds= new int[elist.size()];
-                    for(int i=0;elist.size()>i;i++){
-                        empIds[i] = elist.get(i).getEmpId();
+                    List empIds = new ArrayList<>();
+                    for(Emp e : elist){
+                        empIds.add(e.getEmpId());
                     }
-                    queryWrapper.in("empId",empIds);
+                    queryWrapper = new QueryWrapper<>();
+                    queryWrapper.in("emp_id",empIds);
                 }
             }else if (dept == 1003){//按点击
                 int forumClicks = -1;

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>跟单</title>
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
+
+</head>
+<body>
+<div>
+    <div style="width: 60%;margin: 0 auto">
+        <div class="layui-form-item">
+            <div class="layui-form-item layui-inline">
+                <img src="../img/main.png">
+                <span style="font-size: 20px;">&nbsp;&nbsp;跟单主题：</span>
+                <span th:text="${documentary.businessName}"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
+                    <i class="layui-icon layui-icon-left"></i>返回
+                </button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div th:each="forumReplyBo : ${dblist}">
+                <div>
+                    <div style="width: 30%;" class="layui-form-item layui-inline">1</div>
+                    <div style="width: 40%;" class="layui-form-item layui-inline">2</div>
+                    <div style="width: 40%;" class="layui-form-item layui-inline">3</div>
+                </div>
+                <div>5</div>
+                <div>6</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <form class="layui-form" action="/crm/forum/saveForum.do">1</form>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../../../layui/layui.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+
+    });
+
+    //返回
+    function goback(){
+        window.close();
+    }
+</script>
+</body>
+</html>
