@@ -1,0 +1,84 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+/*左边菜单颜色样式*/
+.left{
+    position: fixed;
+    left:0;
+    top:0;
+    width:220px;
+    height:100vh;
+    float:left;
+    overflow-y: auto;
+    background:#0b5475;
+}
+/*line-height左边的框距离最上面的距离*/
+.left header{
+    width:100%;
+    font-size: 25px;
+    line-height: 74px;
+    text-align: center;
+    font-weight: 500;
+    user-select: none;
+    color:#fff;
+}
+.left .menu-nav li{
+    position: relative;
+    min-width: 100%;
+    list-style: none;
+    line-height: 40px;
+}
+.left .menu-nav li a{
+    display:block;
+    max-width:100%;
+    height:100%;
+    color:#fff;
+    padding-left: 35px;
+    box-sizing: border-box;
+    text-decoration: none;
+    transition: 0.3s;
+}
+/*左边菜单内a标签移动的颜色*/
+.left .menu-nav li:hover a{
+    background-color:#06394b;
+    padding-left: 55px;
+}
+/*右边样式级颜色*/
+.right{
+    width:81%;
+    height:100vh;
+    background: #fff;
+    float:right;
+}
+/*左边CRM管理系统和a标签中间的按个div*/
+.logo{
+    width:100%;
+    height: 70px;
+    margin-top: 15px;
+    padding: 5px;
+}
+.logo .head{
+    width:50px;
+    height:50px;
+    margin-left: 20px;
+    border-radius: 100%;
+    vertical-align: middle;
+}
+.logo .status{
+    user-select: none;
+    font-size: 13px;
+    text-align: left;
+    margin-left: 10px;
+    vertical-align: middle;
+    color:#fff;
+    display: inline-block;
+}
+/*滚动条消失*/
+.left::-webkit-scrollbar {
+    width: 6px;  /*滚动条宽度*/
+    max-height:16px;  /*滚动条高度*/
+    background-color:#0b5475;
+}
