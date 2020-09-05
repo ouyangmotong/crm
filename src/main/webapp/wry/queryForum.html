@@ -1,94 +1,35 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>全部讨论帖子</title>
-    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
-
+    <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
-<body>
-<div>
-    <div>
-        <div>
-            <form class="layui-form">
-                <div class="layui-form-item layui-inline">
-                    <img src="../img/main.png">
-                    <span>全部讨论贴子</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="layui-input-block">
-                    <select name="dept">
-                        <option value=""></option>
-                        <option value="1001">按主题</option>
-                        <option value="1002">按用户</option>
-                        <option value="1003">按点击</option>
-                    </select>
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <input type="text" name="name" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
-                        <i class="layui-icon layui-icon-search"></i>查找
-                    </button>
-                </div>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="layui-form-item layui-inline">
-                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addContract()">
-                        <i class="layui-icon layui-icon-add-1"></i>新增跟单
-                    </button>
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
-                        <i class="layui-icon layui-icon-refresh-1"></i>刷新
-                    </button>
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <a class="layui-btn" lay-submit lay-filter="formDemo" href="saveForum.html" target="_top">发帖</a>
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">刷新</button>
-                </div>
-            </form>
-        </div>
-        <div>
-            <table id="demo" lay-filter="test"></table>
-        </div>
-    </div>
-</div>
-
-<script src="../js/jquery-3.4.1.js"></script>
+<script src="../layui/layui.all.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
-    //$(function () {});
-
-    layui.use(['table','form','tree','jquery'], function(){
+    layui.use(['table','form'], function () {
         var table = layui.table;
         var form = layui.form;
-        var $ = layui.jquery;
-        var tree = layui.tree;
 
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 500
-            ,width:1200
-            ,url: '/crm/forum/queryForum.do' //数据接口
-            ,limit:5
+            , url: '/crm/forum/queryForum.do' //数据接口
             ,page: true //开启分页
-            ,limits:[1,3,5,10]
-            ,cols: [
-                [ //表头
-                    // /*templet:'{{d.empno}}'*/
-                    {field: 'forumId',type:'checkbox', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field:'forumClassify', width:100, title: '分类'}
-                    ,{width:80, title: '主题',width:200 ,templet: '<div><a href="../crm/forum-reply/queryByIdForumReply.do?forumId={{d.forumId}}" target="_blank">{{d.headline}}</a></div>'}
-                    ,{field:'emp', width:100, title: '作者',templet:'<div>{{d.emp.empName}}</div>'}
-                    ,{field:'forumDate', width:180, title: '发布时间'}
-                    ,{field:'business', width:200, title: '所属商机',templet:'<div>{{d.business.businessName}}</div>'}
-                    ,{field:'forumClicks', width:80,title: '点击量'}
-                    ,{field:'forumReplyBoNum', width:80,title: '回复量'}
-                    ,{field:'finalReplyDate', width:180,title: '最后回复'}
-                ]
-            ]
+            , cols: [[ //表头
+                {field: 'forumId',type:'checkbox', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field:'forumClassify', width:100, title: '分类'}
+                ,{width:80, title: '主题',width:200 ,templet: '<div><a href="../crm/forum-reply/queryByIdForumReply.do?forumId={{d.forumId}}" target="_blank">{{d.headline}}</a></div>'}
+                ,{field:'emp', width:100, title: '作者',templet:'<div>{{d.emp.empName}}</div>'}
+                ,{field:'forumDate', width:180, title: '发布时间'}
+                ,{field:'business', width:200, title: '所属商机',templet:'<div>{{d.businessName}}</div>'}
+                ,{field:'forumClicks', width:80,title: '点击量'}
+                ,{field:'forumReplyBoNum', width:80,title: '回复量'}
+                ,{field:'finalReplyDate', width:180,title: '最后回复'}
+            ]]
         });
 
         //监听提交
@@ -101,11 +42,71 @@
                     ,name:data.field.name
                 } //设定异步数据接口的额外参数
             });
-            return false;
+            return false;//阻止表格跳转
         });
 
     });
 
+    function addForum1(){//添加
+        window.open("saveForum.html");
+    }
+    function refresh(){//刷新
+        location.reload();
+    }
+
 </script>
+<body>
+<div>
+    <br/><br/>
+    <form class="layui-form" action="">
+        <div class="layui-form-item layui-inline">
+            <img src="../img/main.png">
+            <span style="font-size: 20px;">
+                    &nbsp;&nbsp;全部讨论帖子
+                </span>
+            <span th:text="${forumBo.emp.empImg}"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <!--下拉框-->
+        <div class="layui-form-item layui-inline">
+            <select name="dept">
+                <option value=""></option>
+                <option value="1001">按主题</option>
+                <option value="1002">按用户</option>
+                <option value="1003">按点击</option>
+            </select>
+        </div>
+        <!--请输入内容-->
+        <div class="layui-form-item layui-inline">
+            <input type="text" name="name" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+        </div>
+        <!--查找-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>查找
+            </button>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--新增售后服务-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addForum1()">
+                <i class="layui-icon layui-icon-add-1"></i>发帖
+            </button>
+        </div>
+        <!--刷新-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                <i class="layui-icon layui-icon-refresh-1"></i>刷新
+            </button>
+        </div>
+    </form>
+    <!--查询表格-->
+    <table id="demo" class="layui-table" lay-skin="line" lay-size="sm" lay-even lay-skin="nob">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+        </colgroup>
+    </table>
+</div>
 </body>
 </html>

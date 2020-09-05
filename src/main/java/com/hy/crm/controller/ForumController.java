@@ -1,7 +1,6 @@
 package com.hy.crm.controller;
 
 import com.hy.crm.entity.Forum;
-import com.hy.crm.service.IEmpService;
 import com.hy.crm.service.IForumService;
 import com.hy.crm.util.LayUIData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ import java.util.Date;
 public class ForumController {
     @Autowired
     private IForumService forumService;
-    @Autowired
-    private IEmpService empService;
 
     /**
      * 按条件分页查询所有帖子
@@ -44,23 +41,17 @@ public class ForumController {
 
     /**
      * 发帖
-     * @param forumClassifyId
-     * @param headline
-     * @param principalPart
+     * @param forum
      * @return
      */
     @RequestMapping("/saveForum.do")
-    public String saveForum(Integer forumClassifyId, String headline, String principalPart){
-        Forum forum = new Forum();
-        forum.setForumClassifyId(forumClassifyId);
-        forum.setHeadline(headline);
-        forum.setPrincipalPart(principalPart);
+    public String saveForum(Forum forum){
         forum.setEmpId(1001);//没有当前用户id，给个默认值
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
-        forum.setForumDate(dateFormat.format(date));
-        forum.setForumClicks(0);
-        forum.setForumStatic(1001);
+        forum.setForumDate(dateFormat.format(date));//发帖时间
+        forum.setForumClicks(0);//点击量0
+        forum.setForumStatic(1001);//状态 1001成功
         forumService.save(forum);
         return "redirect:../../wry/queryForum.html";
     }

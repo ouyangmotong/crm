@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crm.entity.Business;
 import com.hy.crm.entity.Emp;
 import com.hy.crm.entity.Forum;
 import com.hy.crm.entity.ForumReply;
@@ -90,28 +91,36 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
             ForumBo forumBo = new ForumBo();
             BeanUtils.copyProperties(f , forumBo);
 
-            if(f.getForumClassifyId() == 1001){//分类名称
-                forumBo.setForumClassify("商机讨论板");
-            }else if(f.getForumClassifyId() == 1002){
-                forumBo.setForumClassify("合理化建议");
-            }
-            else if(f.getForumClassifyId() == 1003){//分类名称
-                forumBo.setForumClassify("技术交流");
-            }
-            else if(f.getForumClassifyId() == 1004){//分类名称
-                forumBo.setForumClassify("企业文化");
-            }
-            else if(f.getForumClassifyId() == 1005){//分类名称
-                forumBo.setForumClassify("生活娱乐");
+            if(f.getForumClassifyId() != null){
+                if(f.getForumClassifyId() == 1001){//分类名称
+                    forumBo.setForumClassify("商机讨论板");
+                }else if(f.getForumClassifyId() == 1002){
+                    forumBo.setForumClassify("合理化建议");
+                }
+                else if(f.getForumClassifyId() == 1003){//分类名称
+                    forumBo.setForumClassify("技术交流");
+                }
+                else if(f.getForumClassifyId() == 1004){//分类名称
+                    forumBo.setForumClassify("企业文化");
+                }
+                else if(f.getForumClassifyId() == 1005){//分类名称
+                    forumBo.setForumClassify("生活娱乐");
+                }
             }
 
             queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("emp_id",f.getEmpId());
             forumBo.setEmp(empService.getOne(queryWrapper));//查询用户
 
-            queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("business_id",f.getBusinessId());
-            forumBo.setBusiness(businessService.getOne(queryWrapper));//查询所属商机
+            if(f.getBusinessId() != null){
+                queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("business_id",f.getBusinessId());
+                Business business = businessService.getOne(queryWrapper);//查询所属商机
+                forumBo.setBusiness(business);
+                forumBo.setBusinessName(business.getBusinessName());
+            }else {
+                forumBo.setBusinessName("");
+            }
 
             queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("forum_id",f.getForumId());

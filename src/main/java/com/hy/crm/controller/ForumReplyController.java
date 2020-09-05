@@ -1,11 +1,13 @@
 package com.hy.crm.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hy.crm.entity.Forum;
 import com.hy.crm.entity.ForumReply;
 import com.hy.crm.entity.bo.ForumBo;
 import com.hy.crm.entity.bo.ForumReplyBo;
 import com.hy.crm.service.IForumReplyService;
 import com.hy.crm.service.IForumService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +42,14 @@ public class ForumReplyController {
     @RequestMapping("/queryByIdForumReply.do")
     public String queryByIdForumReply(Integer forumId, Model model){
         ForumBo forumBo = forumReplyService.queryByIdForumReply2(forumId);//查询主贴
+
+        //每查询一次帖子 增加一次帖子点击量
+        Forum forum = new Forum();
+        BeanUtils.copyProperties(forumBo , forum);
+        forum.setForumClicks(forum.getForumClicks()+1);
+        forumService.updateById(forum);
+        forumBo.setForumClicks(forumBo.getForumClicks()+1);
+
         QueryWrapper qw = new QueryWrapper();
         qw.eq("forum_id",forumId);
         qw.eq("forum_reply_static",1001);//回复是可用状态

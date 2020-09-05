@@ -10,16 +10,22 @@
 <body>
 <div>
     <div style="width: 60%;margin: 0 auto">
-        <div>
-            <h1>新增</h1>
-            <hr/>
+        <br/><br/>
+        <div style="float: left;"><h1>新增帖子</h1></div>
+        <div style="float: right;">
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
+                    <i class="layui-icon layui-icon-left"></i>返回
+                </button>
+            </div>
         </div>
+        <hr/>
         <div>
             <form class="layui-form" action="/crm/forum/saveForum.do">
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择框</label>
                     <div class="layui-input-block">
-                        <select th:name="forumClassifyId">
+                        <select name="forumClassifyId" style="width: 100px;">
                             <option value="1001">商机讨论板</option>
                             <option value="1002">合理化建议</option>
                             <option value="1003">技术交流</option>
@@ -37,13 +43,14 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">文本域</label>
                     <div class="layui-input-block">
+                        <br/>
                         <textarea name="principalPart" placeholder="请输入内容" th:name="principalPart" class="layui-textarea"></textarea>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit lay-filter="formDemo">发帖</button>
-                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="formDemo">保存</button>
+                        <button style="width: 85px;height: 35px;" type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
                     </div>
                 </div>
             </form>
@@ -58,6 +65,11 @@
         var form = layui.form;
 
     });
+
+    //返回
+    function goback(){
+        window.close();
+    }
 </script>
 </body>
 </html>
