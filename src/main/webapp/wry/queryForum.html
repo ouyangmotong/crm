@@ -17,7 +17,7 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            , url: '/crm/forum/queryForum.do' //数据接口
+            , url: '../crm/forum/queryForum.do' //数据接口
             ,page: true //开启分页
             , cols: [[ //表头
                 {field: 'forumId',type:'checkbox', title: 'ID', width:80, sort: true, fixed: 'left'}
@@ -36,7 +36,7 @@
         form.on('submit(formDemo)', function(data){
             console.log(data.field)
             table.reload('demo', {
-                url: '/crm/forum/queryForum.do'
+                url: '../crm/forum/queryForum.do'
                 ,where: {
                     dept:data.field.dept
                     ,name:data.field.name

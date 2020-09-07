@@ -9,14 +9,13 @@ import com.hy.crm.service.IBusinessService;
 import com.hy.crm.service.IDocumentaryService;
 import com.hy.crm.service.IEmpService;
 import com.hy.crm.util.LayUIData;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -38,74 +37,65 @@ public class DocumentaryController {
     private IEmpService empService;
 
     /**
-     * 根据条件分页查询跟单
-     * @param page
-     * @param limit
-     * @param dept
-     * @param name
+     * 根据条件分页查询所有跟单
+     * @param page 当前页
+     * @param limit 每页显示多少条
+     * @param type 条件查询类型 1001跟单时间 1002跟单主题 1003跟单人
+     * @param typeValue 条件查询值
      * @return
      */
     @ResponseBody
     @RequestMapping("/queryDocumentary.do")
-    public LayUIData queryDocumentary(Integer page, Integer limit, Integer dept, String name){
-        return documentaryService.queryDocumentary(page,limit,dept,name);
+    public LayUIData queryDocumentary(Integer page, Integer limit, Integer type, String typeValue, HttpSession session){
+        Emp emp = new Emp();
+        //emp = (Emp) session.getAttribute("emp");//当前用户
+        emp.setEmpId(1001);//写死
+        return documentaryService.queryDocumentary(page,limit,type,typeValue,1001,emp);//1001查询全部 1002查询我的
     }
 
     /**
-     * 根据主题查询跟单信息
-     * @param businessId
+     * 根据条件分页查询我的跟单
+     * @param page
+     * @param limit
+     * @param type
+     * @param typeValue
+     * @param session
      * @return
      */
-    @RequestMapping("/queryBusinessName.do")
-    public String queryBusinessName(String businessId, Model model){
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("business_id",businessId);
-        List<Documentary> dlist = documentaryService.list(qw);
-        List<DocumentaryBo> dblist = new ArrayList<>();
-        for (Documentary d : dlist){
-            DocumentaryBo db = new DocumentaryBo();
-            BeanUtils.copyProperties(d , db);
-            if(d.getDocumentaryType() == 1001){//电话沟通
-                db.setDocumentaryTypeName("电话沟通");
-            }else if(d.getDocumentaryType() == 1002){//邮件联系
-                db.setDocumentaryTypeName("邮件联系");
-            }else if(d.getDocumentaryType() == 1003){//网上交流
-                db.setDocumentaryTypeName("网上交流");
-            }else if(d.getDocumentaryType() == 1004){//上面拜访
-                db.setDocumentaryTypeName("上面拜访");
-            }else if(d.getDocumentaryType() == 1005){//产品送样
-                db.setDocumentaryTypeName("产品送样");
-            }else if(d.getDocumentaryType() == 1006){//客户招待
-                db.setDocumentaryTypeName("客户招待");
-            }else if(d.getDocumentaryType() == 1007){//其他
-                db.setDocumentaryTypeName("其他");
-            }
-            dblist.add(db);
-        }
-        model.addAttribute("dblist",dblist);
-        model.addAttribute("documentaryBo",dblist.get(0));
+    @ResponseBody
+    @RequestMapping("/queryMyDocumentary.do")
+    public LayUIData queryMyDocumentary(Integer page, Integer limit, Integer type, String typeValue,HttpSession session){
+        Emp emp = new Emp();
+        //emp = (Emp) session.getAttribute("emp");//当前用户
+        emp.setEmpId(1001);//写死
+        return documentaryService.queryDocumentary(page,limit,type,typeValue,1002,emp);//1001查询全部 1002查询我的
+    }
+
+    /**
+     * 根据商机id查询跟单信息
+     * @param businessId 主题id
+     * @return
+     */
+    @RequestMapping("/queryBusinessById.do")
+    public String queryBusinessById(String businessId, Model model){
+        List<DocumentaryBo> dblist = documentaryService.queryBusinessById(businessId);
+
+        model.addAttribute("dblist",dblist);//跟单信息
+        model.addAttribute("documentaryBo",dblist.get(0));//第一条跟单信息
         model.addAttribute("documentaryStatic",businessService.getById(businessId).getDocumentaryId());//商机跟单状态
-        return "wry/queryDocumentary.html";
+        return "wry/queryByDocumentary.html";
     }
 
     /**
      * 继续跟单
-     * @param documentary
-     * @param businessStatic
+     * @param documentary 跟单信息
+     * @param businessStatic 商机跟单状态
      * @return
      */
     @RequestMapping("/saveDocumentary.do")
     public String saveDocumentary(Documentary documentary,Integer businessStatic){
-        documentaryService.save(documentary);
-
-        //修改商机表中的跟单状态
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("business_id",documentary.getBusinessId());
-        Business business = businessService.getOne(qw);
-        business.setDocumentaryId(businessStatic);
-        businessService.updateById(business);
-
-        return "redirect:queryBusinessName.do?businessId="+documentary.getBusinessId();
+        documentaryService.saveDocumentary(documentary,businessStatic);
+        return "redirect:queryBusinessById.do?businessId="+documentary.getBusinessId();
     }
 
     /**
@@ -114,46 +104,34 @@ public class DocumentaryController {
      * @return
      */
     @RequestMapping("/queryBusinessDocumentary.do")
-    public String queryBusinessDocumentary(Model model){
+    public String queryBusinessDocumentary(Model model,HttpSession session){
         QueryWrapper qw = new QueryWrapper();
         qw.eq("documentary_id",1001);//1001为待跟单状态
-        List<Business> blist = businessService.list(qw);
-        Emp emp = empService.getById(1001);
-        model.addAttribute("blist",blist);
+        List<Business> blist = businessService.list(qw);//查询跟单状态为待跟单的所有商机
+        Emp emp = new Emp();
+        //emp = (Emp) session.getAttribute("emp");//当前用户
+        emp.setEmpId(1001);//写死
+        emp.setEmpName("admin");
+        model.addAttribute("blist",blist);//商机信息
         model.addAttribute("emp", emp);//当前用户
         return "wry/saveDocumentary.html";
     }
 
     /**
      * 新增跟单
-     * @param documentary
-     * @param businessId
-     * @param businessStatic
+     * @param documentary 跟单信息
+     * @param businessId 商机id
+     * @param businessStatic 商机状态
      * @return
      */
     @RequestMapping("/saveNewDocumentary.do")
-    public String saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic) {
-        QueryWrapper qw = new QueryWrapper();
-
-        //修改商机表中的跟单状态
-        Business business = businessService.getById(businessId);
-        business.setDocumentaryId(businessStatic);
-        businessService.updateById(business);
-
-        documentary.setBusinessId(business.getBusinessId());
-        documentary.setBusinessName(business.getBusinessName());
-
-        Emp emp = empService.getById(1001);
-        documentary.setEmpId(emp.getEmpId());
-        documentary.setEmpName(emp.getEmpName());
-
-        documentaryService.save(documentary);
-        return "redirect:queryBusinessName.do?businessId="+documentary.getBusinessId();
+    public String saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic,HttpSession session) {
+        Emp emp = new Emp();
+        //emp = (Emp) session.getAttribute("emp");//当前用户
+        emp.setEmpId(1001);//写死
+        emp.setEmpName("admin");
+        documentaryService.saveNewDocumentary(documentary,businessId,businessStatic,emp);
+        return "redirect:queryBusinessById.do?businessId="+documentary.getBusinessId();
     }
 
-    @ResponseBody
-    @RequestMapping("/queryMyDocumentary.do")
-    public LayUIData queryMyDocumentary(Integer page, Integer limit, Integer dept, String name){
-        return documentaryService.queryDocumentary(page,limit,dept,name);
-    }
 }

@@ -1,6 +1,7 @@
 package com.hy.crm.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.crm.entity.Emp;
 import com.hy.crm.entity.Forum;
 import com.hy.crm.util.LayUIData;
 
@@ -14,4 +15,5 @@ import com.hy.crm.util.LayUIData;
  */
 public interface IForumService extends IService<Forum> {
     public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name);//按条件分页查询所有帖子
+    public void saveForum(Forum forum, Emp emp);
 }

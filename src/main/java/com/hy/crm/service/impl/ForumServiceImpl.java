@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,12 +85,11 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
             }
         }
         queryWrapper.eq("forum_static",1001);//帖子是可用状态
-        //分页查询
-        IPage iPage= page(new Page<Forum>(page, limit),queryWrapper);
-        List<ForumBo> list = new ArrayList<>();//存所有主题
+        IPage iPage= page(new Page<Forum>(page, limit),queryWrapper);//分页查询
+        List<ForumBo> list = new ArrayList<>();//存所有帖子
         for (Forum f:(List<Forum>)iPage.getRecords()){
             ForumBo forumBo = new ForumBo();
-            BeanUtils.copyProperties(f , forumBo);
+            BeanUtils.copyProperties(f , forumBo);//将f类里的值都存进forumBo类中
 
             if(f.getForumClassifyId() != null){
                 if(f.getForumClassifyId() == 1001){//分类名称
@@ -147,6 +147,20 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
         layUIData.setCount((int)iPage.getTotal());
         layUIData.setData(list);
         return layUIData;
+    }
+
+    /**
+     * 发帖(添加，没有关联商机)
+     * @param forum
+     * @param emp
+     */
+    public void saveForum(Forum forum,Emp emp){
+        forum.setEmpId(emp.getEmpId());//发布人
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+        forum.setForumDate(dateFormat.format(new Date()));//发帖时间
+        forum.setForumClicks(0);//点击量0
+        forum.setForumStatic(1001);//状态 1001成功
+        save(forum);
     }
 
 }

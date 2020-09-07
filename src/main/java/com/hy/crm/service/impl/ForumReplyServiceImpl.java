@@ -2,6 +2,7 @@ package com.hy.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crm.entity.Emp;
 import com.hy.crm.entity.Forum;
 import com.hy.crm.entity.ForumReply;
 import com.hy.crm.entity.bo.ForumBo;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,10 +42,15 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
      * @param forumId
      * @return
      */
-    public ForumBo queryByIdForumReply(Integer forumId){
+    /*public ForumBo queryByIdForumReply(Integer forumId){
         QueryWrapper qw = new QueryWrapper<>();
         qw.eq("forum_id",forumId);//根据帖子id查询帖子
         Forum forum = forumService.getOne(qw);
+
+        //每查询一次帖子 增加一次帖子点击量
+        forum.setForumClicks(forum.getForumClicks()+1);//数据库修改帖子点击量
+        forumService.updateById(forum);
+
         ForumBo forumBo = new ForumBo();
         BeanUtils.copyProperties(forum , forumBo);
         if(forum.getForumClassifyId() == 1001){//分类名称
@@ -68,7 +76,7 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
         List<ForumReply> list = list(qw);//根据主贴id查询对应回复
         forumBo.setForumReplyBos(queryForumReplyBos(list));//回复
         return forumBo;
-    }
+    }*/
 
     /**
      * 根据id查询帖子
@@ -77,10 +85,16 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
      */
     public ForumBo queryByIdForumReply2(Integer forumId){
         QueryWrapper qw = new QueryWrapper<>();
+
         qw.eq("forum_id",forumId);//根据帖子id查询帖子
         Forum forum = forumService.getOne(qw);
+
+        //每查询一次帖子 增加一次帖子点击量
+        forum.setForumClicks(forum.getForumClicks()+1);//数据库修改帖子点击量
+        forumService.updateById(forum);
+
         ForumBo forumBo = new ForumBo();
-        BeanUtils.copyProperties(forum , forumBo);
+        BeanUtils.copyProperties(forum , forumBo);//把forum对象的值赋给forumBo对象
         if(forum.getForumClassifyId() == 1001){//分类名称
             forumBo.setForumClassify("商机讨论板");
         }else if(forum.getForumClassifyId() == 1002){
@@ -95,12 +109,12 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
         else if(forum.getForumClassifyId() == 1005){//分类名称
             forumBo.setForumClassify("生活娱乐");
         }
+
+        //查询发帖人
         qw = new QueryWrapper();
         qw.eq("emp_id",forum.getEmpId());
-        forumBo.setEmp(empService.getOne(qw));//发帖人
-        qw = new QueryWrapper();
-        qw.eq("forum_id",forumId);
-        qw.eq("forum_reply_static",1001);//回复是可用状态
+        forumBo.setEmp(empService.getOne(qw));
+
         return forumBo;
     }
 
@@ -148,6 +162,27 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
             }
         }
         return list;
+    }
+
+    /**
+     * 添加评论/回复
+     * @param forumId 帖子id
+     * @param replyId 回复回复id
+     * @param principalPart 回复内容
+     * @param emp 当前用户
+     */
+    public void saveForumReply(Integer forumId, Integer replyId, String principalPart, Emp emp){
+        ForumReply fr = new ForumReply();
+
+        fr.setForumId(forumId);//主贴id
+        fr.setPrincipalPart(principalPart);//回复内容
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+        fr.setFinallyDate(dateFormat.format(new Date()));//回复时间
+        fr.setEmpId(emp.getEmpId());//回复用户
+        fr.setReplyId(replyId);//replyId(回复评论id) 如果是-1就是评论 如果是有id就是回复评论
+        fr.setForumReplyStatic(1001);//回复状态成功
+
+        save(fr);
     }
 
 }
