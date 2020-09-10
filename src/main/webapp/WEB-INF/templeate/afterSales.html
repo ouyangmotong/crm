@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>售后服务详情</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
 </head>
 
-<script src="../layui/layui.all.js"></script>
-<script src="../layui/layui.js"></script>
+<script src="../../layui/layui.all.js"></script>
+<script src="../../layui/layui.js"></script>
 <script type="text/javascript">
-    layui.use('rate', function(){
+    layui.use(['rate','jquery'], function(){
         var rate = layui.rate;
-
+        var $=layui.jquery;
+        var fen=$("#fen").val();//拿到该条数据的评分
         //渲染
         var ins1 = rate.render({
-            elem: '#pingfen'  //绑定元素
+            elem: '#pingfen'//绑定元素
+            ,value: fen
         });
     });
 
@@ -64,14 +66,20 @@
             主题&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 800px;height: 30px;" readonly>
+            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 800px;height: 30px;" th:value="${afterSales.headline}" readonly>
         </div>
     </div>
     <!---->
     <div style="margin-left: 108px;line-height: 2;">
-        步骤：<input style="border:none;"/>
-        责任人：<input style="border:none;"/>
-        参与人：<input style="border:none;"/>
+        步骤：&nbsp;&nbsp;
+              <div th:switch="${afterSales.aftStatic}" class="layui-inline">
+                <p th:case="'1001'">已登记待处理</p>
+                <p th:case="'1002'">处理中</p>
+                <p th:case="'1003'">结束</p>
+              </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        责任人：<input th:value="${afterSales.dutyPerson}" style="border:none;" readonly/>
+        参与人：<input th:value="${afterSales.participant}" style="border:none;" readonly/>
     </div>
     <br/>
     <!--售后服务信息-->
@@ -87,7 +95,7 @@
             客户名称&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.clienteleName}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,14 +103,14 @@
             合同编号&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input th:value="${afterSales.contractId}" type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
     </div>
     <br/>
-    <!--合同注意信息-->
+    <!--合同主要信息-->
     <div style="margin-left:80px;" class="layui-inline">
-        合同注意信息&nbsp;&nbsp;&nbsp;&nbsp;
-        <div style="border:2px solid #DBDBDB;border-radius:8px;width: 750px;height: 80px;" class="layui-inline"></div>
+        合同主要信息&nbsp;&nbsp;&nbsp;&nbsp;
+        <div style="border:2px solid #DBDBDB;border-radius:8px;width: 750px;height: 80px;" class="layui-inline">[[${afterSales.contractContent}]]</div>
     </div>
 
     <div style="margin-left: 85px">
@@ -112,7 +120,7 @@
             对方联系人&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.contacts}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -120,7 +128,7 @@
             固定电话&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.telephone}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
     </div>
 
@@ -130,7 +138,7 @@
             移动电话&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.phone}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -138,7 +146,7 @@
             邮件/QQ&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.email}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
     </div>
 
@@ -148,7 +156,13 @@
             服务类型&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <div th:switch="${afterSales.serviceClassify}" style="background-color:#ebebe4;width:300px;height:30px;" class="layui-inline">
+                <p th:case="'1001'">故障申报</p>
+                <p th:case="'1002'">业务咨询</p>
+                <p th:case="'1003'">实施或培训</p>
+                <p th:case="'1004'">主动关怀</p>
+                <p th:case="'1005'">其他</p>
+            </div>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -156,7 +170,13 @@
             服务方式&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <div th:switch="${afterSales.classifyType}" style="background-color:#ebebe4;width:300px;height:30px;" class="layui-inline">
+                <p th:case="'1001'">故障申报</p>
+                <p th:case="'1002'">业务咨询</p>
+                <p th:case="'1003'">实施或培训</p>
+                <p th:case="'1004'">主动关怀</p>
+                <p th:case="'1005'">其他</p>
+            </div>
         </div>
     </div>
 
@@ -167,7 +187,7 @@
             开始时间&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.beginDate}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -175,7 +195,7 @@
             结束时间&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.endDate}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
     </div>
 
@@ -187,7 +207,7 @@
         </div>
         <div class="layui-inline">
             <div style="border:2px solid #DBDBDB;border-radius:8px;width:750px;height:120px;" align="center" class="layui-inline">
-                <textarea style="background-color:#ebebe4;width:720px;height:113px;resize:none;"></textarea>
+                <textarea style="background-color:#ebebe4;width:720px;height:113px;resize:none;">[[${afterSales.serviceContent}]]</textarea>
             </div>
         </div>
     </div>
@@ -199,7 +219,7 @@
         </div>
         <div class="layui-inline">
             <div style="border:2px solid #DBDBDB;border-radius:8px;width:750px;height:120px;" align="center" class="layui-inline">
-                <textarea style="background-color:#ebebe4;width:720px;height:113px;"></textarea>
+                <textarea style="background-color:#ebebe4;width:720px;height:113px;">[[${afterSales.customerFeedback}]]</textarea>
             </div>
         </div>
     </div>
@@ -211,13 +231,14 @@
             服务人员&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="layui-inline">
-            <input type="text" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
+            <input type="text" th:value="${afterSales.serviceStaff}" class="layui-input" style="background-color:#ebebe4;border-radius:8px;width: 300px;height: 30px;" readonly>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="layui-inline">
             服务评分&nbsp;&nbsp;&nbsp;&nbsp;
             <div id="pingfen"></div>
+            <input type="hidden" id="fen" th:value="${afterSales.serviceScore}"/>
         </div>
     </div>
 
@@ -253,7 +274,7 @@
             </div>
             <div style="margin-left:20px;">
                 <br/>
-                <img src="../img/tou.png">王娜&nbsp;&nbsp;
+                <img src="../../img/tou.png">王娜&nbsp;&nbsp;
                 <span style="color: #9F9F9F;">(2016-07-06 11:10)</span>
             </div>
             <div style="margin-left:50px;">
@@ -263,7 +284,7 @@
             <hr>
             <div style="margin-left:20px;">
                 <br/>
-                <img src="../img/tou.png">李浩&nbsp;&nbsp;
+                <img src="../../img/tou.png">李浩&nbsp;&nbsp;
                 <span style="color: #9F9F9F;">(2016-07-06 11:10)</span>
             </div>
             <div style="margin-left:50px;">

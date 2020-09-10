@@ -1,11 +1,13 @@
 package com.hy.crm.controller;
 
 import com.hy.crm.entity.AfterSales;
+import com.hy.crm.entity.bo.AfterSalesBo;
 import com.hy.crm.service.IAfterSalesService;
 import com.hy.crm.util.ImgUtils;
 import com.hy.crm.util.LayUIData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +49,18 @@ public class AfterSalesController {
     public LayUIData queryAll(int page,int limit,int kind,String content){
         System.out.println("page="+page+"------------limit="+limit);
         return iAfterSalesService.queryAll(page,limit,kind,content);
+    }
+
+    /**
+     * 先得到主题名字，根据主题名字查询主题对应的id，根据id查询该条数据
+     *
+     * @param id 主题名字
+     */
+    @RequestMapping("/queryById.do")
+    public String queryById(String id, Model model) {
+        AfterSalesBo afterSalesBo=iAfterSalesService.queryById(id);
+        model.addAttribute("afterSales",afterSalesBo);
+        return "afterSales";
     }
 
     /**

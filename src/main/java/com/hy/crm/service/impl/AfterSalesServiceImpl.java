@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crm.entity.AfterSales;
+import com.hy.crm.entity.Clientele;
 import com.hy.crm.entity.Contract;
+import com.hy.crm.entity.bo.AfterSalesBo;
 import com.hy.crm.mapper.AfterSalesMapper;
 import com.hy.crm.service.IAfterSalesService;
+import com.hy.crm.service.IClienteleService;
 import com.hy.crm.service.IContractService;
 import com.hy.crm.util.LayUIData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +45,14 @@ public class AfterSalesServiceImpl extends ServiceImpl<AfterSalesMapper, AfterSa
     @Autowired
     private IContractService iContractService;
 
+    /**
+     * 注入客户service
+     */
+    @Autowired
+    private IClienteleService iClienteleService;
+
     @Override
-    public LayUIData queryAll(int page, int limit, int kind, String content){
+    public LayUIData queryAll(int page,int limit,int kind,String content){
         LayUIData layUIData = new LayUIData();
         IPage iPage = new Page<AfterSales>(page, limit);
         QueryWrapper<AfterSales> queryWrapper=new QueryWrapper<>();
@@ -86,5 +95,65 @@ public class AfterSalesServiceImpl extends ServiceImpl<AfterSalesMapper, AfterSa
         afterSales.setLastTime(date);
         Boolean b=iAfterSalesService.save(afterSales);
         return b;
+    }
+
+    @Override
+    public AfterSalesBo queryById(String id){
+        AfterSalesBo afterSalesBo=new AfterSalesBo();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        QueryWrapper<AfterSales> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("headline",id);
+        AfterSales afterSales = iAfterSalesService.getOne(queryWrapper);
+        //主题
+        afterSalesBo.setHeadline(afterSales.getHeadline());
+        //状态(1001已登记待处理,1002处理中,1003结束)
+        afterSalesBo.setAftStatic(afterSales.getAftStatic());
+        //责任人
+        afterSalesBo.setDutyPerson(afterSales.getDutyPerson());
+        //参与人
+        afterSalesBo.setParticipant(afterSales.getParticipant());
+        //客户id afterSales.getClienteleId(),根据客户id查询客户信息
+        if(!StringUtils.isEmpty(afterSales.getClienteleId())){
+            Clientele clientele=iClienteleService.getById(afterSales.getClienteleId());
+            //客户名字
+            afterSalesBo.setClienteleName(clientele.getClienteleName());
+        }
+        //合同id afterSales.getContractId()，根据合同id查询合同信息
+        if (!StringUtils.isEmpty(afterSales.getContractId())){
+            Contract contract=iContractService.getById(afterSales.getContractId());
+            //合同编号
+            afterSalesBo.setContractId(contract.getContractNo());
+        }
+        //合同主要内容
+        afterSalesBo.setContractContent(afterSales.getContractContent());
+        //对方联系人
+        afterSalesBo.setContacts(afterSales.getContacts());
+        //固定电话
+        afterSalesBo.setTelephone(afterSales.getTelephone());
+        //移动电话
+        afterSalesBo.setPhone(afterSales.getPhone());
+        //邮件/QQ
+        afterSalesBo.setEmail(afterSales.getEmail());
+        //服务类型(1001故障申报、1002业务咨询、1003实施或培训、1004主动关怀、1005其他)
+        afterSalesBo.setServiceClassify(afterSales.getServiceClassify());
+        //服务方式
+        afterSalesBo.setClassifyType(afterSales.getClassifyType());
+        //开始时间
+        Date beginDate=afterSales.getBeginDate();
+        afterSalesBo.setBeginDate(formatter.format(beginDate));
+        //结束时间
+        Date endDate=afterSales.getEndDate();
+        afterSalesBo.setEndDate(formatter.format(endDate));
+        //服务内容
+        afterSalesBo.setServiceContent(afterSales.getServiceContent());
+        //客户反馈
+        afterSalesBo.setCustomerFeedback(afterSales.getCustomerFeedback());
+        //服务人员
+        afterSalesBo.setServiceStaff(afterSales.getServiceStaff());
+        //服务评分
+        afterSalesBo.setServiceScore(afterSales.getServiceScore());
+        //附件
+        afterSalesBo.setFile(afterSales.getFile());
+        return afterSalesBo;
     }
 }

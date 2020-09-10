@@ -25,7 +25,7 @@
                     title: '主题'
                     , width: 300
                     , fixed: 'left'
-                    ,templet: '<div><a href="afterSales.html" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.headline}}</a></div>'
+                    ,templet: '<div><a href="../crm/after-sales/queryById.do?id={{d.headline}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.headline}}</a></div>'
                 }
                 , {field: 'serviceClassify', title: '服务类型', width: 150}
                 , {field: 'beginDate', title: '开始时间', width: 170, sort: true}
@@ -35,7 +35,7 @@
         });
 
         //监听提交
-        form.on('submit(formDemo)', function(data){
+        form.on('submit(formDemo_1)', function(data){
             alert(data.field.kind)
             if(data.field.kind == null || data.field.kind == '' || data.field.kind == undefined){
                 table.reload('demo', {//将id为demo的表格进行重载
@@ -192,7 +192,7 @@
             </div>
             <!--查找-->
             <div class="layui-form-item layui-inline">
-                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo_1">
                     <i class="layui-icon layui-icon-search"></i>查找
                 </button>
             </div>
