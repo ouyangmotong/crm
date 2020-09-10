@@ -48,19 +48,19 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
      * 按条件分页查询所有帖子
      * @param page 当前页
      * @param limit 每页显示条数
-     * @param dept 条件编号
-     * @param name 条件内容
+     * @param type 条件编号
+     * @param typeValue 条件内容
      * @return
      */
-    public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name){
+    public LayUIData queryForum(Integer page, Integer limit, Integer type, String typeValue){
         LayUIData layUIData = new LayUIData();
         QueryWrapper queryWrapper = new QueryWrapper<>();
-        if(dept != null && dept != 0){
-            if(dept == 1001){//按主题
-                queryWrapper.eq("headline",name);
-            }else if (dept == 1002){//按用户
+        if(type != null && type != 0){
+            if(type == 1001){//按主题
+                queryWrapper.eq("headline",typeValue);
+            }else if (type == 1002){//按用户
                 queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("emp_name",name);
+                queryWrapper.eq("emp_name",typeValue);
                 List<Emp> elist = empService.list(queryWrapper);
                 if(elist.size() > 0){//能查出作者就可以按作者查询
                     List empIds = new ArrayList<>();
@@ -70,11 +70,11 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
                     queryWrapper = new QueryWrapper<>();
                     queryWrapper.in("emp_id",empIds);
                 }
-            }else if (dept == 1003){//按点击
+            }else if (type == 1003){//按点击
                 int forumClicks = -1;
                 try {
-                    if(Integer.parseInt(name) >= 0){
-                        forumClicks = Integer.parseInt(name);
+                    if(Integer.parseInt(typeValue) >= 0){
+                        forumClicks = Integer.parseInt(typeValue);
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

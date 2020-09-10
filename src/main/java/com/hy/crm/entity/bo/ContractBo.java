@@ -14,6 +14,7 @@ import lombok.Data;
 public class ContractBo {
     private Integer contractId;//合同表id
     private Integer priorityId;//优先级(1001高,1002中,1003低)
+    private Integer businessId;//商机id
     private Integer clienteleId;//客户信息id
     private String contractName;//合同名称
     private String contractNo;//合同编号

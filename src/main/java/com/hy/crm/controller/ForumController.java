@@ -29,14 +29,14 @@ public class ForumController {
      * 按条件分页查询所有帖子
      * @param page 当前页
      * @param limit 每页显示条数
-     * @param dept 条件编号
-     * @param name 条件内容
+     * @param type 条件编号
+     * @param typeValue 条件内容
      * @return
      */
     @ResponseBody
     @RequestMapping("/queryForum.do")
-    public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name){
-        return forumService.queryForum(page,limit,dept,name);
+    public LayUIData queryForum(Integer page, Integer limit, Integer type, String typeValue){
+        return forumService.queryForum(page,limit,type,typeValue);
     }
 
     /**

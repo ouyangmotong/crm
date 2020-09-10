@@ -18,45 +18,64 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            , url: '../crm/after-sales/queryAll.do?kind=0' //数据接口
+            , url: '../crm/contract/queryAllContract.do?classify=0' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
                 {
-                    title: '主题'
+                    title: '合同全称'
                     , width: 300
                     , fixed: 'left'
-                    ,templet: '<div><a href="afterSales.html" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.headline}}</a></div>'
+                    ,templet: '<div><a href="../crm/contract/queryByContract.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.contractName}}</a></div>'
                 }
-                , {field: 'serviceClassify', title: '服务类型', width: 150}
-                , {field: 'beginDate', title: '开始时间', width: 170, sort: true}
-                , {field: 'serviceStaff', title: '服务人员', width: 190}
-                , {field: 'serviceScore', title: '服务评分', width: 180}
+                , {field: 'contractNo', title: '合同编号', width: 150}
+                , {field: 'contractSum', title: '合同金额', width: 170, sort: true}
+                , {
+                    title: '汇款额度'
+                    , width: 190
+                    , templet: '<div><a href="../crm/earninga/queryContractEarninga.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.earningNum}}</a></div>'
+                }
+                , {
+                    title: '开票额'
+                    , width: 190
+                    , templet: '<div><a href="../crm/apply-invoice/queryContractApplyInvoice.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.address}}</a></div>'
+                }
+                , {field: 'signDate', title: '签约日期', width: 180}
             ]]
         });
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            alert(data.field.kind)
-            if(data.field.kind == null || data.field.kind == '' || data.field.kind == undefined){
+            if(data.field.type == null || data.field.type == '' || data.field.type == undefined){
                 table.reload('demo', {//将id为demo的表格进行重载
-                    url: '../crm/after-sales/queryAll.do'
+                    url: '../crm/contract/queryAllContract.do?classify=0'
                 });
             }else{
                 table.reload('demo', {//将id为demo的表格进行重载
-                    url: '../crm/after-sales/queryAll.do'
+                    url: '../crm/contract/queryAllContract.do'
                     , where: {
-                        "kind": data.field.kind//这里kind引不引都可以,kind为下拉框value
-                        , "content": data.field.content//content为文本框值
+                        "classify": 0
+                        ,"type": data.field.type//这里type引不引都可以,type为下拉框value
+                        , "typeValue": data.field.typeValue//content为文本框值
+                        , "classify": data.field.classify//content为文本框值
                     } //设定异步数据接口的额外参数
                 });
             }
             return false;//阻止表格跳转
         });
 
+        window.queryContract = function (classify) {
+            if(classify != null){
+                document.getElementById("classify").value = classify;
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/contract/queryAllContract.do?classify='+classify
+                });
+            }
+        }
+
     });
 
     function addContract(){
-        window.open("addaftersales.html");
+        window.open("../crm/contract/queryBusinessContract.do");
     }
     function refresh(){
         location.reload();
@@ -78,7 +97,7 @@
     <div style="float: left;width: 19%">
         <img src="../img/main.png">
         <span style="font-size: 20px;">
-            &nbsp;&nbsp;合同
+            &nbsp;&nbsp;全部合同
         </span>
         <div style="width: 95%;height: 300px;" class="exp">
             <!--分类-->
@@ -88,43 +107,19 @@
                 </span>
             </div>
             <!--所有分类-->
-            <div>
-                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
-                <span style="font-size: 13px;line-height: 1;">
-                    &nbsp;&nbsp;所有分类
-                </span>
-            </div>
-            <!--处理中的事务-->
+            <!-- 所有合同 -->
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">处理中的事务</a>
-                </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">3</span>
-            </div>
-            <!--已结束的事务-->
-            <div>
-                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
-                <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">已结束的事务</a>
-                </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">5</span>
-            </div>
-            <!--已撤销的事务-->
-            <div>
-                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
-                <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">已撤销的事务</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(0)">所有合同</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
             </div>
-            <!--横线-->
-            <hr>
             <!--本周新增-->
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本周新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1001)">本周新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
             </div>
@@ -132,7 +127,7 @@
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上周新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1002)">上周新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">0</span>
             </div>
@@ -140,7 +135,7 @@
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本月新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1003)">本月新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
             </div>
@@ -148,7 +143,7 @@
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上月新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1004)">上月新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">1</span>
             </div>
@@ -156,7 +151,7 @@
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本季度新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1005)">本季度新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
             </div>
@@ -164,7 +159,7 @@
             <div>
                 <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
                 <span style="font-size: 13px;line-height: 2;">
-                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上季度新增</a>
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1006)">上季度新增</a>
                 </span>
                 &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">7</span>
             </div>
@@ -175,20 +170,20 @@
     <div style="float: right;width: 79%">
 
         <form class="layui-form" action="">
+            <input type="hidden" name="classify" id="classify" value="0">
             <!--下拉框-->
             <div class="layui-form-item layui-inline">
-                <select name="kind">
+                <select name="type">
                     <option value="" ></option>
-                    <option value="1">按主题</option>
-                    <option value="2">按服务类型</option>
-                    <option value="3">按开始时间</option>
-                    <option value="4">按服务人员</option>
-                    <option value="5">按服务评分</option>
+                    <option value="1001">按合同名称</option>
+                    <option value="1002">按客户名称</option>
+                    <option value="1003">按商机名称</option>
+                    <option value="1004">按签约日期</option>
                 </select>
             </div>
             <!--请输入内容-->
             <div class="layui-form-item layui-inline">
-                <input type="text" name="content" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                <input type="text" name="typeValue" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
             </div>
             <!--查找-->
             <div class="layui-form-item layui-inline">
@@ -197,10 +192,10 @@
                 </button>
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <!--新增售后服务-->
+            <!--新增合同-->
             <div class="layui-form-item layui-inline">
                 <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addContract()">
-                    <i class="layui-icon layui-icon-add-1"></i>新增售后服务
+                    <i class="layui-icon layui-icon-add-1"></i>新增合同
                 </button>
             </div>
             <!--刷新-->

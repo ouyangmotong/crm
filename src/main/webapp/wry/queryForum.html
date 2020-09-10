@@ -38,8 +38,8 @@
             table.reload('demo', {
                 url: '../crm/forum/queryForum.do'
                 ,where: {
-                    dept:data.field.dept
-                    ,name:data.field.name
+                    type:data.field.type
+                    ,typeValue:data.field.typeValue
                 } //设定异步数据接口的额外参数
             });
             return false;//阻止表格跳转
@@ -69,7 +69,7 @@
         </div>
         <!--下拉框-->
         <div class="layui-form-item layui-inline">
-            <select name="dept">
+            <select name="type">
                 <option value=""></option>
                 <option value="1001">按主题</option>
                 <option value="1002">按用户</option>
@@ -78,7 +78,7 @@
         </div>
         <!--请输入内容-->
         <div class="layui-form-item layui-inline">
-            <input type="text" name="name" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+            <input type="text" name="typeValue" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
         </div>
         <!--查找-->
         <div class="layui-form-item layui-inline">

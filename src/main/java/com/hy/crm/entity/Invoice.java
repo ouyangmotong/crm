@@ -20,45 +20,20 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ApplyInvoice implements Serializable {
+public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 开票申请表id
+     * 开票表id
      */
-    @TableId(value = "apply_invoice_id", type = IdType.AUTO)
-    private Integer applyInvoiceId;
+    @TableId(value = "invoice_id", type = IdType.AUTO)
+    private Integer invoiceId;
 
     /**
      * 主题
      */
     private String headline;
-
-    /**
-     * 优先级(1001高,1002中,1003低)
-     */
-    private Integer priorityId;
-
-    /**
-     * 结束时间
-     */
-    private String endDate;
-
-    /**
-     * 申请人id
-     */
-    private Integer empId;
-
-    /**
-     * 所属部门id
-     */
-    private Integer deptId;
-
-    /**
-     * 申请日期
-     */
-    private String applyDate;
 
     /**
      * 主要技术条款
@@ -69,11 +44,6 @@ public class ApplyInvoice implements Serializable {
      * 客户id
      */
     private Integer clienteleId;
-
-    /**
-     * 关联合同
-     */
-    private String contractFile;
 
     /**
      * 合同id
@@ -125,10 +95,5 @@ public class ApplyInvoice implements Serializable {
      * 附件
      */
     private String applyInvoiceFile;
-
-    /**
-     * 申请状态 1001待审核 1002申请通过 1003申请不通过
-     */
-    private Integer invoiceStatic;
 
 }
