@@ -174,15 +174,18 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
     public void saveForumReply(Integer forumId, Integer replyId, String principalPart, Emp emp){
         ForumReply fr = new ForumReply();
 
-        fr.setForumId(forumId);//主贴id
-        fr.setPrincipalPart(principalPart);//回复内容
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
-        fr.setFinallyDate(dateFormat.format(new Date()));//回复时间
-        fr.setEmpId(emp.getEmpId());//回复用户
-        fr.setReplyId(replyId);//replyId(回复评论id) 如果是-1就是评论 如果是有id就是回复评论
-        fr.setForumReplyStatic(1001);//回复状态成功
+        if(principalPart != null && !principalPart.equals("")){//必须有回复内容才能回复
+            fr.setForumId(forumId);//主贴id
+            fr.setPrincipalPart(principalPart);//回复内容
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+            fr.setFinallyDate(dateFormat.format(new Date()));//回复时间
+            fr.setEmpId(emp.getEmpId());//回复用户
+            fr.setReplyId(replyId);//replyId(回复评论id) 如果是-1就是评论 如果是有id就是回复评论
+            fr.setForumReplyStatic(1001);//回复状态成功
 
-        save(fr);
+            save(fr);
+        }
+
     }
 
 }

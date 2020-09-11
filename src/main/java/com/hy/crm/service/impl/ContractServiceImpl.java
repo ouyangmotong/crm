@@ -53,10 +53,12 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @param belong 属于 1001查询全部 1002查询我的跟单
      * @return
      */
-    public LayUIData queryAllContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong){
+    public LayUIData queryContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong){
         LayUIData layUIData = new LayUIData();
         QueryWrapper qw = new QueryWrapper();
         List<ContractBo> cblist = new ArrayList<>();//存查出来的所有数据
+        Integer count = 0;//数据长度
+        boolean queryNotNull = true;//默认条件查询查到了（在此功能中是）
 
         TimeUtil tu = new TimeUtil();
         if(classify != null && classify != 0){//等于0就是查询所有
@@ -91,15 +93,17 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
             if(type == 1001){//1001按合同名称
                 qw.eq("contract_name",typeValue);
             }else if(type == 1002){//1002按客户名称
-                qw.eq("emp_name",typeValue);
-                List<Emp> elist = empService.list(qw);
-                if(elist.size() > 0){//能查出作者就可以按作者查询
-                    List empIds = new ArrayList<>();
-                    for(Emp e : elist){
-                        empIds.add(e.getEmpId());
+                qw.eq("clientele_name",typeValue);
+                List<Clientele> clist = clienteleService.list(qw);
+                if(clist.size() > 0){//能查出客户就可以按作者查询
+                    List clienteleIds = new ArrayList<>();
+                    for(Clientele c : clist){
+                        clienteleIds.add(c.getClienteleId());
                     }
                     qw = new QueryWrapper<>();//清空查询条件
-                    qw.in("emp_id",empIds);
+                        qw.in("clientele_id",clienteleIds);
+                }else {
+                    queryNotNull = false;//没有查到客户
                 }
             }else if(type == 1003){//1003按商机名称
                 qw.eq("business_name",typeValue);
@@ -111,6 +115,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
                     }
                     qw = new QueryWrapper();
                     qw.in("business_id",bs);
+                }else {
+                    queryNotNull = false;//没有查到商机
                 }
             }else if(type == 1004){//1004按签约日期
                 qw.eq("sign_date",typeValue);
@@ -121,37 +127,40 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
             qw.eq("emp_id",emp.getEmpId());
         }
 
-        IPage iPage= page(new Page<Contract>(page, limit),qw);//分页查询
-        for(Contract c : (List<Contract>)iPage.getRecords()){
-            ContractBo contractBo = new ContractBo();
-            BeanUtils.copyProperties(c , contractBo);//将f类里的值都存进forumBo类中
+        if(queryNotNull){//如果条件查询没查出条件，就不可能查出数据，直接返回空
+            IPage iPage= page(new Page<Contract>(page, limit),qw);//分页查询
+            count = (int)iPage.getTotal();
+            for(Contract c : (List<Contract>)iPage.getRecords()){
+                ContractBo contractBo = new ContractBo();
+                BeanUtils.copyProperties(c , contractBo);//将f类里的值都存进forumBo类中
 
-            //汇款额
-            qw = new QueryWrapper();
-            qw.eq("contract_id",c.getContractId());
-            Integer earningNum = 0;//汇款额
-            List<Earninga> earningaList = earningaService.list(qw);
-            for(Earninga e : earningaList){
-                earningNum += e.getEarningNum();
+                //汇款额
+                qw = new QueryWrapper();
+                qw.eq("contract_id",c.getContractId());
+                Integer earningNum = 0;//汇款额
+                List<Earninga> earningaList = earningaService.list(qw);
+                for(Earninga e : earningaList){
+                    earningNum += e.getEarningNum();
+                }
+                contractBo.setEarningNum(earningNum);
+
+                //开票额
+                qw = new QueryWrapper();
+                qw.eq("contract_id",c.getContractId());
+                Integer address = 0;//开票额
+                List<Invoice> invoiceList = iInvoiceService.list(qw);
+                for(Invoice i : invoiceList){
+                    address += i.getContractSum();
+                }
+                contractBo.setAddress(address);
+
+                cblist.add(contractBo);
             }
-            contractBo.setEarningNum(earningNum);
-
-            //开票额
-            qw = new QueryWrapper();
-            qw.eq("contract_id",c.getContractId());
-            Integer address = 0;//开票额
-            List<Invoice> invoiceList = iInvoiceService.list(qw);
-            for(Invoice i : invoiceList){
-                address += i.getContractSum();
-            }
-            contractBo.setAddress(address);
-
-            cblist.add(contractBo);
         }
 
         layUIData.setCode(0);
         layUIData.setMsg("查询成功");
-        layUIData.setCount((int)iPage.getTotal());
+        layUIData.setCount(count);
         layUIData.setData(cblist);
         return layUIData;
     }

@@ -33,19 +33,13 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            if(data.field.type == null || data.field.type == '' || data.field.type == undefined){
-                table.reload('demo', {//将id为demo的表格进行重载
-                    url: '../crm/documentary/queryMyDocumentary.do'
-                });
-            }else{
-                table.reload('demo', {//将id为demo的表格进行重载
-                    url: '../crm/documentary/queryMyDocumentary.do'
-                    , where: {
-                        type:data.field.type
-                        ,typeName:data.field.typeName
-                    } //设定异步数据接口的额外参数
-                });
-            }
+            table.reload('demo', {//将id为demo的表格进行重载
+                url: '../crm/documentary/queryMyDocumentary.do'
+                , where: {
+                    type:data.field.type
+                    ,typeName:data.field.typeName
+                } //设定异步数据接口的额外参数
+            });
             return false;//阻止表格跳转
         });
 

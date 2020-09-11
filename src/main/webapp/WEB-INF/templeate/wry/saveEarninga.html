@@ -26,10 +26,12 @@
             </div>
             <hr/>
             <div class="layui-form-item" style="padding: 2% 1% 1% 1%;">
-                <form class="layui-form" action="/crm/earninga/saveEarninga.do">
-                    <div style="float: left;padding-left:10px;">
-                        <label class="layui-form-label">合同名称：</label>
-                        <span th:text="${contract.contractName}"/>
+                <form class="layui-form" action="../earninga/saveEarninga.do">
+                    <div>
+                        <div style="float: left;padding-left:10px;">
+                            <label class="layui-form-label">合同名称：</label>
+                            <span th:text="${contract.contractName}"/>
+                        </div>
                     </div>
                     <div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">

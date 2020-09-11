@@ -17,8 +17,8 @@ import java.util.List;
  * @since 2020-08-28
  */
 public interface IContractService extends IService<Contract> {
-    //根据条件查询所有合同
-    public LayUIData queryAllContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong);
+    //根据条件查询合同
+    public LayUIData queryContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong);
 
     //新增合同前查询可新增的商机
     public List<Business> queryBusinessContract();

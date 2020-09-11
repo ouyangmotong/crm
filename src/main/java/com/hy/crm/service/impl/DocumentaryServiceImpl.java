@@ -126,14 +126,16 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
      * @param businessStatic 跟单商机表跟单状态
      */
     public void saveDocumentary(Documentary documentary,Integer businessStatic){
-        save(documentary);//插入跟单信息
+        if(documentary.getDocumentaryId() != null && documentary.getDocumentaryData() != null){//跟单日期和跟单内容不能为空
+            save(documentary);//插入跟单信息
 
-        //修改商机表中的跟单状态
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("business_id",documentary.getBusinessId());
-        Business business = businessService.getOne(qw);
-        business.setDocumentaryId(businessStatic);
-        businessService.updateById(business);
+            //修改商机表中的跟单状态
+            QueryWrapper qw = new QueryWrapper();
+            qw.eq("business_id",documentary.getBusinessId());
+            Business business = businessService.getOne(qw);
+            business.setDocumentaryId(businessStatic);
+            businessService.updateById(business);
+        }
     }
 
     /**
@@ -146,18 +148,20 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
     public void saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic,Emp emp){
         QueryWrapper qw = new QueryWrapper();
 
-        //修改商机表中的跟单状态
-        Business business = businessService.getById(businessId);
-        business.setDocumentaryId(businessStatic);
-        businessService.updateById(business);
+        if (documentary.getDocumentaryData() != null && documentary.getDocumentaryDate() != null){//验证日期和详细内容不等于空
+            //修改商机表中的跟单状态
+            Business business = businessService.getById(businessId);
+            business.setDocumentaryId(businessStatic);
+            businessService.updateById(business);
 
-        documentary.setBusinessId(business.getBusinessId());
-        documentary.setBusinessName(business.getBusinessName());
+            documentary.setBusinessId(business.getBusinessId());//商机信息
+            documentary.setBusinessName(business.getBusinessName());
 
-        documentary.setEmpId(emp.getEmpId());
-        documentary.setEmpName(emp.getEmpName());
+            documentary.setEmpId(emp.getEmpId());//录入人|当前用户
+            documentary.setEmpName(emp.getEmpName());
 
-        save(documentary);//插入跟单信息
+            save(documentary);//插入跟单信息
+        }
     }
 
 }

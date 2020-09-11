@@ -3,13 +3,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>收入</title>
+    <title>申请</title>
     <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
 
 </head>
 <body>
 <div>
-    <div style="width: 60%;margin: 0 auto">
+    <div style="width: 950px;margin: 0 auto">
         <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
             <div style="float: left;padding-left:10px;">
                 <span style="font-size: 25px;">&nbsp;&nbsp;开票申请单</span>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="layui-form-item" style="padding: 2% 1% 1% 1%;">
-                <form class="layui-form" action="/crm/apply-invoice/saveApplyInvoice.do" method="post">
+                <form class="layui-form" action="../apply-invoice/saveApplyInvoice.do" method="post">
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">主题：</label>
                         <div class="layui-input-inline">
@@ -36,16 +36,16 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">申请人姓名：</label>
-                                <div class="layui-input-inline">
-                                    <span th:text="${emp.empName}"/>
+                                <div class="layui-input-inline" style="padding-top: 6%;">
+                                    [[${emp.empName}]]
                                 </div>
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">申请人部门：</label>
-                                <div class="layui-input-inline">
-                                    <span th:text="${dept.deptName}"/>
+                                <div class="layui-input-inline" style="padding-top: 6%;">
+                                    [[${dept.deptName}]]
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <label class="layui-form-label">开票种类：</label>
                             <div class="layui-input-inline">
-                                <select name="invoiceClassifyid" lay-verify="required" lay-search="">
+                                <select class="layui-input" name="invoiceClassifyid" lay-verify="required" lay-search="">
                                     <option value="1001">普通纸质发票</option>
                                     <option value="1002">普通电子发票</option>
                                     <option value="1003">增值税专用纸质发票</option>

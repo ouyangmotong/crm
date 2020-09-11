@@ -10,7 +10,7 @@
 <body>
 <div>
     <div style="width: 60%;margin: 0 auto">
-        <form class="layui-form" action="/crm/contract/updateContract.do">
+        <form class="layui-form" action="../contract/updateContract.do">
             <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
                 <div style="float: left;padding-left:10px;">
                     <img src="/img/main.png">
@@ -22,6 +22,8 @@
                     </div>
                 </div>
                 <div style="float: right;">
+                    <div id="test5"></div><!-- 优先级 -->
+                    <input type="hidden" id="priorityId" name="priorityId" />
                     <div class="layui-form-item layui-inline">
                         <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
                             <i class="layui-icon layui-icon-left"></i>返回
@@ -40,13 +42,13 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">合同名称：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="contractName" th:value="${contract.contractName}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required" readonly= "true" id="contractName" name="contractName" th:value="${contract.contractName}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">合同金额：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="contractSum" th:value="${contract.contractSum}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|number" readonly= "true" id="contractSum" name="contractSum" th:value="${contract.contractSum}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                 </div>
@@ -54,13 +56,13 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">签约日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="signDate" th:value="${contract.signDate}" class="layui-input" id="test1" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|date" readonly= "true" id="signDate" name="signDate" th:value="${contract.signDate}" class="layui-input" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">生效日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="validDate" th:value="${contract.validDate}" class="layui-input" id="test1" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|date" readonly= "true" id="validDate" name="validDate" th:value="${contract.validDate}" class="layui-input" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                 </div>
@@ -68,13 +70,13 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">服务器至：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="validityDate" th:value="${contract.validityDate}" class="layui-input" id="test1" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|date" readonly= "true" id="validityDate" name="validityDate" th:value="${contract.validityDate}" class="layui-input" placeholder="yyyy-MM-dd" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">对方联系人：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="contacts" th:value="${contract.contacts}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required" readonly= "true" id="contacts" name="contacts" th:value="${contract.contacts}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                 </div>
@@ -82,13 +84,13 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">固定电话：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="telephone" th:value="${contract.telephone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required" readonly= "true" id="telephone" name="telephone" th:value="${contract.telephone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">移动电话：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="phone" th:value="${contract.phone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|phone" readonly= "true" id="phone" name="phone" th:value="${contract.phone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                 </div>
@@ -96,28 +98,37 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">邮件/QQ：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="email" th:value="${contract.email}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required|email" readonly= "true" id="email" name="email" th:value="${contract.email}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;background-color:#ebebe4;">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">主要技术条款</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" name="technicalClause" th:value="${contract.technicalClause}" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" lay-verify="required" readonly= "true" id="technicalClause" name="technicalClause" class="layui-textarea" style="background-color:#ebebe4;">[[${contract.technicalClause}]]</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">主要商务条款</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" name="commerceClause" th:value="${contract.commerceClause}" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" lay-verify="required" readonly= "true" id="commerceClause" name="commerceClause" class="layui-textarea" style="background-color:#ebebe4;">[[${contract.commerceClause}]]</textarea>
                     </div>
                 </div>
                 <div>
-                    附件
+                    <br/>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>附件</legend>
+                    </fieldset>
+                    <div class="layui-upload">
+                        <input type="hidden" name="file" id="file" />
+                        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+                        <button type="button" class="layui-btn" id="test9">开始上传</button>
+                    </div>
                 </div>
                 <div class="layui-form-item layui-form-text" style="text-align:center;">
                     <input type="hidden" th:name="contractId" th:value="${contract.contractId}">
-                    <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">保存</button>
+                    <input type="button" id="button1" style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" onclick="unlock()" value="编辑">
+                    <button id="button2" style="width: 85px;height: 35px;display: none;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">保存</button>
                 </div>
             </div>
         </form>
@@ -127,13 +138,51 @@
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../../../layui/layui.js"></script>
 <script>
-    layui.use(['form','laydate'], function(){
+    layui.use(['form','laydate','upload','jquery','rate'], function(){
         var form = layui.form;
         var laydate = layui.laydate;
+        var upload = layui.upload;
+        var $ = layui.$;
+        var rate = layui.rate;
 
         //常规用法
         laydate.render({
             elem: '#test1'
+        });
+
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#test8'
+            ,url: '../contract/fileUpload.do' //改成您自己的上传接口
+            ,auto: false
+            ,accept: 'file' //普通文件
+            //,multiple: true
+            ,bindAction: '#test9'
+            ,done: function(res){
+                layer.msg('上传成功');
+                //图片的名字
+                $("#file").val(res.data);
+                console.log(res)
+            },error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    upload.render();
+                });
+            }
+        });
+
+        //优先级
+        rate.render({
+            elem: '#test5'
+            ,text: true
+            ,length: 3
+            ,value: 1
+            ,theme: '#1E9FFF'
+            ,choose: function(value){
+                $("#priorityId").val(value);
+            }
         });
 
     });
@@ -145,6 +194,57 @@
 
     function refresh(){//刷新
         location.reload();
+    }
+
+    //编辑
+    function unlock() {
+        document.getElementById("button1").style.display = "none";
+        document.getElementById("button2").style.display = null;
+
+        //合同名称
+        document.getElementById("contractName").readOnly = false;
+        document.getElementById("contractName").style.backgroundColor="#ffffff";
+
+        //合同金额
+        document.getElementById("contractSum").readOnly = false;
+        document.getElementById("contractSum").style.backgroundColor="#ffffff";
+
+        //签约日期
+        document.getElementById("signDate").readOnly = false;
+        document.getElementById("signDate").style.backgroundColor="#ffffff";
+
+        //生效日期
+        document.getElementById("validDate").readOnly = false;
+        document.getElementById("validDate").style.backgroundColor="#ffffff";
+
+        //服务器至
+        document.getElementById("validityDate").readOnly = false;
+        document.getElementById("validityDate").style.backgroundColor="#ffffff";
+
+        //对方联系人
+        document.getElementById("contacts").readOnly = false;
+        document.getElementById("contacts").style.backgroundColor="#ffffff";
+
+        //固定电话
+        document.getElementById("telephone").readOnly = false;
+        document.getElementById("telephone").style.backgroundColor="#ffffff";
+
+        //移动电话
+        document.getElementById("phone").readOnly = false;
+        document.getElementById("phone").style.backgroundColor="#ffffff";
+
+        //邮件/QQ
+        document.getElementById("email").readOnly = false;
+        document.getElementById("email").style.backgroundColor="#ffffff";
+
+        //主要技术条款
+        document.getElementById("technicalClause").readOnly = false;
+        document.getElementById("technicalClause").style.backgroundColor="#ffffff";
+
+        //主要商务条款
+        document.getElementById("commerceClause").readOnly = false;
+        document.getElementById("commerceClause").style.backgroundColor="#ffffff";
+
     }
 
 </script>

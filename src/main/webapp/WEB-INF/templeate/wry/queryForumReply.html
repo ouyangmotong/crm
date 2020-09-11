@@ -82,9 +82,9 @@
                                     <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-primary" th:onclick="reply([[${forumReplyBo.forumReplyId}]])" lay-submit lay-filter="*">回复</button>
                                 </div>
                                 <div style="display: none;" th:id="'oDiv' + ${forumReplyBo.forumReplyId}">
-                                    <form class="layui-form" action="/crm/forum-reply/saveForumReply.do">
+                                    <form class="layui-form" action="../forum-reply/saveForumReply.do">
                                         <div class="layui-form-item layui-inline">
-                                            <input type="text" th:name="principalPart" placeholder="回复内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                            <input type="text" lay-verify="required" th:name="principalPart" placeholder="回复内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                                         </div>
                                         <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
                                         <input type="hidden" th:name="replyId" th:value="${forumReplyBo.forumReplyId}">
@@ -104,7 +104,7 @@
         </div>
         <div style="text-align:center;">
             <hr/>
-            <form class="layui-form" action="/crm/forum-reply/saveForumReply.do">
+            <form class="layui-form" action="../forum-reply/saveForumReply.do">
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">发表回复</label>
                     <div class="layui-input-block">

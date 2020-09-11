@@ -10,7 +10,7 @@
 <body>
 <div>
     <div style="width: 60%;margin: 0 auto">
-        <form class="layui-form" action="/crm/documentary/saveNewDocumentary.do">
+        <form class="layui-form" action="../documentary/saveNewDocumentary.do">
             <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
                 <div style="float: left;padding-left:10px;">
                     <img src="/img/main.png">
@@ -43,7 +43,7 @@
                         <div class="layui-form">
                             <label class="layui-form-label">验证日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" th:name="documentaryDate" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+                                <input type="text" lay-verify="required|date" th:name="documentaryDate" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">详细内容</label>
                     <div class="layui-input-block">
-                        <textarea name="desc" placeholder="请输入内容" th:name="documentaryData" class="layui-textarea"></textarea>
+                        <textarea lay-verify="required" name="desc" placeholder="请输入内容" th:name="documentaryData" class="layui-textarea"></textarea>
                     </div>
                 </div>
                 <!--<div>

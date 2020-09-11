@@ -18,7 +18,7 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            , url: '../crm/contract/queryAllContract.do?classify=0' //数据接口
+            , url: '../crm/contract/queryMyContract.do?classify=0' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
                 {
@@ -46,9 +46,9 @@
         //监听提交
         form.on('submit(formDemo)', function(data){
             table.reload('demo', {//将id为demo的表格进行重载
-                url: '../crm/contract/queryAllContract.do'
+                url: '../crm/contract/queryMyContract.do'
                 , where: {
-                    "classify": data.field.classify
+                    "classify": data.field.classify//时间范围
                     ,"type": data.field.type//这里type引不引都可以,type为下拉框value
                     , "typeValue": data.field.typeValue//content为文本框值
                     , "classify": data.field.classify//content为文本框值
@@ -61,7 +61,7 @@
             if(classify != null){
                 document.getElementById("classify").value = classify;
                 table.reload('demo', {//将id为demo的表格进行重载
-                    url: '../crm/contract/queryAllContract.do?classify='+classify
+                    url: '../crm/contract/queryMyContract.do?classify='+classify
                 });
             }
         }
@@ -91,7 +91,7 @@
     <div style="float: left;width: 19%">
         <img src="../img/main.png">
         <span style="font-size: 20px;">
-            &nbsp;&nbsp;全部合同
+            &nbsp;&nbsp;我的合同
         </span>
         <div style="width: 95%;height: 300px;" class="exp">
             <!--分类-->

@@ -8,16 +8,23 @@ import com.hy.crm.entity.Emp;
 import com.hy.crm.service.IBusinessService;
 import com.hy.crm.service.IClienteleService;
 import com.hy.crm.service.IContractService;
+import com.hy.crm.util.ImgUtils;
 import com.hy.crm.util.LayUIData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -85,7 +92,7 @@ public class ContractController {
         Emp emp = new Emp();
         //emp = (Emp) session.getAttribute("emp");
         emp.setEmpId(1001);
-        return contractService.queryAllContract(page,limit,emp,classify,type,typeValue,1001);//1001查询全部 1002查询我的跟单
+        return contractService.queryContract(page,limit,emp,classify,type,typeValue,1001);//1001查询全部 1002查询我的跟单
     }
 
     /**
@@ -104,7 +111,7 @@ public class ContractController {
         Emp emp = new Emp();
         //emp = (Emp) session.getAttribute("emp");
         emp.setEmpId(1001);
-        return contractService.queryAllContract(page,limit,emp,classify,type,typeValue,1002);//1001查询全部 1002查询我的跟单
+        return contractService.queryContract(page,limit,emp,classify,type,typeValue,1002);//1001查询全部 1002查询我的跟单
     }
 
     /**
@@ -185,9 +192,47 @@ public class ContractController {
         contract.setEmpId(c.getEmpId());//关联人员
         contract.setContractStatic(c.getContractStatic());//状态(1001完成,1002撤除,1003搁置)
 
-        contractService.save(contract);
+        contractService.updateById(contract);
 
-        return "";
+        return "redirect:../../wry/queryContract.html";
+    }
+
+    /**
+     * 文件上传
+     * @param pictureFile
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/fileUpload.do")
+    @ResponseBody
+    public ImgUtils fileUpload(@RequestParam("file") MultipartFile pictureFile, HttpServletRequest request) throws IOException {
+        System.out.println("进fileupload----");
+        // 图片上传设置图片名称，不能重复，可以使用uuid
+        String picName = UUID.randomUUID().toString();
+        // 获取文件名
+        String oriName = pictureFile.getOriginalFilename();
+        // 获取图片后缀
+        String extName = oriName.substring(oriName.lastIndexOf("."));
+
+        String webpath = request.getServletContext().getRealPath("/");
+        webpath = webpath.substring(0, webpath.lastIndexOf("\\"));
+        webpath = webpath.substring(0, webpath.lastIndexOf("\\"));
+        File rootFile = new File(webpath);
+        File uploadFile = new File(rootFile, "upload");
+        if (!uploadFile.exists()) {
+            uploadFile.mkdir();
+        }
+        System.out.println("开始上传");
+        // 开始上传
+        pictureFile.transferTo(new File(webpath + File.separator + "upload" + File.separator + picName + extName));
+        String imgName=File.separator + "upload" + File.separator + picName + extName;
+        System.out.println("上传成功");
+        ImgUtils imgUtils=new ImgUtils();
+        imgUtils.setCode(0);
+        imgUtils.setMsg("文件上传成功");
+        imgUtils.setData(imgName);
+        return imgUtils;
     }
 
 }
