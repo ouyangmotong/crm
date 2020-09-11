@@ -47,6 +47,7 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
      * @param emp 当前用户
      * @return
      */
+    @Override
     public LayUIData queryDocumentary(Integer page, Integer limit, Integer type, String typeValue,Integer belong,Emp emp){
         LayUIData layUIData = new LayUIData();
         QueryWrapper queryWrapper = new QueryWrapper<>();
@@ -89,6 +90,7 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
      * @param businessId 商机id
      * @return
      */
+    @Override
     public List<DocumentaryBo> queryBusinessById(String businessId){
         List<DocumentaryBo> dblist = new ArrayList<>();//储存所有跟单信息
 
@@ -125,6 +127,7 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
      * @param documentary 跟单信息
      * @param businessStatic 跟单商机表跟单状态
      */
+    @Override
     public void saveDocumentary(Documentary documentary,Integer businessStatic){
         if(documentary.getDocumentaryId() != null && documentary.getDocumentaryData() != null){//跟单日期和跟单内容不能为空
             save(documentary);//插入跟单信息
@@ -145,6 +148,7 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
      * @param businessStatic 商机状态
      * @param emp 当前用户
      */
+    @Override
     public void saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic,Emp emp){
         QueryWrapper qw = new QueryWrapper();
 

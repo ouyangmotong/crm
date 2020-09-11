@@ -52,6 +52,7 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
      * @param typeValue 条件内容
      * @return
      */
+    @Override
     public LayUIData queryForum(Integer page, Integer limit, Integer type, String typeValue){
         LayUIData layUIData = new LayUIData();
         QueryWrapper queryWrapper = new QueryWrapper<>();
@@ -164,6 +165,7 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
      * @param forum
      * @param emp
      */
+    @Override
     public void saveForum(Forum forum,Emp emp){
         if(forum.getForumDate() != null && forum.getHeadline() != null){//主题，内容不能为空
             forum.setEmpId(emp.getEmpId());//发布人

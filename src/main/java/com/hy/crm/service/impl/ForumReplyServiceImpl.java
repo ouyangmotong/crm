@@ -83,6 +83,7 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
      * @param forumId
      * @return
      */
+    @Override
     public ForumBo queryByIdForumReply2(Integer forumId){
         QueryWrapper qw = new QueryWrapper<>();
 
@@ -123,6 +124,7 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
      * @param frlist
      * @return
      */
+    @Override
     public List<ForumReplyBo> queryForumReplyBos(List<ForumReply> frlist){
         List<ForumReplyBo> list=new ArrayList<>();
         QueryWrapper qw = new QueryWrapper<>();
@@ -171,6 +173,7 @@ public class ForumReplyServiceImpl extends ServiceImpl<ForumReplyMapper, ForumRe
      * @param principalPart 回复内容
      * @param emp 当前用户
      */
+    @Override
     public void saveForumReply(Integer forumId, Integer replyId, String principalPart, Emp emp){
         ForumReply fr = new ForumReply();
 

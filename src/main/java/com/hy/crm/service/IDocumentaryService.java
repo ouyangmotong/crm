@@ -19,15 +19,15 @@ import java.util.List;
 public interface IDocumentaryService extends IService<Documentary> {
 
     //根据条件分页查询所有|我的跟单
-    public LayUIData queryDocumentary(Integer page, Integer limit, Integer type, String typeValue, Integer belong, Emp emp);
+    LayUIData queryDocumentary(Integer page, Integer limit, Integer type, String typeValue, Integer belong, Emp emp);
 
     //根据商机id查询跟单信息
-    public List<DocumentaryBo> queryBusinessById(String businessId);
+    List<DocumentaryBo> queryBusinessById(String businessId);
 
     //继续跟单
-    public void saveDocumentary(Documentary documentary,Integer businessStatic);
+    void saveDocumentary(Documentary documentary,Integer businessStatic);
 
     //新增跟单
-    public void saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic,Emp emp);
+    void saveNewDocumentary(Documentary documentary,Integer businessId,Integer businessStatic,Emp emp);
 
 }

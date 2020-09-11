@@ -53,6 +53,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @param belong 属于 1001查询全部 1002查询我的跟单
      * @return
      */
+    @Override
     public LayUIData queryContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong){
         LayUIData layUIData = new LayUIData();
         QueryWrapper qw = new QueryWrapper();
@@ -169,6 +170,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * 新增合同前查询可新增的商机
      * @return
      */
+    @Override
     public List<Business> queryBusinessContract(){
         List<Business> blist = new ArrayList<>();//存跟单状态为完成状态并且没有签过合同所有商机
         QueryWrapper qw = new QueryWrapper();
@@ -189,6 +191,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @param businessId
      * @param emp
      */
+    @Override
     public void saveNewContract(Contract contract,Integer businessId,Emp emp){
         Business business = businessService.getById(businessId);
         contract.setBusinessId(businessId);

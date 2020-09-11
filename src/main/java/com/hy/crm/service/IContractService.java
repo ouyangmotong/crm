@@ -18,11 +18,11 @@ import java.util.List;
  */
 public interface IContractService extends IService<Contract> {
     //根据条件查询合同
-    public LayUIData queryContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong);
+    LayUIData queryContract(Integer page, Integer limit,Emp emp,Integer classify, Integer type, String typeValue,Integer belong);
 
     //新增合同前查询可新增的商机
-    public List<Business> queryBusinessContract();
+    List<Business> queryBusinessContract();
 
     //添加合同
-    public void saveNewContract(Contract contract,Integer businessId,Emp emp);
+    void saveNewContract(Contract contract,Integer businessId,Emp emp);
 }

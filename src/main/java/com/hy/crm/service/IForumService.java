@@ -14,6 +14,6 @@ import com.hy.crm.util.LayUIData;
  * @since 2020-08-28
  */
 public interface IForumService extends IService<Forum> {
-    public LayUIData queryForum(Integer page, Integer limit, Integer dept, String name);//按条件分页查询所有帖子
-    public void saveForum(Forum forum, Emp emp);
+    LayUIData queryForum(Integer page, Integer limit, Integer dept, String name);//按条件分页查询所有帖子
+    void saveForum(Forum forum, Emp emp);
 }
