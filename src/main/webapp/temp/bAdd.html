@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商机新增页面</title>
+    <link rel="stylesheet"  href="../fontawesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+        .wrapper{
+            width:100%;
+            height:100vh;
+        }
+        .item{
+            width:100%;
+            line-height: 75px;
+            margin-left: 20px;
+        }
+        .item .layui-inline{
+
+        }
+        item .layui-inline input[type="file"]{
+            width:250px;
+            height:40px;
+            display: block;
+        }
+        .item .layui-inline input[type="text"]{
+            width:250px;
+            height:40px;
+            vertical-align: middle;
+        }
+        .item .layui-inline input[type="radio"]{
+            width:20px;
+            height:20px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .item .layui-inline input[type="date"]{
+            width:250px;
+            height:40px;
+        }
+        textarea{
+            vertical-align: middle;
+            width:500px;
+            height:80px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            resize: none;
+        }
+        .line{
+            font-size: 19px;
+            font-weight: 500;
+            color:#ccc;
+            position: relative;
+            margin-left: 20px;
+        }
+        .line:after{
+            content: '';
+            width:100%;
+            height:1px;
+            position: relative;
+            background: #ccc;
+            display: block;
+        }
+        .line:after{
+            top:-10px;
+            right: -85px;
+        }
+        .item .layui-card-header{
+            color:#fff;
+            font-size: 18px;
+            background-color:#0C0C0C;
+        }
+        .item .layui-card{
+            margin-right: 20px;
+            height:auto;
+            border: 1px solid #ccc;
+        }
+        .select{
+            display:inline-block  !important;
+            width:250px;
+            height:40px;
+        }
+        .footer{
+            margin-top: 20px;
+        }
+        .layui-form-select{
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="form" class="layui-form">
+        <div class="item">
+            <div class="layui-inline">
+                <label>商机名称</label>
+                <select class="select clname" name="clienteleId"></select>
+            </div>
+            <div class="layui-inline">
+                <label >优先级:</label>
+                    低<input type="radio" name="priorityId" value="1003">
+                    中<input type="radio" name="priorityId" value="1002">
+                    高<input type="radio" name="priorityId" value="1001">
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-block">
+                    <button class="layui-btn btn-back"><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="fa fa-repeat" aria-hidden="true"></i>刷新</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="line">客户信息</div>
+
+        <div class="item">
+            <div class="layui-inline">
+                <label>客户名称</label>
+                <input type="text" name="clienteleName" required lay-verify="required" placeholder="请输入">
+            </div>
+            <div class="layui-inline">
+                <label>所属行业</label>
+                <select class="select industy" name="industryName"></select>
+            </div>
+        </div>
+            <div class="item">
+                <div class="layui-inline">
+                    <label>所在城市</label>
+                    <input type="text" name="city" required lay-verify="required" placeholder="请输入">
+                </div>
+
+                <div class="layui-inline">
+                    <label>详细地址</label>
+                    <input type="text" name="address" required lay-verify="required" placeholder="请输入">
+                </div>
+
+                </div>
+                <div class="line">商机信息</div>
+
+                <div class="item">
+                    <div class="layui-inline">
+                        <label>商机名称</label>
+                        <input type="text" name="businessName" required lay-verify="required" id="businessName" placeholder="请输入" >
+                    </div>
+                    <div class="layui-inline">
+                        <label>客户来源</label>
+                        <select class="select source" name="clienteleSource"></select>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label>预计成交金额</label>
+                        <input type="text" name="estimatedAmount" required  placeholder="请输入">
+                    </div>
+
+
+                </div>
+                        <div class="item">
+                            <div class="layui-inline">
+                                <label>预计结单日期</label>
+                                <input type="date" name="estimatedDate" required  placeholder="请输入" lay-verify="required">
+                            </div>
+
+                            <div class="layui-inline">
+                                <label>联系人</label>
+                                <input type="text" name="contacts" required  placeholder="请输入">
+                            </div>
+
+                            <div class="layui-inline">
+                                <label>部门</label>
+                                <input type="text" name="dept" required  placeholder="请输入">
+                            </div>
+
+                        </div>
+
+
+        <div class="item">
+            <div class="layui-inline">
+                <label>职务</label>
+                <input type="text" name="post" required  placeholder="请输入">
+            </div>
+
+
+            <div class="layui-inline">
+                <label>固定电话</label>
+                <input type="text" name="telephone" required  placeholder="请输入">
+            </div>
+
+            <div class="layui-inline">
+                <label>移动电话</label>
+                <input type="text" name="phone" required  placeholder="请输入">
+            </div>
+
+
+        </div>
+        <div class="item">
+            <div class="layui-inline">
+                <label>邮件/QQ</label>
+                <input type="text" name="email" required  placeholder="请输入">
+            </div>
+
+            <div class="layui-inline">
+                <label>主要业务需求</label>
+                <textarea name="principalPart"></textarea>
+            </div>
+
+            <div class="layui-inline">
+                <input type="hidden" name="businessFile"  id="hidden">
+                <label>相关附件</label>
+                <input type="file" name="file" required   placeholder="请输入" id="test1">
+            </div>
+
+        </div>
+            <div class="item">
+
+                <div class="layui-inline">
+                    <label>商机所属部门</label>
+                    <select class="select dept" name="deptId"></select>
+                </div>
+
+                <div class="layui-inline">
+                    <label>负责人</label>
+                    <input type="text" name="date" required  placeholder="请输入" id="person">
+                </div>
+                <div class="layui-inline">
+                    <label>商机参与人</label>
+                    <input type="text" name="participator" required  placeholder="请输入">
+                </div>
+                <div class="layui-inline">
+                    <label>商机关注人</label>
+                    <input type="text" name="date" required  placeholder="请输入">
+                </div>
+
+            </div>
+        <div class="line">处理流程日志</div>
+        <div class="item footer">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">处理过程</div>
+                    <div class="layui-card-body" name="businessLog">
+                     <ul></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">父事务</div>
+                    <div class="layui-card-body">
+                        内容
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">子事务</div>
+                    <div class="layui-card-body">
+                        内容
+                    </div>
+                </div>
+            </div>
+        </div>
+           <div class="item">
+               <div class="layui-inline">
+               <button type="button" lay-submit class="layui-btn layui-btn-primary"  lay-filter="aduit">提交审核</button>
+               <button type="button" class="layui-btn">登记完成转跟单</button>
+               <button type="button" lay-submit class="layui-btn layui-btn-normal" lay-filter="formDemo">保存</button>
+               <button type="button" class="layui-btn layui-btn-warm">取消</button>
+               </div>
+           </div>
+
+        </form>
+    </div>
+
+<script src="../layui/layui.js"></script>
+
+<script>
+
+    layui.use(['form','layer','jquery','upload'],function(){
+        var form=layui.form;
+        var layer=layui.layer;
+        var $=layui.jquery;
+        var upload=layui.upload;
+
+        $(function(){
+            $.ajax({
+                url:"/crm/crm/clientele/selecAllClientName.do",
+                type:"get",
+                dataType:"json",
+                contentType:"application/json",
+                success:function(data){
+                    var html=""
+                    for(let i=0;i<data.length;i++){
+                        if(i==0)html+="<option value=''>请选择</option>";
+                        html+="<option value='"+data[i].clienteleId+"'>"+data[i].clienteleName+"</option>"
+
+                    }
+                    $(".clname").append(html);
+                    form.render();
+                }
+
+            })
+
+            $.getJSON("../json/clientSource.json",function(json) {
+                var res = json;
+                $.each(res.data, function (i, ele) {
+                    var option = new Option();
+                    if (i == 0) {
+                        option.value = ele.value;
+                        option.text = ele.clazz;
+                    } else {
+                        option.value = ele.value;
+                        option.text = ele.clazz;
+                    }
+
+                    $(".source").append(option);
+                })
+
+            });
+            //加载行业
+                $.getJSON("../json/industry.json",function(json){
+                    var res=json;
+                    $.each(res.data,function(i,ele){
+                        var option=new Option();
+                        if(i==0){
+                            option.value=ele.value;
+                            option.text=ele.clazz;
+                        }else {
+                            option.value = ele.value;
+                            option.text = ele.clazz;
+                        }
+
+                        $(".industy").append(option);
+                    })
+                })
+            /**
+             * 所属部门
+             */
+            $.getJSON("../json/dept.json",function(json){
+                var res=json;
+                $.each(res.data,function(i,ele){
+                    var option=new Option();
+                    if(i==0){
+                        option.value=ele.value;
+                        option.text=ele.clazz;
+                    }else{
+                        option.value=ele.value;
+                        option.text=ele.clazz;
+                    }
+                    $(".dept").append(option);
+                })
+                form.render();
+
+            })
+
+
+
+
+        })
+        //返回主页面
+        var flag=false;
+        form.on('submit(formDemo)',function(data){
+            //提交数据
+           /* document.getElementById("form").submit();*/
+            $.ajax({
+                url:"/crm/crm/business/save.do",
+                type:"post",
+                data:data.field,
+                dataType:"json",
+                contentType:"application/json",
+                success:function(data){
+                    if(data.code==200){
+                        layer.alert("添加成功！",{icon:1});
+                        flag=true;
+                    }
+
+                }
+
+            })
+            return false;
+        })
+
+        //加载文件上传组件
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/crm/crm/business/uploadFile.do' //上传接口
+            ,done: function(res){
+                //上传完毕回调
+                if(res.code==200){
+                    document.getElementById("hidden").value=res.data;
+                    layer.alert('上传成功',{icon:1});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+                layer.alert('上传失败！',{icon:5});
+            }
+        });
+
+        //返回主页面
+        $(document).on("click",".btn-back",function(){
+            window.top.location.href="/crm/temp/business.jsp";
+        })
+        //提交审核
+        form.on('submit(aduit)',function(data){
+            if(flag){
+                var content=$("#businessName").val();
+                var value=$("#person").val();
+                var data=new Date().toLocaleDateString();
+                var li=$("<li>已有新的商机正在审核中....,登记时间："+data+"负责人:<a href='#'>"+value+"</a></li>");
+                 $(".layui-card-body:first").children("ul").append(li);
+                 $.ajax({
+                     url:"/crm/crm/business/flow.do",
+                     type:"get",
+                     data:"issuetime="+data+"&issuename="+value+"content="+content,
+                     dataType: "json",
+                     success:function(data){
+                      if(data.code==200){
+                          layer.alert(data.msg,{icon:5});
+                          setTimeout(function(){
+                              var frameIndex = parent.layer.getFrameIndex(window.name);
+                              parent.layer.close(frameIndex);
+                          },1000);
+                      }else{
+                          layer.alert("未知错误！");
+                      }
+
+                     }
+
+                 })
+            }else{
+
+                layer.alert("您还没有保存！",{icon:5});
+            }
+        })
+
+    })
+
+</script>
+
+</body>
+</html>

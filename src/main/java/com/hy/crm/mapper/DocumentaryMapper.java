@@ -1,16 +1,20 @@
 package com.hy.crm.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crm.entity.AssistBusy;
 import com.hy.crm.entity.Documentary;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
- * <p>
- * 商机状态(跟单) Mapper 接口
- * </p>
- *
- * @author Jackson
- * @since 2020-08-28
+ * @author kw
+ * @version 1.0
+ * @description
+ * @date 2020/9/7 15:44 星期一
  */
+@Mapper
 public interface DocumentaryMapper extends BaseMapper<Documentary> {
+
 
 }

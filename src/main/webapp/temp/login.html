@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CRM客户系统管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
     <style>
         *{
             margin:0px;
@@ -107,19 +109,19 @@
 <body>
     <div class="login">
         <div class="tx-div">CRM客户管理系统</div>
-        <form id="form">
+        <form id="form"  class="layui-form" action="">
             <div class="data-input item">
-                <input type="text" name="userName" placeholder="请输入账号/手机/邮箱">
+                <input type="text" name="username" autofocus placeholder="请输入账号/手机/邮箱" lay-verify="userame">
             </div>
             <div class="data-input item">
-                <input type="password" name="password" placeholder="请输入密码">
+                <input type="password" name="password" placeholder="请输入密码" lay-verify="password">
             </div>
             <div class="data-input">
-                <input type="checkbox" name="remeberMe" value="1" id="check">记住我
-                <span>忘记密码?<small>请<a href="/templeate/register.html">注册</a></small></span>
+                <input type="checkbox" name="remeberme" value="1" id="check">记住我
+                <span>忘记密码?<small>请<a href="/crm/temp/register.html">注册</a></small></span>
             </div>
             <div class="data-input-login">
-                <input type="submit" value="登录">
+                <input type="button"  value="登录" class="btn-login"  lay-submit lay-filter="formDemo">
                 <input type="reset" value="重置">
             </div>
         </form>
@@ -128,6 +130,50 @@
             <footer>Copyright&copy;2020 kw</footer>
         </div>
     </div>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['form','layer','jquery'],function(){
+        var form=layui.form,layer=layui.layer,$=layui.jquery;
+        //使用表单模块验证
+        form.verify({
+            username: [/[\S]+/, "必填项不能为空"]
+            ,
+            password: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格']
+
+        })
+        //使用layui的表单模块
+        form.on('submit(formDemo)',function(data){
+
+            $.ajax({
+                url:"/crm/crm/emp/testLogin.do",
+                type:"post",
+                data:{"username":data.field.username,"password":data.field.password,"remeberme":data.field.remeberme},
+                dataType:"json",
+                beforeSend:function(){
+                    var index = layer.msg('正在登录中，请稍候...',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        layer.close(index);
+                    },1000);
+
+                },
+                success:function(data){
+                    if(data.code==200){
+                        var index=layer.msg(data.msg,{icon:1});
+                        setTimeout(function(){
+                            layer.close(index);
+                            window.location.href="/crm/temp/index.html";
+                        },1000);
+                    }else{
+                        layer.alert(data.msg,{icon:5});
+                    }
+
+                }
+            });
+
+        });
+    });
+
+</script>
 
 </body>
 </html>

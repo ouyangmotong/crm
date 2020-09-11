@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>crm客户管理系统注册</title>
-    <link rel="stylesheet" href="/layui/css/layui.css">
-    <script src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../layui/layui.js"></script>
     <style>
         *{
             margin:0;
@@ -29,6 +30,7 @@
             line-height: 79px;
         }
         .register .title h3{
+            font-size: 20px;
             color:#ddd
         }
         .register .line{
@@ -61,16 +63,27 @@
             outline: none;
             border: 1px solid #ccc;
         }
-        .form-item-radio{
-            text-align: left;
-            margin: 20px 0px;
+       .form-item-radio{
+            margin: 15px 0;
+            box-sizing: border-box;
             vertical-align: center;
         }
         .form-item-radio input{
             width:25px;
             height:25px;
-            margin-left: 20px;
+            display: inline-block;
+            margin-left:10px;
+        }
+        .upload{
+            display: inline-block;
             vertical-align: middle;
+        }
+        .upload img{
+            text-align: center;
+            width:40px;
+            height:40px;
+            vertical-align: middle;
+            border-radius: 5px;
         }
 
         .form-item-btn{
@@ -108,8 +121,6 @@
         }
         .form-item-btn input:nth-of-type(3):hover{
             background-color:#ccc;
-
-
         }
         .footer {
             width:100%;
@@ -118,6 +129,16 @@
             font-size: 13px;
             color:#ccc;
         }
+        .layui-form-select{
+            display: none !important;
+        }
+       .form-item select{
+            display: inline-block;
+            width:500px;
+            height:40px;
+            border-radius: 5px;
+
+        }
 
     </style>
 </head>
@@ -125,51 +146,65 @@
     <div class="register">
         <div class="title"><h3>CRM客户管理系统注册信息</h3></div>
         <div class="line"></div>
-        <form id="form">
+        <form class="layui-form" id="form" action="">
         <div class="content">
             <div class="form-item">
                 <label>用户账号:</label>
-                <input type="text" name="username" required placeholder="请输入">
+                <input type="text" name="empName" autofocus required placeholder="请输入" id="empName"  lay-verify="empName">
                 <small>备注：手机、姓名、邮箱</small>
             </div>
             <div class="form-item">
                 <label>用户密码:</label>
-                <input type="password" name="username" required placeholder="请输入">
+                <input type="password" name="empPwd" required placeholder="请输入" id="empPwd" lay-verify="empPwd">
             </div>
-            <div class="form-item-radio">
-                    <label>性别:</label>
-                    <input type="radio" name="sex" value="男" title="男">男
-                    <input type="radio" name="sex" value="女" title="女" checked>女
-            </div>
-            <div class="form-item-radio">
-                <label>角色:</label>
-                <input type="checkbox" name="checkbox" required >管理员
-                <input type="checkbox" name="checkbox" required >普通员工
-            </div>
+                <div class="form-item-radio layui-form-item">
+                    <label class="layui-form-label">性别:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="empSex" value="1" title="男" lay-verify="other">
+                        <input type="radio" name="empSex" value="2" title="女" lay-verify="other">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色:</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" value="管理员"  name="roleName" title="管理员" lay-verify="other">
+                        <input type="checkbox" value="普通员工"  name="roleName" title="普通员工" lay-verify="other" >
+                    </div>
+                </div>
             <div class="form-item">
                 <label>年龄:</label>
-                <input type="text" name="username" required placeholder="请输入">
+                <input type="text" name="empAge" required placeholder="请输入" id="empAge" lay-verify="empAge">
             </div>
             <div class="form-item">
                 <label>电话:</label>
-                <input type="text" name="username" required placeholder="请输入">
+                <input type="text" name="phone" required placeholder="请输入" id="phone" lay-verify="empPhone">
             </div>
             <div class="form-item">
                 <label>生日:</label>
-                <input type="date" name="username" required >
+                <input type="date" name="birthday" required id="brigthday" lay-verify="empBrithday">
             </div>
             <div class="form-item">
                 <label>邮箱:</label>
-                <input type="text" name="username" required placeholder="请输入">
+                <input type="text" name="email" required placeholder="请输入" id="email" lay-verify="empEmail">
+            </div>
+            <div class="form-item img-code">
+                <input type="hidden" name="empImg" class="hidden" id="hidden" lay-verify="empImg">
+                <label>图片:</label>
+                <div class="upload">
+                    <input type="file" name="file" required placeholder="请输入" id="test1">
+                    <img>
+                </div>
             </div>
             <div class="form-item">
-                <label>图片:</label>
-                <input type="file" name="file" required placeholder="请输入">
+                <label>部门:</label>
+                <select name="deptId" id="select">
+                    <option value="">请选择一个部门</option>
+                </select>
             </div>
             <div class="down-line"></div>
             <div class="form-item-btn">
-                <input type="button" class="btn" value="注册">
-                <input type="submit" value="重置">
+                <input type="button" class="btn" value="注册" lay-submit  lay-filter="formDemo">
+                <input type="reset" value="重置">
                 <input type="button" class="btn-exit" value="返回">
             </div>
         </div>
@@ -177,8 +212,121 @@
         <div class="footer">
             <footer>Copyright &copy;2020 kw</footer>
         </div>
-
     </div>
+    <script src="../layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer','upload'],function(){
+        var form=layui.form,layer=layui.layer,$=layui.jquery,upload=layui.upload;
+            //监听提交
+            form.on('submit(formDemo)', function(data){
+           $.ajax({
+               url:"/crm/crm/emp/register.do",
+               type:"post",
+               data:JSON.stringify(data.field),
+               dataType:"json",
+               contentType:"application/json",
+               success:function(data){
+                if(data.code==200){
+                    layer.alert("注册成功",{icon:1});
+
+                }else{
+                    layer.alert("注册失败",{icon:5});
+                }
+
+               }
+           })
+            return false;
+        });
+            //注入部门
+            $(function(){
+                $.getJSON('../json/dept.json',function(json){
+                    var res=json;
+                    $.each(res.data,function(i,ele){
+                        var option=new Option();
+                        if(i==0){
+                            option.value="";
+                            option.text="请选择";
+                        }
+                        option.value=ele.value;
+                        option.text=ele.clazz;
+
+                        $("#select").append(option);
+
+                    })
+                })
+
+            })
+
+        /*表单验证*/
+        form.verify({
+            empName: [/[\S]+/, "必填项不能为空"]
+            ,
+            empPwd: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格']
+            ,
+            other: function (value, item) { //value：表单的值、item：表单的DOM对象
+
+                var verifyName = $(item).attr('name')
+                    , verifyType = $(item).attr('type')
+                    , formElem = $(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
+                    , verifyElem = formElem.find('input[name=' + verifyName + ']')//获取需要校验的元素
+                    , isTrue = verifyElem.is(':checked')//是否命中校验
+                    , focusElem = verifyElem.next().find('i.layui-icon');//焦点元素
+                if (!isTrue || !value) {
+                    //定位焦点
+                    focusElem.css(verifyType == 'radio' ? {"color": "#FF5722"} : {"border-color": "#FF5722"});
+                    //对非输入框设置焦点
+                    focusElem.first().attr("tabIndex", "1").css("outline", "0").blur(function () {
+                        focusElem.css(verifyType == 'radio' ? {"color": ""} : {"border-color": ""});
+                    }).focus();
+                    return '必填项不能为空';
+                }
+
+            },
+            empAge: [/(^$)|^\d+$/, '只能填写数字'],
+            empPhone: [/(^$)|^1\d{10}$/, '请输入正确的手机号']
+            ,
+            empBrithday:[/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
+
+            empEmail: [/^[a-z0-9._%-]+@([a-z0-9-]+\.)+[a-z]{2,4}$|^1[3|4|5|7|8]\d{9}$/, '邮箱格式不对']
+            ,
+
+        });
+        //点击退出注册页面
+        $(".btn-exit").click(function(){
+            window.location.href="/crm/temp/login.html";
+        })
+
+        //加载文件上传模块
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/crm/crm/emp/fileUpload.do' //上传接口
+            ,before:function (obj) {
+                obj.preview(function (index,file,result) {
+                    $("img").attr('src',result)
+                })
+            }
+            ,done: function(res){
+                //上传完毕回调
+                if(res.code==200){
+                    document.getElementById("hidden").value=res.data;
+                    layer.alert('上传成功',{icon:1});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+                layer.alert('上传失败！',{icon:5});
+            }
+        });
+
+
+
+
+
+
+
+    })
+
+</script>
 
 </body>
 </html>

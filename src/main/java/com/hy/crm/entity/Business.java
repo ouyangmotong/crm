@@ -27,17 +27,19 @@ public class Business implements Serializable {
     @TableId(value = "business_id", type = IdType.AUTO)
     private Integer businessId;
 
-    @TableField("business_Name")
+    @TableField(value="business_Name")
     private String businessName;
 
     /**
      * 客户id
      */
+    @TableField(value="clientele_id ")
     private Integer clienteleId;
 
     /**
      * 客户来源id
      */
+    @TableField(value="clientele_source")
     private Integer clienteleSource;
 
     /**
@@ -121,6 +123,7 @@ public class Business implements Serializable {
      */
     @TableField("businessStatic_id")
     private Integer businessstaticId;
+
 
 
 }
