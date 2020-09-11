@@ -3,20 +3,13 @@ package com.hy.crm.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crm.entity.*;
 import com.hy.crm.mapper.*;
 import com.hy.crm.service.IBusinessService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hy.crm.service.IBusinessStaticService;
-import com.hy.crm.service.IDocumentaryService;
-import com.hy.crm.service.IForumService;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import com.sun.org.apache.bcel.internal.generic.VariableLengthInstruction;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +127,7 @@ public class BusinessServiceImpl extends ServiceImpl<BusinessMapper, Business> i
         //查询所有的跟单的日期
         List<Documentary> documentary = findDocumentary(arg.getBusinessId());
         for(Documentary data:documentary){
-            assistBusy.setDocumentarydate(data.getDocumentarydate());
+            assistBusy.setDocumentarydate(data.getDocumentaryDate());
         }
        //拿到负责人
         List<Emp> emp = findEmp(arg.getEmpId());
