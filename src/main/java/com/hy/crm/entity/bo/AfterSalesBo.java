@@ -1,7 +1,5 @@
 package com.hy.crm.entity.bo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,7 +16,6 @@ public class AfterSalesBo implements Serializable {
     /**
      * 售后服务id
      */
-    @TableId(value = "after_salesId", type = IdType.AUTO)
     private Integer afterSalesid;
 
     /**

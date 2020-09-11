@@ -18,27 +18,32 @@
         var myChart = echarts.init(document.getElementById("mainTop"));
 
         var option = {
-            tooltip: {
+            tooltip: {//工具提示
                 trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                formatter: '{a} <br/>{b} : {c}单({d}%)'
             },
             series: [
                 {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
+                    name: '商机状态',//鼠标移上去显示的小标题
+                    type: 'pie',//样式，这个为馅饼样式
+                    radius: '79%',//半径
+                    center: ['50%', '51%'],//第一个具体中心的百分比，第二个距离上面的百分比
                     data: [
-                        {value: 310, name: '已丢单'},
-                        {value: 234, name: '已搁置'},
-                        {value: 135, name: '进行中'},
-                        {value: 1548, name: '已成交'}
+                        {value: 20, name: '已成交',na:'100',
+                            //自定义特殊 tooltip，仅对该数据项有效
+                            tooltip:{formatter:'{@[na]}'},
+                            //自定义特殊itemStyle，仅对该item有效
+                            itemStyle:{}
+                            },
+                        {value: 10, name: '已丢单',na:'10'},
+                        {value: 135, name: '已搁置',na:'10'},
+                        {value: 10, name: '进行中',na:'10'}
                     ],
                     emphasis: {
                         itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            shadowBlur: 10,//阴影模糊,类似于影子
+                            shadowOffsetX: 0,//阴影偏移X
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'//阴影颜色
                         }
                     }
                 }
@@ -269,7 +274,7 @@
                 不同状态的商机预计成交金额
             </span>
             <!--饼图-->
-            <div id="mainTop" style="width: 400px;height:150px;margin-left: 200px;"></div>
+            <div id="mainTop" style="width: 400px;height:175px;margin-left: 200px;"></div>
         </div>
         <br/>
         <div style="width: 50%;height: 300px;" class="exp layui-inline">
