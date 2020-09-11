@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>本季度统计</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+</head>
+<body>
+
+<div class="demoTable">
+    输入部门：
+    <div class="layui-inline">
+        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+</div>
+
+<table class="layui-hide" id="LAY_table_user" lay-filter="user">
+</table>
+
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //方法级渲染
+        table.render({
+            elem: '#LAY_table_user'
+            ,url: '/demo/table/user/'
+            ,cols: [
+                [
+                    {title:'姓名',rowspan:2}
+                    ,{title:'商机数',colspan:2}
+                    ,{title:'成交数',colspan:2}
+                    ,{title:'跟单数',colspan:2}
+                    ,{title:'合同数',colspan:2}
+                ],
+                [
+                {field:'id', title: '本周', width:100, fixed: true}
+                ,{field:'username', title: '上周', width:100}
+                ,{field:'sex', title: '本周', width:100}
+                ,{field:'city', title: '上周', width:100}
+                ,{field:'sign', title: '本周', width:100}
+                ,{field:'experience', title: '上周', width:100}
+                ,{field:'score', title: '本周',width:100}
+                ,{field:'classify', title: '上周',width:100}
+            ]
+            ]
+            ,id: 'testReload'
+            ,page: true
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        key: {
+                            id: demoReload.val()
+                        }
+                    }
+                }, 'data');
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -7,8 +7,47 @@
     <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 
+<script src="../js/echarts.min.js"></script>
 <script src="../layui/layui.all.js"></script>
 <script src="../layui/layui.js"></script>
+<script src="../js/jquery-3.4.1.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    $(function () {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById("mainTop"));
+
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 310, name: '已丢单'},
+                        {value: 234, name: '已搁置'},
+                        {value: 135, name: '进行中'},
+                        {value: 1548, name: '已成交'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    });
+</script>
 
 <script type="text/javascript">
     function baidu(){
@@ -225,7 +264,12 @@
             </div>
             <!--横线-->
             <hr>
-
+            <br/>
+            <span style="font-size: 14px;line-height: 1;color: #C6C6C6;margin-left:300px;">
+                不同状态的商机预计成交金额
+            </span>
+            <!--饼图-->
+            <div id="mainTop" style="width: 400px;height:150px;margin-left: 200px;"></div>
         </div>
         <br/>
         <div style="width: 50%;height: 300px;" class="exp layui-inline">
