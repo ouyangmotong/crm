@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-    <div style="width: 950px;margin: 0 auto">
+    <div style="width: 1100px;margin: 0 auto">
         <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
             <div style="float: left;padding-left:10px;">
                 <span style="font-size: 25px;">&nbsp;&nbsp;开票申请单</span>
@@ -29,14 +29,14 @@
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">主题：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="headline" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                            <input type="text" lay-verify="required" name="headline" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text">
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">申请人姓名：</label>
-                                <div class="layui-input-inline" style="padding-top: 6%;">
+                                <div class="layui-input-inline" style="padding-top:10px;">
                                     [[${emp.empName}]]
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">申请人部门：</label>
-                                <div class="layui-input-inline" style="padding-top: 6%;">
+                                <div class="layui-input-inline" style="padding-top:10px;">
                                     [[${dept.deptName}]]
                                 </div>
                             </div>
@@ -53,20 +53,20 @@
                     <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">主要技术条款：</label>
                         <div class="layui-input-block">
-                            <textarea name="technicalClause" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            <textarea name="technicalClause" lay-verify="required" placeholder="请输入内容" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <label class="layui-form-label">对方单位全称：</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="padding-top:10px;">
                                 <span th:text="${clientele.clienteleName}"/>
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">关联合同：</label>
-                                <div class="layui-input-inline">
+                                <div class="layui-input-inline" style="padding-top:10px;">
                                     <span th:text="${contract.contractName}"/>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">纳税人识别号：</label>
-                                <input type="text" name="taxesNumber" th:value="${clientele.dutyParagraph}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="taxesNumber" lay-verify="required" th:value="${clientele.dutyParagraph}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                     </div>
@@ -95,13 +95,13 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开户行：</label>
-                                <input type="text" name="accountBank" th:value="${clientele.accountBank}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="accountBank" lay-verify="required" th:value="${clientele.accountBank}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开户账号：</label>
-                                <input type="text" name="bankAccount" th:value="${clientele.bankAccount}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="bankAccount" lay-verify="required" th:value="${clientele.bankAccount}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                     </div>
@@ -109,13 +109,13 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开户行地址：</label>
-                                <input type="text" name="bankAddress" th:value="${clientele.bankAddress}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="bankAddress" lay-verify="required" th:value="${clientele.bankAddress}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开户行电话：</label>
-                                <input type="text" name="companyTelephone" th:value="${clientele.companyTelephone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="companyTelephone" lay-verify="required" th:value="${clientele.companyTelephone}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                     </div>
@@ -123,13 +123,13 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开票金额：</label>
-                                <input type="text" name="contractSum" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="contractSum|number" lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">金额大写：</label>
-                                <input type="text" name="amountWords" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="amountWords" lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                     </div>
