@@ -33,7 +33,7 @@
             </div>
                 <div class="content">
                     <a href="#">客户管理</a>
-                    <a href="#">新增用户</a>
+                    <a href="/crm/temp/client.html" target="frame">新增用户</a>
                     <a href="#">查看/编辑用户</a>
                     <a href="#">查看商机列表</a>
                     <a href="#">查看合同列表</a>
@@ -144,9 +144,8 @@
         </div>
         <div class="bodySubject">
             <div class="index-icon-title"><h3>欢迎使用</h3></div>
-            <div class="x-content">
-                <iframe src="" name="frame" id="frame">
-
+            <div class="x-content" id="map">
+                <iframe src="../temp/main.jsp" name="frame" id="frame" style="width:100%; height:100vh;" frameborder="0" scrolling="auto">
 
 
                 </iframe>
@@ -156,6 +155,7 @@
 
     </div>
 <script>
+
     $(function() {
         $(".icho a").on("click",function(){
             $(this).parent().siblings(".content").slideToggle();
@@ -174,6 +174,8 @@
             $(".right").toggleClass("rightTab");
 
         })
+
+
 
 
     })

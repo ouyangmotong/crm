@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-28
  */
 public interface IEmpService extends IService<Emp> {
+    public int insertEmp(Emp emp);
+    public int insertRoleEmp(Integer empid,String roleName);
 
 }

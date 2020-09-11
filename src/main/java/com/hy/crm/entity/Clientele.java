@@ -27,7 +27,9 @@ public class Clientele implements Serializable {
      */
     @TableId(value = "clientele_id", type = IdType.AUTO)
     private Integer clienteleId;
-
+    /**
+     * 客户名称
+     */
     private String clienteleName;
 
     /**

@@ -67,7 +67,7 @@ body{
 .left .item .ctx-item a{
     display: block;
     width:100%;
-    padding-left: 55px;
+    padding-left: 15px;
     line-height: 60px;
     font-size: 16px;
     color: #fff;
@@ -213,14 +213,12 @@ body{
     font-size: 18px;
     line-height: 65px;
 }
-#frame{
-    width:100%;
-    height:auto;
-    border: none;
-}
 .x-content{
     width:97%;
     height: 100vh;
     margin-left: 25px;
     border: 1px solid #ccc;
 }
+
+
+

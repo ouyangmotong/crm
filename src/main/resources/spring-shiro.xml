@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:Context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置验证realm-->
+    <bean id="shiroRealmDemo" class="com.hy.crm.shiro.ShiroRealmDemo">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+    <!--配置安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+      <property name="realm" ref="shiroRealmDemo"></property>
+    </bean>
+
+        <!--配置shiro 中的web过滤器-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"></property>
+        <!--配置没有登录跳转的页面-->
+        <property name="loginUrl" value="/temp/login.html"></property>
+        <!--验证成功跳转的页面-->
+        <property name="successUrl" value="/temp/index.html"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /temp/**  anon
+                /login/**  authc
+                /crm/emp/** anon
+                /crm/clientele/** anon
+            </value>
+        </property>
+
+    </bean>
+
+</beans>

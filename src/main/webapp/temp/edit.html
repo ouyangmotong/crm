@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>查看/编辑客户信息</title>
-    <link rel="stylesheet" href="/fontawesome/css/font-awesome.css"></link>
-    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{|/fontawesome/css/font-awesome.css|}"></link>
+    <link rel="stylesheet" th:href="@{|/layui/css/layui.css|}">
     <style>
         *{
             margin:0px;
@@ -13,9 +13,9 @@
             box-sizing: border-box;
         }
         .client{
-            width:65%;
+            width:75%;
             height:100vh;
-            margin: 0px auto;
+            margin-left:50px;
 
         }
         .client .title{
@@ -47,21 +47,23 @@
 
         }
         .client .title .x-right a:nth-of-type(1){
-            background-color:#ccc;
+            background-color:#1E9FFF;
+        }
+        .client .title .x-right a:nth-of-type(1):hover{
+            background-color:#007DDB;
         }
         .client .title .x-right a:nth-of-type(2){
             background-color:#0be881;
         }
+        .client .title .x-right a:nth-of-type(2):hover{
+            background: #20bf6b;
+        }
         .line{
             margin-top: 0px;
             width:100%;
-            height: 1px;
+            height:1px;
             background: #ccc;
 
-        }
-        .content{
-            width:100%;
-            height:auto;
         }
         .content .item{
             box-sizing: border-box;
@@ -73,11 +75,11 @@
 
         }
         .client .content  .x-address input{
-            width:890px;
+            width:860px;
             height:40px;
         }
         .content .ctx-item input{
-            width:400px;
+            width:300px;
             height:40px;
             border-radius: 5px;
             border: 0;
@@ -87,11 +89,15 @@
         }
         .content .item .x-textarea textarea{
             vertical-align: middle;
-            width:890px;
+            width:860px;
             height:90px;
             border-radius: 5px;
             border: 0;
             border: 1px solid #ccc;
+        }
+        .content{
+            width: 100%;
+            height:auto;
         }
         .client .data-btn{
             width:100%;
@@ -108,17 +114,15 @@
         .client .data-btn .data-btn-add{
             background: #576574;
         }
-        .client .data-btn .data-btn-remove{
-            background: #95afc0;
-        }
+
         .client .data-btn .data-btn-add:hover{
             background:#1dd1a1;
         }
         .client .data-btn .data-btn-cancel:hover{
-            background-color: #bdc3c7;
+            background-color: #8D8D8D;
         }
         .client .item p{
-            width: 100%;
+            width:860px;
             font-size: 18px;
             margin:0;
             color:#ccc;
@@ -126,7 +130,7 @@
         .client .item p:after{
             content: "";
             height: 1px;
-            width:890px;
+            width:860px;
             background-color: #ccc;
             display: block;
             position: relative;
@@ -136,10 +140,11 @@
             right: -75px;
         }
         .client .item .select{
-            width:400px;
+            width:300px;
             height:40px;
             border-radius: 5px;
             outline: none;
+
         }
 
 
@@ -149,139 +154,139 @@
     <div class="client">
 
         <div class="title">
-                <span class="ctx x-left">北京新旅途有限公司-CRM双语版</span>
+                <span class="ctx x-left" th:inline="text">[[${client.clienteleName}]]-CRM双语版</span>
                 <span class="ctx x-right">
-                       <a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</a>
-                       <a href="#" class="layui-icon  layui-icon-refresh">刷新</a>
+                       <a href="#" id="layui-btn-a"><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</a>
+                       <a href="#" onclick="flush()" class="layui-icon   layui-icon-refresh">刷新</a>
                 </span>
         </div>
         <div class="line"></div>
-    <form id="form">
+    <form id="form" action="/crm/crm/clientele/updateById.do" method="get"  class="layui-form">
         <div class="content">
-
+            <input type="hidden" th:value="${client.clienteleId}" name="clienteleId">
             <div class="item">
                 <div class="ctx-item">
                     <label>客户名称:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" th:value="${client.clienteleName}" name="clienteleName">
 
                 </div>
                 <div class="ctx-item">
                     <label>拼音:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="spell" th:value="${client.spell}">
                 </div>
             </div>
 
             <div class="item">
             <div class="ctx-item">
                 <label>分类:</label>
-                <select name="" class="select">
-                    <option>请选择</option>
+                <select name="classifyId" class="select clazz" >
+
                 </select>
             </div>
             <div class="ctx-item">
                 <label>客户来源:</label>
-                <select name="" class="select">
-                    <option value="">请选择</option>
+                <select name="clienteleSourceId" class="select source">
+
                 </select>
             </div>
             </div>
             <div class="item">
                 <div class="ctx-item">
                     <label>所属行业:</label>
-                   <select name="" class="select">
-                       <option value="">请选择</option>
+                   <select name="industryId" class="select indust">
+
                    </select>
 
                 </div>
                 <div class="ctx-item">
                     <label>客户网址:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="clienteleUrl" th:value="${client.clienteleUrl}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>国家/地区:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="state" th:value="${client.state}">
 
                 </div>
                 <div class="ctx-item">
                     <label>所在城市:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="city" th:value="${client.city}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item x-address">
                     <label>详细地址:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="address" th:value="${client.address}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>邮政编码:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="postcode" th:value="${client.postcode}">
 
                 </div>
                 <div class="ctx-item">
                     <label>传真:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="faxes" th:value="${client.faxes}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>联系人:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="contacts" th:value="${client.contacts}">
 
                 </div>
                 <div class="ctx-item">
                     <label>部门:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="dept" th:value="${client.dept}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>职务:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="post" th:value="${client.post}">
 
                 </div>
                 <div class="ctx-item">
                     <label>办公电话:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="telephone" th:value="${client.telephone}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>移动电话:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="phone" th:value="${client.phone}">
 
                 </div>
                 <div class="ctx-item">
                     <label>邮件/QQ:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="email" th:value="${client.email}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>法人代表:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="corporate" th:value="${client.corporate}">
 
                 </div>
                 <div class="ctx-item">
                     <label>注册资本:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="registeredCapital" th:value="${client.registeredCapital}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item x-textarea">
                     <label>附件说明:</label>
-                    <textarea></textarea>
+                    <textarea name="principalPart" th:inline="text">[[${client.principalPart}]]</textarea>
                 </div>
             </div>
             <div class="item">
@@ -290,43 +295,131 @@
            <div class="item">
                <div class="ctx-item">
                    <label>银行账号:</label>
-                   <input type="text" placeholder="请输入" required>
+                   <input type="text" placeholder="请输入" required name="bankAccount" th:value="${client.bankAccount}">
                </div>
                <div class="ctx-item">
                    <label>开户名称:</label>
-                   <input type="text" placeholder="请输入" required>
+                   <input type="text" placeholder="请输入" required name="accountName" th:value="${client.accountName}">
                </div>
            </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>开户银行:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="accountBank" th:value="${client.accountBank}">
                 </div>
                 <div class="ctx-item">
                     <label>银行地址:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="bankAddress" th:value="${client.bankAddress}">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>税号:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="dutyParagraph" th:value="${client.dutyParagraph}">
                 </div>
                 <div class="ctx-item">
                     <label>电话:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="companyTelephone" th:value="${client.companyTelephone}">
                 </div>
+            </div>
+            <div class="data-btn">
+                <button type="button" class="data-btn-add" lay-submit lay-filter="update">编辑</button>
+                <button type="button" class="data-btn-cancel">取消</button>
             </div>
         </div>
     </form>
-        <div class="data-btn">
-            <button type="button" class="data-btn-add">编辑</button>
-            <button type="button" class="data-btn-remove">删除</button>
-            <button type="button" class="data-btn-cancel">取消</button>
-        </div>
+
     </div>
+<script th:src="@{|/layui/layui.js|}"></script>
+<script>
+    function flush(){
+        window.location.reload();
+    }
+
+    layui.config({
+        base:'/crm/json/'
+
+    }).extend({
+        clientClazz:'clientClazz',
+        clientSource:'clientSource',
+        industry:'industry'
+    });
+
+    layui.use(['form','jquery','layer','clientClazz','clientSource','industry'],function() {
+        var form = layui.form, $ = layui.jquery, layer = layui.layer
+            , common = layui.clientClazz, clientSource = layui.clientSource, industry = layui.industry;
+
+            var res = common.data0;
+            var option=null;
+            for (let i = 0; i < res.length; i++) {
+                option=new Option();
+                option.text=res[i].clazz;
+                option.value=res[i].value;
+               if(res[i].value==[[${client.classifyId}]]){
+                    option.selected=true;
+                }
+                else{
+                    option.selected=false;
+                }
+                $(".clazz").append(option);
+            }
+
+
+            var dataR= clientSource.data1;
+            var option1=null;
+            for (let i = 0; i <dataR.length; i++) {
+                option1=new Option();
+                option1.text=dataR[i].clazz;
+                option1.value=dataR[i].value;
+                if(dataR[i].value==[[${client.clienteleSourceId}]]){
+                    option1.selected=true;
+                }
+                else{
+                    option1.selected=false;
+                }
+                $(".source").append(option1);
+            }
+
+            //加载所属行业
+            var arg = industry.data2;
+            var option2 =null;
+            for (let i = 0; i < arg.length; i++) {
+                option2=new Option();
+                option2.text=arg[i].clazz;
+                option2.value=arg[i].value;
+                if(arg[i].value==[[${client.industryId}]]){
+                    option2.selected=true;
+                }else{
+                    option2.selected=false;
+                }
+                $(".indust").append(option2);
+            }
+
+            //监听提交表单数据
+        form.on('submit(update)',function(data){
+            document.getElementById("form").submit();
+            /*提交成功的时候关闭弹出层*/
+            var frameIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(frameIndex);
+            return false;
+        })
+        //取消提交表单
+        $(document).on("click",".data-btn-cancel",function(){
+           var frameIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(frameIndex);
+            return false;
+        })
+
+        $(document).on("click","#layui-btn-a",function(){
+          window.top.location.href="/crm/temp/ctm.jsp";
+        })
+
+        form.render();
+    })
+
+</script>
 
 </body>
 </html>

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>CRM客户管理系统新增客户</title>
-    <link rel="stylesheet" href="/fontawesome/css/font-awesome.css"></link>
-    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="../fontawesome/css/font-awesome.css"></link>
+    <!--  <link rel="stylesheet" href="../layui/css/layui.css">-->
+    <script src="../js/jquery-3.4.1.min.js"></script>
     <style>
         *{
             margin:0px;
@@ -13,9 +14,9 @@
             box-sizing: border-box;
         }
         .client{
-            width:65%;
+            width:1000px;
             height:100vh;
-            margin: 0px auto;
+            margin-left: 100px;
 
         }
         .client .title{
@@ -55,6 +56,7 @@
             background-color:#0be881;
         }
         .line{
+            text-align: center;
             margin-top: 0px;
             width:100%;
             height: 1px;
@@ -100,11 +102,12 @@
             height:auto;
             text-align: center;
         }
-        .client .data-btn button{
+        .client .data-btn input{
             width:107.8px;
             height:38px;
             border: 0;
             color: #fff;
+            outline: none;
             border-radius: 8px;
         }
         .client .data-btn .data-btn-add{
@@ -134,11 +137,14 @@
             top:-10px;
             right: -75px;
         }
-        .client .item .select{
+        .client .item .sel{
             width:400px;
             height:40px;
             border-radius: 5px;
             outline: none;
+        }
+        .layui-form-select{
+            display: none !important;
         }
 
 
@@ -151,137 +157,137 @@
                 <span class="ctx x-left">新增客户</span>
                 <span class="ctx x-middle">基本信息</span>
                 <span class="ctx x-right">
-                       <a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</a>
-                       <a href="#" class="layui-icon  layui-icon-refresh">刷新</a>
+                       <a href="/crm/temp/main.jsp "><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</a>
+                       <a href="javascript:void(0);" onclick="flush()" id="flush"><i class="fa fa-repeat" aria-hidden="true"></i>刷新</a>
                 </span>
         </div>
         <div class="line"></div>
 
         <div class="content">
-            <form id="form" action="" method="">
+            <form id="form" action="" method="" class="layui-form">
             <div class="item">
                 <div class="ctx-item">
                     <label>客户名称:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="clienteleName" lay-verify="clientName">
 
                 </div>
                 <div class="ctx-item">
                     <label>拼音:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="spell">
                 </div>
             </div>
 
             <div class="item">
             <div class="ctx-item">
                 <label>分类:</label>
-                <select name="" class="select">
-                    <option>请选择</option>
+                <select name="classifyId" class="sel clazz" lay-verify="other">
+
                 </select>
             </div>
             <div class="ctx-item">
                 <label>客户来源:</label>
-                <select name="" class="select">
-                    <option value="">请选择</option>
+                <select name="clienteleSourceId" class="sel source" lay-verify="other">
+
                 </select>
             </div>
             </div>
             <div class="item">
                 <div class="ctx-item">
                     <label>所属行业:</label>
-                   <select name="" class="select">
-                       <option value="">请选择</option>
+                       <select name=" industryId" class="sel indust" lay-verify="other">
+
                    </select>
 
                 </div>
                 <div class="ctx-item">
                     <label>客户网址:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="clienteleUrl" lay-verify="url">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>国家/地区:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="state" lay-verify="state">
 
                 </div>
                 <div class="ctx-item">
                     <label>所在城市:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="city" lay-verify="city">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item x-address">
                     <label>详细地址:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="address" lay-verify="address">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>邮政编码:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="postcode" >
 
                 </div>
                 <div class="ctx-item">
                     <label>传真:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="faxes" >
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>联系人:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="contacts" lay-verify="linkMans">
 
                 </div>
                 <div class="ctx-item">
                     <label>部门:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="dept">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>职务:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="post">
 
                 </div>
                 <div class="ctx-item">
                     <label>办公电话:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="telephone" lay-verify="tel">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>移动电话:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="phone" lay-verify="phone">
 
                 </div>
                 <div class="ctx-item">
                     <label>邮件/QQ:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="email" lay-verify="email">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>法人代表:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="corporate" lay-verify="corporate">
 
                 </div>
                 <div class="ctx-item">
                     <label>注册资本:</label>
-                    <input type="text" placeholder="请输入" name="pingying">
+                    <input type="text" placeholder="请输入" name="registeredCapital" lay-verify="registercap">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item x-textarea">
                     <label>附件说明:</label>
-                    <textarea></textarea>
+                    <textarea name="principalPart"></textarea>
                 </div>
             </div>
             <div class="item">
@@ -290,43 +296,164 @@
            <div class="item">
                <div class="ctx-item">
                    <label>银行账号:</label>
-                   <input type="text" placeholder="请输入" required>
+                   <input type="text" placeholder="请输入" required name="bankAccount" lay-verify="bankAccount">
                </div>
                <div class="ctx-item">
                    <label>开户名称:</label>
-                   <input type="text" placeholder="请输入" required>
+                   <input type="text" placeholder="请输入" required name="accountName" lay-verify="accountName">
                </div>
            </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>开户银行:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="accountBank" lay-verify="accountBank">
                 </div>
                 <div class="ctx-item">
                     <label>银行地址:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="bankAddress" lay-verify="bankAddress">
                 </div>
             </div>
 
             <div class="item">
                 <div class="ctx-item">
                     <label>税号:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="dutyParagraph" lay-verify="dutyParagraph">
                 </div>
                 <div class="ctx-item">
                     <label>电话:</label>
-                    <input type="text" placeholder="请输入" required>
+                    <input type="text" placeholder="请输入" required name="companyTelephone" lay-verify="compantTEL">
                 </div>
             </div>
+                <div class="data-btn">
+                    <input type="button" class="data-btn-add" lay-submit lay-filter="formDemo" value="确认"></input>
+                    <input type="button" class="data-btn-cancel" value="取消" onclick="formReset()"></input>
+                </div>
             </form>
         </div>
 
-        <div class="data-btn">
-            <button type="button" class="data-btn-add">确认</button>
-            <button type="button" class="data-btn-cancel">取消</button>
-        </div>
     </div>
+
+<script src="../layui/layui.js"></script>
+<script>
+
+    //重置表单数据
+    function formReset(){
+        document.getElementById("form").reset();
+    }
+    //刷新表单
+    function flush(){
+        window.location.reload();
+    }
+    layui.config({
+        base:'../json/'
+
+    }).extend({
+        clientClazz:'clientClazz',
+        clientSource:'clientSource',
+        industry:'industry'
+    });
+
+    layui.use(['form','jquery','layer','clientClazz','clientSource','industry'],function(){
+        var form=layui.form,$=layui.jquery,layer=layui.layer
+            ,common=layui.clientClazz,clientSource=layui.clientSource,industry=layui.industry;
+        var res=common.data0;
+        var html="";
+        for(let i=0;i<res.length;i++){
+            if(i==0){html+="<option value=' '>请选择</option>";}
+            html+="<option value="+res[i].value+">"+res[i].clazz+"</option>";
+
+        }
+        $(".clazz").append(html);
+        //加载客户来源
+        var dataR = clientSource.data1;
+        var cho="";
+        for(let i=0;i<dataR.length;i++) {
+            if (i == 0) cho += "<option value=' '>请选择</option>";
+            cho += "<option value=" + dataR[i].value + ">" + dataR[i].clazz + "</option>";
+        }
+        $(".source").append(cho);
+
+            //加载所属行业
+            var argou = industry.data2;
+            var cho1="";
+
+            for(let i=0;i<argou.length;i++){
+                if(i==0)cho1+="<option value=' '>请选择</option>";
+                cho1+="<option value="+argou[i].value+">"+argou[i].clazz+"</option>"
+            }
+
+            $(".indust").append(cho1);
+
+
+            //表单验证
+                form.verify({
+                    clientName: [/[\S]+/, "必填项不能为空"],
+
+                    other: function (value,item) {
+
+                        var verifyName = $(item).attr('name')
+                            , verifyType = $(item).attr('type')
+                            , formElem = $(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
+                            , verifyElem = formElem.find('input[name=' + verifyName + ']')//获取需要校验的元素
+                            , isTrue = verifyElem.is(':checked')//是否命中校验
+                            , focusElem = verifyElem.next().find('i.layui-icon');//焦点元素
+                        if (!isTrue || !value) {
+                            //定位焦点
+                            focusElem.css(verifyType == 'radio' ? {"color": "#FF5722"} : {"border-color": "#FF5722"});
+                            //对非输入框设置焦点
+                            focusElem.first().attr("tabIndex", "1").css("outline", "0").blur(function () {
+                                focusElem.css(verifyType == 'radio' ? {"color": ""} : {"border-color": ""});
+                            }).focus();
+                            return '必填项不能为空';
+                        }
+                    },
+                    url:[/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,"网址不合法"],
+                    state:[/[\S]+/, "必填项不能为空"],
+                    city:[/[\S]+/, "必填项不能为空"],
+                    address:[/[\S]+/, "必填项不能为空"],
+                    linkMans:[/[\S]+/, "必填项不能为空"],
+                    tel:[/(^$)|^[0-9]\d{7}$/, '请输入正确的电话'],
+                    phone:[/(^$)|^1\d{10}$/, '请输入正确的手机号'],
+                    email:[/^[0-9]\d{15}$/,'输入正确的qq号'],
+                    corporate:[/[\S]+/, "必填项不能为空"],
+                    registercap: [/(^$)|^\d+$/, '只能填写数字'],
+                    bankAccount:[/^[0-9]\d{17}$/,'银行卡号不合法'],
+                    accountName:[/[\S]+/, "必填项不能为空"],
+                    accountBank:[/[\S]+/, "必填项不能为空"],
+                    bankAddress:[/[\S]+/, "必填项不能为空"],
+                    dutyParagraph:[/^[0-9a-z]\d{6}$/,'输入合法'],
+                    compantTEL:[/(^$)|^1\d{10}$/, '请输入正确的手机号']
+
+
+                });
+
+            form.on('submit(formDemo)',function(data){
+                $.ajax({
+                    url:"/crm/crm/clientele/add.do",
+                    type:"post",
+                    data:JSON.stringify(data.field),
+                    dataType:"json",
+                    contentType:"application/json;charset=UTF-8",
+                    success:function(data){
+                        if(data.code==200){
+                            layer.alert(data.msg,{icon:1});
+                        }else{
+                            layer.alert(data.msg,{icon:5});
+                        }
+
+                    }
+            });
+
+
+            });
+
+
+
+    });
+
+
+</script>
 
 </body>
 </html>

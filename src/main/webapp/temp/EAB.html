@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商机新增页面</title>
+    <link rel="stylesheet" th:href="@{|/fontawesome/css/font-awesome.css|}">
+    <link rel="stylesheet" th:href="@{|/layui/css/layui.css|}">
+    <script th:src="@{|/js/jquery-3.4.1.min.js|}"></script>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+        .wrapper{
+            width:100%;
+            height:100vh;
+        }
+        .item{
+            width:100%;
+            line-height: 75px;
+            margin-left: 20px;
+        }
+        .item .layui-inline{
+
+        }
+        item .layui-inline input[type="file"]{
+            width:250px;
+            height:40px;
+            display: block;
+        }
+        .item .layui-inline input[type="text"]{
+            width:250px;
+            height:40px;
+            vertical-align: middle;
+        }
+        .item .layui-inline input[type="radio"]{
+            width:20px;
+            height:20px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .item .layui-inline input[type="date"]{
+            width:250px;
+            height:40px;
+        }
+        textarea{
+            vertical-align: middle;
+            width:500px;
+            height:80px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            resize: none;
+        }
+        .line{
+            font-size: 19px;
+            font-weight: 500;
+            color:#ccc;
+            position: relative;
+            margin-left: 20px;
+        }
+        .line:after{
+            content: '';
+            width:100%;
+            height:1px;
+            position: relative;
+            background: #ccc;
+            display: block;
+        }
+        .line:after{
+            top:-10px;
+            right: -85px;
+        }
+        .item .layui-card-header{
+            color:#fff;
+            font-size: 18px;
+            background-color:#0C0C0C;
+        }
+        .item .layui-card{
+            margin-right: 20px;
+            height:auto;
+            border: 1px solid #ccc;
+        }
+        .select{
+            display:inline-block  !important;
+            width:250px;
+            height:40px;
+        }
+        .footer{
+            margin-top: 20px;
+        }
+        .layui-form-select{
+            display: none !important;
+        }
+        #span{
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .item:nth-of-type(1) .layui-inline:nth-of-type(1){
+            margin-right: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="form" class="layui-form" action="/crm/crm/business/update.do" method="post">
+            <input type="hidden" name="businessId" id="hidden" th:value="${data.businessId}">
+            <input type="hidden"  name="clienteleId" id="cid" th:value="${data.clienteleId}">
+        <div class="item">
+            <div class="layui-inline">
+                <label>商机名称:</label>
+                <span id="span" th:inline="text">[[${data.businessname}]]CRM版</span>
+            </div>
+            <div class="layui-inline">
+                <label >优先级:</label>
+                    低<input type="radio" th:field="${data.priorityId}" name="priorityId" th:value="1003">
+                    中<input type="radio" th:field="${data.priorityId}" name="priorityId" th:value="1002">
+                    高<input type="radio" th:field="${data.priorityId}" name="priorityId" th:value="1001">
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-block">
+                    <button class="layui-btn btn-back"><i class="fa fa-chevron-left" aria-hidden="true"></i>返回</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" onclick="flush()"><i class="fa fa-repeat" aria-hidden="true"></i>刷新</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="line">客户信息</div>
+
+        <div class="item">
+            <div class="layui-inline">
+                <label>客户名称</label>
+                <input type="text" th:value="${data.clientelename}" name="clienteleName" required lay-verify="required" placeholder="请输入">
+            </div>
+            <div class="layui-inline">
+                <label>所属行业</label>
+                <select class="select industy"  name="industryId"></select>
+            </div>
+        </div>
+            <div class="item">
+                <div class="layui-inline">
+                    <label>所在城市</label>
+                    <input type="text" name="city" th:value="${data.city}" required lay-verify="required" placeholder="请输入">
+                </div>
+
+                <div class="layui-inline">
+                    <label>详细地址</label>
+                    <input type="text" name="address" th:value="${data.address}" required lay-verify="required" placeholder="请输入">
+                </div>
+
+                </div>
+                <div class="line">商机信息</div>
+
+                <div class="item">
+                    <div class="layui-inline">
+                        <label>商机名称</label>
+                        <input type="text" name="businessName" th:value="${data.businessname}" required lay-verify="required" placeholder="请输入" >
+                    </div>
+                    <div class="layui-inline">
+                        <label>客户来源</label>
+                        <select class="select source" name="clienteleSource"></select>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label>预计成交金额</label>
+                        <input type="text" name="estimatedAmount" th:value="${data.estimatedAmount}" required  placeholder="请输入">
+                    </div>
+
+
+                </div>
+                        <div class="item">
+                            <div class="layui-inline">
+                                <label>预计结单日期</label>
+                                <input type="date" name="estimatedDate" th:value="${data.estimatedDate}" required  placeholder="请输入" lay-verify="required">
+                            </div>
+
+                            <div class="layui-inline">
+                                <label>联系人</label>
+                                <input type="text" name="contacts" th:value="${data.contacts}" required  placeholder="请输入">
+                            </div>
+
+                            <div class="layui-inline">
+                                <label>部门</label>
+                                <input type="text" name="dept" th:value="${data.dept}" required  placeholder="请输入">
+                            </div>
+
+                        </div>
+
+
+        <div class="item">
+            <div class="layui-inline">
+                <label>职务</label>
+                <input type="text" name="post" th:value="${data.post}" required  placeholder="请输入">
+            </div>
+
+
+            <div class="layui-inline">
+                <label>固定电话</label>
+                <input type="text" name="telephone" th:value="${data.telephone}" required  placeholder="请输入">
+            </div>
+
+            <div class="layui-inline">
+                <label>移动电话</label>
+                <input type="text" name="phone" required th:value="${data.phone}"  placeholder="请输入">
+            </div>
+
+
+        </div>
+        <div class="item auto">
+            <div class="layui-inline">
+                <label>邮件/QQ</label>
+                <input type="text" name="email" th:value="${data.email}" required  placeholder="请输入">
+            </div>
+
+            <div class="layui-inline">
+                <label>主要业务需求</label>
+                <textarea name="principalPart" th:text="${data.principalPart}"></textarea>
+            </div>
+
+            <div class="layui-inline">
+                <input type="hidden" name="businessFile"  id="hidden">
+                <label>相关附件</label>
+                <input type="file" name="file" required   placeholder="请输入" id="test1">
+            </div>
+            <div class="layui-inline">
+                <p><img th:src="@{|/crm/${data.businessFile}|}" width="100" height="50"></p>
+            </div>
+
+        </div>
+            <div class="item">
+
+                <div class="layui-inline">
+                    <label>商机所属部门</label>
+                    <select class="select dept" name="deptId"></select>
+                </div>
+
+                <div class="layui-inline">
+                    <label>负责人</label>
+                    <input type="text" name="empName" th:value="${data.empname}" required  placeholder="请输入">
+                </div>
+                <div class="layui-inline">
+                    <label>商机参与人</label>
+                    <input type="text" name="participator" th:value="${data.participator}" required  placeholder="请输入">
+                </div>
+                <div class="layui-inline">
+                    <label>商机关注人</label>
+                    <input type="text" name="" required  placeholder="请输入">
+                </div>
+
+            </div>
+        <div class="line">处理流程日志</div>
+        <div class="item footer">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">处理过程</div>
+                    <div class="layui-card-body" name="businessLog">
+                     内容
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">父事务</div>
+                    <div class="layui-card-body">
+                        内容
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">子事务</div>
+                    <div class="layui-card-body">
+                        内容
+                    </div>
+                </div>
+            </div>
+        </div>
+           <div class="item">
+               <div class="layui-inline">
+               <button type="button" lay-submit class="layui-btn layui-btn-normal" lay-filter="formDemo">修改</button>
+               <button type="button" class="layui-btn layui-btn-warm">取消</button>
+               </div>
+           </div>
+
+        </form>
+    </div>
+
+<script th:src="@{|/layui/layui.js|}"></script>
+
+<script>
+    function flush(){
+        document.getElementById("form").reset();
+        window.location.reload();
+    }
+
+    layui.use(['form','layer','jquery','upload'],function(){
+        var form=layui.form;
+        var layer=layui.layer;
+        var $=layui.jquery;
+        var upload=layui.upload;
+
+        $(function(){
+
+            $.getJSON("/crm/json/clientSource.json",function(json) {
+                var res = json;
+                $.each(res.data, function (i, ele) {
+                    var option = new Option();
+                    if (i == 0) {
+                        option.value = ele.value;
+                        option.text = ele.clazz;
+                    } else {
+                        option.value = ele.value;
+                        option.text = ele.clazz;
+                        if(ele.value==[[${data.clienteleSource}]])option.selected=true;
+                        else option.selected=false;
+
+                    }
+
+                    $(".source").append(option);
+                })
+                form.render();
+
+            });
+            //加载行业
+                $.getJSON("/crm/json/industry.json",function(json){
+                    var res=json;
+                    $.each(res.data,function(i,ele){
+                        var option=new Option();
+                        if(i==0){
+                            option.value=ele.value;
+                            option.text=ele.clazz;
+                        }else {
+                            option.value = ele.value;
+                            option.text = ele.clazz;
+                            if(ele.value==[[${data.industrayId}]])option.selected=true;
+                            else option.selected=false;
+                        }
+
+                        $(".industy").append(option);
+                    })
+                })
+            /**
+             * 所属部门
+             */
+            $.getJSON("/crm/json/dept.json",function(json){
+                var res=json;
+                $.each(res.data,function(i,ele){
+                    var option=new Option();
+                    if(i==0){
+                        option.value=ele.value;
+                        option.text=ele.clazz;
+                    }else{
+                        option.value=ele.value;
+                        option.text=ele.clazz;
+                        if(ele.value==[[${data.deptId}]])option.selected=true;
+                        else option.selected=false;
+                    }
+                    $(".dept").append(option);
+                })
+                form.render();
+
+            })
+
+        });
+
+
+        //返回主页面
+        form.on('submit(formDemo)',function(){
+            //提交数据
+            document.getElementById("form").submit();
+            var frameIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(frameIndex);
+            return false;
+        })
+
+        //加载文件上传组件
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/crm/crm/business/uploadFile.do' //上传接口
+            ,before:function (obj) {
+                obj.preview(function (index,file,result) {
+                    $("img").attr('src',result)
+                })
+            }
+            ,done: function(res){
+                //上传完毕回调
+                if(res.code==200){
+                    document.getElementById("hidden").value=res.data;
+                    layer.alert('上传成功',{icon:1});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+                layer.alert('上传失败！',{icon:5});
+            }
+        });
+
+        //返回主页面
+        $(document).on("click",".btn-back",function(){
+            window.top.location.href="/crm/temp/business.jsp";
+        })
+
+    })
+</script>
+
+</body>
+</html>
