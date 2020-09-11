@@ -1,58 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>主页面</title>
+    <meta charset="UTF-8">
+    <title>CRM合同管理平台</title>
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="layui/css/layui.css">
 </head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">所有商品</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
-    </div>
-
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+<script src="layui/layui.all.js"></script>
+<script src="layui/layui.js"></script>
+<body>
+<div class="left">
+    <header>CRM客户管理系统</header>
+    <div class="logo" class="layui-inline">
+        <a href=" "><img src="imgs/logo.png" style="height: 40px;width: 40px;"/></a>
+    <div class="status" class="layui-inline">
+        <span><img src="imgs/log.png" style="height: 14px;width: 14px;" class="head">用户一</span><br>
+        <span>探索系统与运营之道</span>
     </div>
 </div>
-<script src="layui/layui.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
+<div class="nav">
+    <ul class="menu-nav">
+        <li><a href="html/mydesktop.html" target="rightFrame">我的桌面</a></li>
+        <li><a href="#" target="rightFrame">客户管理</a></li>
+        <li><a href="#" target="rightFrame">我的商机</a></li>
+        <li><a href="#" target="rightFrame">全部商机</a></li>
+        <li><a href="wry/queryMyDocumentary.html" target="rightFrame">我的跟单</a></li>
+        <li><a href="wry/queryDocumentary.html" target="rightFrame">全部跟单</a></li>
+        <li><a href="wry/queryForum.html" target="rightFrame">全部讨论帖子</a></li>
+        <li><a href="wry/queryMyContract.html" target="rightFrame">我的合同</a></li>
+        <li><a href="wry/queryContract.html" target="rightFrame" >全部合同</a></li>
+        <li><a href="html/querycontract.html" target="rightFrame">售后服务</a></li>
+        <li><a href="html/statisticsAnalyse.html" target="rightFrame">统计分析</a></li>
+        <li><a href="#" target="rightFrame">安全退出</a></li>
+    </ul>
+</div>
+</div>
+<div class="right">
+    <iframe frameborder="0" width="100%" height="600px;" src="html/mydesktop.html" name="rightFrame">
 
-    });
-</script>
+    </iframe>
+</div>
 </body>
 </html>

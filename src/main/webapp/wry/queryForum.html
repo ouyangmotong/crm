@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>全部讨论帖子</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['table','form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            , url: '../crm/forum/queryForum.do' //数据接口
+            ,page: true //开启分页
+            , cols: [[ //表头
+                {field: 'forumId',type:'checkbox', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field:'forumClassify', width:100, title: '分类'}
+                ,{width:80, title: '主题',width:200 ,templet: '<div><a href="../crm/forum-reply/queryByIdForumReply.do?forumId={{d.forumId}}" target="_blank">{{d.headline}}</a></div>'}
+                ,{field:'emp', width:100, title: '作者',templet:'<div>{{d.emp.empName}}</div>'}
+                ,{field:'forumDate', width:180, title: '发布时间'}
+                ,{field:'business', width:200, title: '所属商机',templet:'<div>{{d.businessName}}</div>'}
+                ,{field:'forumClicks', width:80,title: '点击量'}
+                ,{field:'forumReplyBoNum', width:80,title: '回复量'}
+                ,{field:'finalReplyDate', width:180,title: '最后回复'}
+            ]]
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            console.log(data.field)
+            table.reload('demo', {
+                url: '../crm/forum/queryForum.do'
+                ,where: {
+                    type:data.field.type
+                    ,typeValue:data.field.typeValue
+                } //设定异步数据接口的额外参数
+            });
+            return false;//阻止表格跳转
+        });
+
+    });
+
+    function addForum1(){//添加
+        window.open("saveForum.html");
+    }
+    function refresh(){//刷新
+        location.reload();
+    }
+
+</script>
+<body>
+<div>
+    <br/><br/>
+    <form class="layui-form" action="">
+        <div class="layui-form-item layui-inline">
+            <img src="../img/main.png">
+            <span style="font-size: 20px;">
+                    &nbsp;&nbsp;全部讨论帖子
+                </span>
+            <span th:text="${forumBo.emp.empImg}"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <!--下拉框-->
+        <div class="layui-form-item layui-inline">
+            <select name="type">
+                <option value=""></option>
+                <option value="1001">按主题</option>
+                <option value="1002">按用户</option>
+                <option value="1003">按点击</option>
+            </select>
+        </div>
+        <!--请输入内容-->
+        <div class="layui-form-item layui-inline">
+            <input type="text" name="typeValue" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+        </div>
+        <!--查找-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>查找
+            </button>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--新增售后服务-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addForum1()">
+                <i class="layui-icon layui-icon-add-1"></i>发帖
+            </button>
+        </div>
+        <!--刷新-->
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                <i class="layui-icon layui-icon-refresh-1"></i>刷新
+            </button>
+        </div>
+    </form>
+    <!--查询表格-->
+    <table id="demo" class="layui-table" lay-skin="line" lay-size="sm" lay-even lay-skin="nob">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+        </colgroup>
+    </table>
+</div>
+</body>
+</html>

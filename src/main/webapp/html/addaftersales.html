@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新增售后服务</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    layui.use(['rate','form','laydate','upload','jquery'], function(){
+        let rate = layui.rate;
+        let form = layui.form;
+        let laydate = layui.laydate;
+        var upload = layui.upload;
+        var $ = layui.$;
+
+        //渲染
+        let ins1 = rate.render({
+            elem: '#pingfen'  //绑定元素
+            ,choose: function(value){
+                alert("评分："+value)
+                $("#serviceScore").val(value);
+            }
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#shijian1' //指定元素
+            ,type:'datetime'
+        });
+        laydate.render({
+            elem: '#shijian2' //指定元素
+            ,type:'datetime'
+        });
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '../crm/after-sales/fileUpload.do' //改成您自己的上传接口
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    console.log("index:"+index); //得到文件索引
+                    console.log("file:"+file); //得到文件对象
+                    console.log("result:"+result); //得到文件base64编码，比如图片
+                    $('#demo1').attr('src', result); //图片链接（base64）,将图片放到下面框中
+                });
+            }
+            ,done: function(res){
+                //图片的名字
+                $("#file").val(res.data);
+                //如果上传成功
+                if(res.code == 0){
+                    return layer.msg('上传成功',{icon:6});
+                }
+                //上传失败
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+    });
+
+    $(function () {
+       $.get("../crm/contract/queryAllByStatic.do",function (d) {
+           var kehu="<option value=''>选择客户</option>";
+           for (var i=0;i<d.length;i++){
+               kehu += "<option value='"+d[i].contractId+"'>"+d[i].contractName+"</option>";
+           }
+           console.log(kehu)
+           $("#clienteleName").html(kehu);
+       });
+
+       $("#clienteleName").change(function(){
+           alert($("#clienteleName").val())
+       });
+    });
+
+    //返回
+    function goback(){
+        window.close();
+    }
+    //刷新
+    function refresh(){
+        location.reload();
+    }
+</script>
+
+<body bgcolor="#2B93AF">
+
+<form class="layui-form" method="post" action="../crm/after-sales/addAfterSales.do">
+    <!--页面div-->
+    <div style="margin-left:75px;margin-top: 0px;width: 1000px;height: 1600px;display: inline-block;background-color: white;">
+        <br/>
+        <!--新添售后服务-->
+        <div class="layui-form-item layui-inline" style="margin-left:50px;font-size: 20px;">
+            新增售后服务
+        </div>
+        <!--返回、刷新-->
+        <div style="float: right;margin-right:50px">
+            <!--返回-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
+                    <i class="layui-icon layui-icon-left"></i>返回
+                </button>
+            </div>
+            <!--刷新-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                    <i class="layui-icon layui-icon-refresh-1"></i>刷新
+                </button>
+            </div>
+        </div>
+        <!--基本信息-->
+        <div style="margin-left:50px;margin-right: 50px;background-color: #F9FFDB;font-size: 15px;">
+            <hr>
+            &nbsp;&nbsp;&nbsp;&nbsp;基本信息
+            <hr>
+        </div>
+        <!--主题-->
+        <div style="margin-left: 100px;line-height: 2;">
+            <div class="layui-inline">
+                <span style="color: red">*</span>
+                主题&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="headline" type="text" class="layui-input" style="border-radius:8px;width: 800px;height: 30px;">
+            </div>
+        </div>
+        <!---->
+        <div style="margin-left: 108px;line-height: 2;">
+            步骤：<input style="border:none;" value="服务登记"/>
+            <input type="hidden" style="border:none;" value="1001" name="aftStatic"/>
+            责任人：<input style="border:none;" name="dutyPerson"/>
+            参与人：<input style="border:none;" name="participant"/>
+        </div>
+        <br/>
+        <!--售后服务信息-->
+        <div style="margin-left:50px;margin-right: 50px;background-color: #F9FFDB;font-size: 15px;">
+            <hr>
+            &nbsp;&nbsp;&nbsp;&nbsp;售后服务信息
+            <hr>
+        </div>
+        <!--客户名称/合同编号-->
+        <div style="margin-left: 100px">
+            <div class="layui-inline">
+                客户名称&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <select id="clienteleName" name="clienteleId" style="width: 300px;height: 30px;display: block;" lay-search>
+
+                </select>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                合同编号&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input type="text" name="contractNo" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+        </div>
+        <br/>
+        <!--合同主要信息-->
+        <div style="margin-left:80px;" class="layui-inline">
+            合同主要信息&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                <input name="contractContent" class="layui-input" style="border-radius:8px;width:750px;height: 30px;"/>
+            </div>
+        </div>
+
+        <div style="margin-left: 85px">
+            <br/>
+            <div class="layui-inline">
+                <span style="color: red">*</span>
+                对方联系人&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="contacts" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                固定电话&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="telephone" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+        </div>
+
+        <div style="margin-left: 110px">
+            <br/>
+            <div class="layui-inline">
+                移动电话&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="phone" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                邮件/QQ&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="email" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+        </div>
+
+        <div style="margin-left: 110px" class="layui-form-item">
+            <br/>
+            <div class="layui-inline">
+                服务类型&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <select name="serviceClassify" style="width: 300px;height: 30px;" class="layui-select" lay-search>
+                    <option value="">选择服务类型</option>
+                    <option value="1001">故障申报</option>
+                    <option value="1002">业务咨询</option>
+                    <option value="1003">实施或培训</option>
+                    <option value="1004">主动关怀</option>
+                    <option value="1005">其他</option>
+                </select>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                服务方式&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <select name="classifyType" style="width: 300px;height: 30px;" class="layui-select" lay-search>
+                    <option value="">选择服务类型</option>
+                    <option value="1001">故障申报</option>
+                    <option value="1002">业务咨询</option>
+                    <option value="1003">实施或培训</option>
+                    <option value="1004">主动关怀</option>
+                    <option value="1005">其他</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="margin-left: 100px">
+            <br/>
+            <div class="layui-inline">
+                <span style="color: red">*</span>
+                开始时间&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="beginDate" id="shijian1" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                结束时间&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="endDate" id="shijian2" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+        </div>
+
+        <div style="margin-left: 100px">
+            <br/>
+            <div class="layui-inline">
+                <span style="color: red">*</span>
+                服务内容&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <textarea name="serviceContent" style="border-radius:10px;width:720px;height:113px;"></textarea>
+            </div>
+        </div>
+
+        <div style="margin-left: 108px">
+            <br/>
+            <div class="layui-inline">
+                客户反馈&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <textarea name="customerFeedback" style="border-radius:10px;width:720px;height:113px;"></textarea>
+            </div>
+        </div>
+
+        <div style="margin-left: 100px">
+            <br/>
+            <div class="layui-inline">
+                <span style="color: red">*</span>
+                服务人员&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="layui-inline">
+                <input name="serviceStaff" type="text" class="layui-input" style="border-radius:8px;width: 300px;height: 30px;">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="layui-inline">
+                服务评分&nbsp;&nbsp;&nbsp;&nbsp;
+                <div id="pingfen"></div>
+                <input type="hidden" id="serviceScore" name="serviceScore" />
+            </div>
+        </div>
+
+        <div style="margin-left: 75px">
+            <br/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">附件：</label>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="test1" name="file">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                    <div class="layui-upload-list">
+                        <input type="hidden" name="img" id="file" />
+                        <img class="layui-upload-img" style="height: 100px;width: 115px;margin-left:110px;" id="demo1">
+                        <p id="demoText"></p><!--上传失败-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--处理流程日志-->
+        <div style="margin-left:50px;margin-right: 50px;background-color: #F9FFDB;font-size: 15px;">
+            <hr>
+            &nbsp;&nbsp;&nbsp;&nbsp;处理流程日志
+            <hr>
+        </div>
+
+        <!--处理流程日志左边框-->
+        <div style="margin-left:50px;" class="layui-inline">
+            <div style="border:1px solid #CCCCCC;width: 520px;height: 300px;" class="layui-inline">
+                <div class="layui-bg-gray" style="height: 55px;">
+                    <span style="text-align: center;font-weight:bold;color: #000000;">
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;【处理过程】
+                    </span>
+                    <span style="float:right;margin-right:50px;">
+                        <a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">查看流程图 ></a>
+                    </span>
+                </div>
+                <div style="margin-left:20px;">
+                    <br/>
+                    <img src="../img/tou.png">王娜&nbsp;&nbsp;
+                    <span style="color: #9F9F9F;">(2016-07-06 11:10)</span>
+                </div>
+                <div style="margin-left:50px;">
+                    <b>转服务人员处理</b>
+                </div>
+                <br/><br/>
+                <hr>
+                <div style="margin-left:20px;">
+                    <br/>
+                    <img src="../img/tou.png">李浩&nbsp;&nbsp;
+                    <span style="color: #9F9F9F;">(2016-07-06 11:10)</span>
+                </div>
+                <div style="margin-left:50px;">
+                    <b>本次处理已完成</b>
+                </div>
+            </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <!--处理流程日志右边两个小框-->
+        <div class="layui-inline">
+            <div style="border:1px solid #CCCCCC;width: 352px;height: 140px;" class="layui-inline">
+                <div class="layui-bg-gray" style="height: 55px;">
+                    <span style="text-align: center;font-weight:bold;color: #000000;">
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;【父事务】
+                    </span>
+                </div>
+            </div>
+            <br/><br/>
+            <div style="border:1px solid #CCCCCC;width: 352px;height: 140px;" class="layui-inline">
+                <div class="layui-bg-gray" style="height: 55px;">
+                    <span style="text-align: center;font-weight:bold;color: #000000;">
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;【子事务】
+                    </span>
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/>
+        <div style="margin-left:130px;" class="layui-form-item">
+            <div class="layui-input-block">
+                <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">保存</button>
+                <button style="width: 130px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-primary">转服务人员处理</button>
+                <button style="width: 130px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-primary">本次服务完成</button>
+                <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-primary">取消</button>
+                <button style="width: 85px;height: 35px;" type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

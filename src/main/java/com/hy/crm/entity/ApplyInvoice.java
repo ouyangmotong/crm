@@ -1,12 +1,13 @@
 package com.hy.crm.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -80,7 +81,7 @@ public class ApplyInvoice implements Serializable {
     private Integer contractId;
 
     /**
-     * 开票种类()
+     * 开票种类(1001普通纸质发票 1002普通电子发票 1003增值税专用纸质发票 1004增值税专用电子发票)
      */
     @TableField("invoice_classifyId")
     private Integer invoiceClassifyid;
@@ -125,5 +126,9 @@ public class ApplyInvoice implements Serializable {
      */
     private String applyInvoiceFile;
 
+    /**
+     * 申请状态 1001待审核 1002申请通过 1003申请不通过
+     */
+    private Integer invoiceStatic;
 
 }

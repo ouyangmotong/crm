@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -14,7 +16,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Jackson
- * @since 2020-08-28
+ * @since 2020-09-03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -35,14 +37,19 @@ public class AfterSales implements Serializable {
     private String headline;
 
     /**
-     * 状态(1001已登记待处理,1002处理中,1003已完成)
+     * 状态(1001已登记待处理,1002处理中,1003结束)
      */
     private Integer aftStatic;
 
     /**
-     * 责任人id
+     * 责任人
      */
-    private Integer empId;
+    private String dutyPerson;
+
+    /**
+     * 参与人
+     */
+    private String participant;
 
     /**
      * 客户id
@@ -53,6 +60,11 @@ public class AfterSales implements Serializable {
      * 合同id
      */
     private Integer contractId;
+
+    /**
+     * 合同主要内容
+     */
+    private String contractContent;
 
     /**
      * 对方联系人
@@ -75,7 +87,7 @@ public class AfterSales implements Serializable {
     private String email;
 
     /**
-     * 服务类型
+     * 服务类型(1001故障申报、1002业务咨询、1003实施或培训、1004主动关怀、1005其他)
      */
     private Integer serviceClassify;
 
@@ -87,12 +99,14 @@ public class AfterSales implements Serializable {
     /**
      * 开始时间
      */
-    private String beginDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date beginDate;
 
     /**
      * 结束时间
      */
-    private String endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endDate;
 
     /**
      * 服务内容
@@ -118,6 +132,11 @@ public class AfterSales implements Serializable {
      * 附件
      */
     private String file;
+
+    /**
+     * 最后修改时间
+     */
+    private String lastTime;
 
 
 }

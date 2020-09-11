@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>售后服务</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+
+<script>
+    layui.use(['table','form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            , url: '../crm/after-sales/queryAll.do?kind=0' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {
+                    title: '主题'
+                    , width: 300
+                    , fixed: 'left'
+                    ,templet: '<div><a href="../crm/after-sales/queryById.do?id={{d.headline}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.headline}}</a></div>'
+                }
+                , {field: 'serviceClassify', title: '服务类型', width: 150}
+                , {field: 'beginDate', title: '开始时间', width: 170, sort: true}
+                , {field: 'serviceStaff', title: '服务人员', width: 190}
+                , {field: 'serviceScore', title: '服务评分', width: 180}
+            ]]
+        });
+
+        //监听提交
+        form.on('submit(formDemo_1)', function(data){
+            alert(data.field.kind)
+            if(data.field.kind == null || data.field.kind == '' || data.field.kind == undefined){
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/after-sales/queryAll.do'
+                });
+            }else{
+                table.reload('demo', {//将id为demo的表格进行重载
+                    url: '../crm/after-sales/queryAll.do'
+                    , where: {
+                        "kind": data.field.kind//这里kind引不引都可以,kind为下拉框value
+                        , "content": data.field.content//content为文本框值
+                    } //设定异步数据接口的额外参数
+                });
+            }
+            return false;//阻止表格跳转
+        });
+
+    });
+
+    function addContract(){
+        window.open("addaftersales.html");
+    }
+    function refresh(){
+        location.reload();
+    }
+</script>
+
+<style type="text/css">
+    .exp {
+        border-radius: 3px 4px 5px 6px;
+        border: 2px solid #DBDBDB
+    }
+</style>
+
+<body>
+
+<div style="width: 1300px;display:inline-block;background-color: white;">
+    <br/><br/>
+    <!--左菜单-->
+    <div style="float: left;width: 19%">
+        <img src="../img/main.png">
+        <span style="font-size: 20px;">
+            &nbsp;&nbsp;售后服务
+        </span>
+        <div style="width: 95%;height: 300px;" class="exp">
+            <!--分类-->
+            <div class="layui-bg-gray" style="height: 27px;">
+                <span style="text-align: center;font-weight:bold;color: #000000;">
+                    分类
+                </span>
+            </div>
+            <!--所有分类-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 1;">
+                    &nbsp;&nbsp;所有分类
+                </span>
+            </div>
+            <!--处理中的事务-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">处理中的事务</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">3</span>
+            </div>
+            <!--已结束的事务-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">已结束的事务</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">5</span>
+            </div>
+            <!--已撤销的事务-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">已撤销的事务</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
+            </div>
+            <!--横线-->
+            <hr>
+            <!--本周新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本周新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
+            </div>
+            <!--上周新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上周新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">0</span>
+            </div>
+            <!--本月新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本月新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
+            </div>
+            <!--上月新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上月新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">1</span>
+            </div>
+            <!--本季度新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">本季度新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
+            </div>
+            <!--上季度新增-->
+            <div>
+                <img src="../img/wenjianjia.png" style="height:18px;width:21px;">
+                <span style="font-size: 13px;line-height: 2;">
+                    &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'">上季度新增</a>
+                </span>
+                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">7</span>
+            </div>
+        </div>
+    </div>
+
+    <!--右菜单-->
+    <div style="float: right;width: 79%">
+
+        <form class="layui-form" action="">
+            <!--下拉框-->
+            <div class="layui-form-item layui-inline">
+                <select name="kind">
+                    <option value="" ></option>
+                    <option value="1">按主题</option>
+                    <option value="2">按服务类型</option>
+                    <option value="3">按开始时间</option>
+                    <option value="4">按服务人员</option>
+                    <option value="5">按服务评分</option>
+                </select>
+            </div>
+            <!--请输入内容-->
+            <div class="layui-form-item layui-inline">
+                <input type="text" name="content" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+            </div>
+            <!--查找-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" lay-submit lay-filter="formDemo_1">
+                    <i class="layui-icon layui-icon-search"></i>查找
+                </button>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--新增售后服务-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="addContract()">
+                    <i class="layui-icon layui-icon-add-1"></i>新增售后服务
+                </button>
+            </div>
+            <!--刷新-->
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                    <i class="layui-icon layui-icon-refresh-1"></i>刷新
+                </button>
+            </div>
+        </form>
+        <!--查询表格-->
+        <table id="demo" class="layui-table" lay-skin="line" lay-size="sm" lay-even lay-skin="nob">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+            </colgroup>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

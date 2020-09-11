@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的统计</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+
+<script src="../layui/layui.all.js"></script>
+<script src="../layui/layui.js"></script>
+
+<style type="text/css">
+    .exp1 {
+        border-radius: 1px 2px 3px 4px;
+        border: 1.5px solid #E2E2E2
+    }
+</style>
+<body>
+
+<div style="width: 1050px;display:inline-block;background-color: white;">
+    <!--周-->
+    <!--商机数-->
+    <div style="width: 250px;height: 150px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                商机数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--成交数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                成交数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--跟单数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                跟单数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--合同数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                合同数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上周</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <br/><br/>
+    <!--月-->
+    <!--商机数-->
+    <div style="width: 250px;height: 150px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                商机数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--成交数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                成交数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--跟单数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                跟单数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--合同数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                合同数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上月</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <br/><br/>
+    <!--季度-->
+    <!--商机数-->
+    <div style="width: 250px;height: 150px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                商机数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--成交数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                成交数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--跟单数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                跟单数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--合同数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                合同数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上季度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <br/><br/>
+    <!--年度-->
+    <!--商机数-->
+    <div style="width: 250px;height: 150px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                商机数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--成交数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                成交数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--跟单数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                跟单数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+    <!--合同数-->
+    <div style="width: 250px;height: 150px;margin-left:7px;" class="exp1 layui-inline">
+        <div class="layui-bg-gray" style="height: 25px;">
+            <span style="text-align: center;font-weight:bold;color: #000000;">
+                合同数
+            </span>
+        </div>
+        <!---->
+        <div style="margin:5px;">
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">本年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+            <!--这个div模拟垂直分割线-->
+            <div style="border:0.1px solid;height:70px;margin-top:22px;color: #C4C4C4" class="layui-inline"></div>
+            <div style="margin-left:35px;margin-top:22px;color: #707070;" class="layui-inline">
+                <p style="width: 70px;height: 18px;margin-left:5px;">上年度</p>
+                <p style="width: 70px;height: 16px;"></p>
+                <p style="width: 70px;height: 16px;">0.00万</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

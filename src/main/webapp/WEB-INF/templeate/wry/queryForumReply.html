@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帖子</title>
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
+
+</head>
+<body>
+<div>
+    <div style="width: 60%;margin: 0 auto">
+        <br/><br/>
+        <div>
+            <div style="float: left;padding-left:10px;"><h1><span th:text="${forumBo.forumClassify}"/></h1></div>
+            <div style="float: right;">
+                <div class="layui-form-item layui-inline">
+                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
+                        <i class="layui-icon layui-icon-left"></i>返回
+                    </button>
+                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                        <i class="layui-icon layui-icon-refresh-1"></i>刷新
+                    </button>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <div>
+            <div style="font-size:18px;padding-left:10px;">
+                <div style="margin-top:10px;">
+                    主题:<span th:text="${forumBo.headline}"/>
+                </div>
+                <div style="margin-top:10px;margin-bottom:10px;">
+                    点击(<span th:text="${forumBo.forumClicks}"/>)
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    回复(<span th:text="${forumBo.forumReplyBoNum}"/>)
+                </div>
+            </div>
+            <div>
+                <div style="margin-top:10px;margin-bottom:10px;"><!-- 楼主1楼 -->
+                    <div style="float: left;width: 16%;text-align:center;"><!-- 左边图片 -->
+                        <img th:src="${forumBo.emp.empImg}">
+                    </div>
+                    <div style="float: right;width: 83%;border:solid 1px #dfdfdf"><!-- 右边内容 -->
+                        <div style="padding:10px 10px 10px 10px;background-color: #f5f5f5;font-size: 18px;">
+                            &nbsp;&nbsp;
+                            <span th:text="${forumBo.emp.empName}"/>
+                            发布与:
+                            <span th:text="${forumBo.forumDate}"/>
+                        </div>
+                        <div style="padding:30px 30px 30px 50px;">
+                            <div>
+                                <span th:text="${forumBo.principalPart}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both;"></div><!-- 去浮动div -->
+                </div>
+                <div th:each="forumReplyBo : ${list}" style="margin-top:10px;margin-bottom:10px;"><!-- 其他楼层(主贴评论) -->
+                    <div style="float: left;width: 16%;text-align:center;"><!-- 左边图片 -->
+                        <img th:src="${forumReplyBo.emp.empImg}">
+                    </div>
+                    <div style="float: right;width: 83%;border:solid 1px #dfdfdf"><!-- 右边内容 -->
+                        <div style="padding:10px 10px 10px 10px;background-color: #f5f5f5;font-size: 18px;">
+                            &nbsp;&nbsp;
+                            <span th:text="${forumReplyBo.emp.empName}"/>
+                            发布与:
+                            <span th:text="${forumReplyBo.finallyDate}"/>
+                        </div>
+                        <div style="padding:30px 30px 10px 50px;">
+                            <div>
+                                <span th:text="${forumReplyBo.principalPart}"/>
+                            </div>
+                            <div style="margin-top:10px;">
+                                <div style="float: left;width: 50%"></div>
+                                <!-- 三级回复 -->
+                                <div style="float: right;width: 48%;padding:0px 10px 10px 10px;" th:each="forumReplyBos : ${forumReplyBo.forumReplyBos}">
+                                    <span th:text="${forumReplyBos.emp.empName}"/>回复:<span th:text="${forumReplyBos.principalPart}"/>
+                                </div>
+                                <div style="clear:both;"></div><!-- 去浮动div -->
+                                <div style="float:right;padding:0px 10px 10px 10px;" th:id="'eDiv' + ${forumReplyBo.forumReplyId}">
+                                    <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-primary" th:onclick="reply([[${forumReplyBo.forumReplyId}]])" lay-submit lay-filter="*">回复</button>
+                                </div>
+                                <div style="display: none;" th:id="'oDiv' + ${forumReplyBo.forumReplyId}">
+                                    <form class="layui-form" action="../forum-reply/saveForumReply.do">
+                                        <div class="layui-form-item layui-inline">
+                                            <input type="text" lay-verify="required" th:name="principalPart" placeholder="回复内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                        </div>
+                                        <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
+                                        <input type="hidden" th:name="replyId" th:value="${forumReplyBo.forumReplyId}">
+                                        <div class="layui-form-item layui-inline">
+                                            <button class="layui-btn layui-btn-radius layui-btn-primary">
+                                                <i class="layui-icon layui-icon-release"></i>发送
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both;"></div><!-- 去浮动div -->
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <hr/>
+            <form class="layui-form" action="../forum-reply/saveForumReply.do">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">发表回复</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" lay-verify="required" placeholder="请输入内容" th:name="principalPart" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <input type="hidden" th:name="forumId" th:value="${forumBo.forumId}">
+                    <input type="hidden" th:name="replyId" th:value="-1">
+                    <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">发表</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../../../layui/layui.js"></script>
+<script>
+
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+
+    function reply(id){//回复
+        document.getElementById('oDiv'+id).style.display='block';//显示文本框和发送按钮
+        document.getElementById('eDiv'+id).style.display='none'//隐藏展示回复按钮
+    }
+
+    //返回
+    function goback(){
+        window.close();
+    }
+
+    function refresh(){//刷新
+        location.reload();
+    }
+
+</script>
+</body>
+</html>
