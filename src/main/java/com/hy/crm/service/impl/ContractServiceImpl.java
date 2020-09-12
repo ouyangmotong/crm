@@ -41,6 +41,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
     private IInvoiceService iInvoiceService;
     @Autowired
     private IClienteleService clienteleService;
+    @Autowired
+    private IApplyInvoiceService applyInvoiceService;
 
     /**
      * 根据条件查询所有合同
@@ -136,24 +138,16 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
                 BeanUtils.copyProperties(c , contractBo);//将f类里的值都存进forumBo类中
 
                 //汇款额
-                qw = new QueryWrapper();
-                qw.eq("contract_id",c.getContractId());
-                Integer earningNum = 0;//汇款额
-                List<Earninga> earningaList = earningaService.list(qw);
-                for(Earninga e : earningaList){
-                    earningNum += e.getEarningNum();
-                }
+                Integer earningNum = earningaService.queryEarningNum(c.getContractId());
                 contractBo.setEarningNum(earningNum);
 
                 //开票额
-                qw = new QueryWrapper();
-                qw.eq("contract_id",c.getContractId());
-                Integer address = 0;//开票额
-                List<Invoice> invoiceList = iInvoiceService.list(qw);
-                for(Invoice i : invoiceList){
-                    address += i.getContractSum();
-                }
+                Integer address = iInvoiceService.queryAddress(c.getContractId());
                 contractBo.setAddress(address);
+
+                //待审额
+                Integer applyInvoiceNum = applyInvoiceService.queryApplyInvoiceNum(c.getContractId());
+                contractBo.setApplyInvoiceNum(applyInvoiceNum);
 
                 cblist.add(contractBo);
             }
@@ -164,6 +158,33 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
         layUIData.setCount(count);
         layUIData.setData(cblist);
         return layUIData;
+    }
+
+    /**
+     * 根据日期范围查询条数
+     * @param emp 当前用户
+     * @param range 1001查询所有 1002查询当前用户
+     * @param dates 时间范围
+     * @param allDate true查询所有 false查询某些时间段
+     * @return
+     */
+    @Override
+    public Integer queryClassify(Emp emp,Integer range,String[] dates,boolean allDate){
+        Integer count = 0;
+        QueryWrapper queryWrapper = new QueryWrapper();
+
+        if(range == 1002){//查询当前用户
+            queryWrapper.eq("emp_id",emp.getEmpId());
+        }
+
+        if(!allDate){
+            queryWrapper.ge("sign_date",dates[0]);//大于等于
+            queryWrapper.le("sign_date",dates[1]);//小于等于
+        }
+
+        count = list(queryWrapper).size();//查询出来的长度
+
+        return  count;
     }
 
     /**
@@ -201,6 +222,17 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         contract.setContractNo("C"+sdf.format(new Date()));
+
+        if(contract.getPriorityId() != null){//优先级
+            if(contract.getPriorityId() == 1){
+                contract.setPriorityId(1001);
+            }else if(contract.getPriorityId() == 2){
+                contract.setPriorityId(1002);
+            }
+            else if(contract.getPriorityId() == 3){
+                contract.setPriorityId(1003);
+            }
+        }
 
         contract.setDeptId(emp.getDeptId());
         contract.setEmpId(emp.getEmpId());

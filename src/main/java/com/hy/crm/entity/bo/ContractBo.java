@@ -21,6 +21,7 @@ public class ContractBo {
     private Integer contractSum;//合同金额
     private Integer earningNum;//汇款额
     private Integer address;//开票额
+    private Integer applyInvoiceNum;//待开票(审批)金额
     private String signDate;//签约日期
     private String validDate;//生效日期
     private String validityDate;//服务期至

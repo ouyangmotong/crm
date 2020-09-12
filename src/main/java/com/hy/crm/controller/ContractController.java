@@ -6,10 +6,10 @@ import com.hy.crm.entity.Business;
 import com.hy.crm.entity.Contract;
 import com.hy.crm.entity.Emp;
 import com.hy.crm.service.IBusinessService;
-import com.hy.crm.service.IClienteleService;
 import com.hy.crm.service.IContractService;
 import com.hy.crm.util.ImgUtils;
 import com.hy.crm.util.LayUIData;
+import com.hy.crm.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +45,8 @@ public class ContractController {
     private IContractService contractService;
     @Autowired
     private IBusinessService businessService;
-    @Autowired
-    private IClienteleService clienteleService;
+
+    private TimeUtil timeUtil = new TimeUtil();
 
     /**
      * 根据状态查询合同
@@ -93,6 +93,53 @@ public class ContractController {
         //emp = (Emp) session.getAttribute("emp");
         emp.setEmpId(1001);
         return contractService.queryContract(page,limit,emp,classify,type,typeValue,1001);//1001查询全部 1002查询我的跟单
+    }
+
+    /**
+     * 根据日期范围查询条数
+     * @param session
+     * @param range 1001查询所有 1002查询当前用户
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryClassify.do")
+    public Integer[] queryClassify(HttpSession session,Integer range){
+        Integer[] counts = new Integer[7];
+        Emp emp = new Emp();
+        //emp = (Emp) session.getAttribute("emp");
+        emp.setEmpId(1001);
+        //return contractService.queryContract(page,limit,emp,classify,type,typeValue,1001);//1001查询全部 1002查询我的跟单
+
+        String[] dates = new String[2];//保存第一天和最后一天
+
+        //所有合同
+        counts[0] = contractService.queryClassify(emp,range,dates,true);
+
+        //本周新增
+        dates = timeUtil.getThisWeek();
+        counts[1] = contractService.queryClassify(emp,range,dates,false);
+
+        //上周新增
+        dates = timeUtil.getLastWeek();
+        counts[2] = contractService.queryClassify(emp,range,dates,false);
+
+        //本月新增
+        dates = timeUtil.getThisMonth();
+        counts[3] = contractService.queryClassify(emp,range,dates,false);
+
+        //上月新增
+        dates = timeUtil.getLastMonth();
+        counts[4] = contractService.queryClassify(emp,range,dates,false);
+
+        //本季度新增
+        dates = timeUtil.getCurrentSeason();
+        counts[5] = contractService.queryClassify(emp,range,dates,false);
+
+        //上季度新增
+        dates = timeUtil.getPrecedingQuarter();
+        counts[6] = contractService.queryClassify(emp,range,dates,false);
+
+        return  counts;
     }
 
     /**
@@ -183,7 +230,18 @@ public class ContractController {
     public String updateContract(Model model, HttpSession session,Contract contract){
 
         Contract c = contractService.getById(contract.getContractId());
-        contract.setPriorityId(c.getPriorityId());//优先级(1001高,1002中,1003低)
+
+        if(contract.getPriorityId() != null){//优先级(1001高,1002中,1003低)
+            if(contract.getPriorityId() == 1){
+                contract.setPriorityId(1001);
+            }else if(contract.getPriorityId() == 2){
+                contract.setPriorityId(1002);
+            }
+            else if(contract.getPriorityId() == 3){
+                contract.setPriorityId(1003);
+            }
+        }
+
         contract.setBusinessId(c.getBusinessId());//商机id
         contract.setClienteleId(c.getClienteleId());//客户信息id
         contract.setContractNo(c.getContractNo());//合同编号

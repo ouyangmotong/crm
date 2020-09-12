@@ -46,12 +46,15 @@ public class EarningaController {
         emp.setEmpId(1001);//写死
         emp.setEmpName("admin");
 
-        Contract contract = contractService.getById(contractId);
-        Clientele clientele = clienteleService.getById(contract.getClienteleId());
+        Contract contract = contractService.getById(contractId);//查询合同
+        Clientele clientele = clienteleService.getById(contract.getClienteleId());//查询客户
+
+        Integer earningNum = earningaService.queryEarningNum(contractId);//根据合同id查询当已收入金额
 
         model.addAttribute("emp", emp);//当前用户
         model.addAttribute("contract", contract);//合同信息
         model.addAttribute("clientele", clientele);//客户信息
+        model.addAttribute("earningNum", earningNum);//已收入金额
         return "wry/saveEarninga.html";
     }
 
@@ -62,13 +65,7 @@ public class EarningaController {
      */
     @RequestMapping("/saveEarninga.do")
     public String saveEarninga(Earninga earninga) {
-        Emp emp = new Emp();
-        //emp = (Emp) session.getAttribute("emp");//当前用户
-        emp.setEmpId(1001);//写死
-        emp.setDeptId(1001);
-        emp.setEmpName("admin");
-
-        earningaService.save(earninga);
+        earningaService.saveEarning(earninga);
         return "redirect:../../wry/queryContract.html";
     }
 

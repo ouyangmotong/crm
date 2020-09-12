@@ -11,9 +11,25 @@
 <script src="../layui/layui.js"></script>
 
 <script>
-    layui.use(['table','form'], function () {
+    layui.use(['table','form','jquery'], function () {
         var table = layui.table;
         var form = layui.form;
+        var $ = layui.$;
+
+        $(function () {
+
+            $.post("../crm/contract/queryClassify.do?range=1001",function(data){
+                var  counts = data.toString().split(",");
+                $("#count1").text(counts[0]);//所有合同
+                $("#count2").text(counts[1]);//本周新增
+                $("#count3").text(counts[2]);//上周新增
+                $("#count4").text(counts[3]);//本月新增
+                $("#count5").text(counts[4]);//上月新增
+                $("#count6").text(counts[5]);//本季度新增
+                $("#count7").text(counts[6]);//上季度新增
+            });
+
+        });
 
         //第一个实例
         table.render({
@@ -25,19 +41,19 @@
                     title: '合同全称'
                     , width: 300
                     , fixed: 'left'
-                    ,templet: '<div><a href="../crm/contract/queryByContract.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.contractName}}</a></div>'
+                    ,templet: '<div><a href="../crm/contract/queryByContract.do?contractId={{d.contractId}}" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.contractName}}</a></div>'
                 }
                 , {field: 'contractNo', title: '合同编号', width: 150}
                 , {field: 'contractSum', title: '合同金额', width: 170, sort: true}
                 , {
                     title: '汇款额度'
                     , width: 190
-                    , templet: '<div><a href="../crm/earninga/queryContractEarninga.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.earningNum}}</a></div>'
+                    , templet: '<div><a onclick="queryEarninga({{d.contractSum}},{{d.earningNum}},{{d.contractId}})" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.earningNum}}</a></div>'
                 }
                 , {
                     title: '开票额'
                     , width: 190
-                    , templet: '<div><a href="../crm/apply-invoice/queryContractApplyInvoice.do?contractId={{d.contractId}}" target="_blank" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.address}}</a></div>'
+                    , templet: '<div><a onclick="queryApplyInvoice({{d.applyInvoiceNum}},{{d.earningNum}},{{d.address}},{{d.contractId}})" style="color: #1E9FFF;" onMouseOver="this.style.color=\'#000000\'" onMouseOut="this.style.color=\'#1E9FFF\'">{{d.address}}</a></div>'
                 }
                 , {field: 'signDate', title: '签约日期', width: 180}
             ]]
@@ -48,8 +64,7 @@
             table.reload('demo', {//将id为demo的表格进行重载
                 url: '../crm/contract/queryAllContract.do'
                 , where: {
-                    "classify": data.field.classify
-                    ,"type": data.field.type//这里type引不引都可以,type为下拉框value
+                    "type": data.field.type//这里type引不引都可以,type为下拉框value
                     , "typeValue": data.field.typeValue//content为文本框值
                     , "classify": data.field.classify//content为文本框值
                 } //设定异步数据接口的额外参数
@@ -68,12 +83,45 @@
 
     });
 
+    //添加
     function addContract(){
         window.open("../crm/contract/queryBusinessContract.do");
     }
+
+    //刷新
     function refresh(){
         location.reload();
     }
+
+    /**
+     * 收入
+     * @param contractSum 合同总金额
+     * @param earningNum 已汇款额
+     * @param contractId 合同id
+     */
+    function queryEarninga(contractSum,earningNum,contractId){
+        if(earningNum < contractSum){//汇款金额不能大于合同金额
+            window.location.href = "../crm/earninga/queryContractEarninga.do?contractId="+contractId;
+        }else {
+            alert("汇款金额("+earningNum+")不能大于合同金额("+contractSum+")");
+        }
+    }
+
+    /**
+     * 开票
+     * @param applyInvoiceNum 待开票(审批)金额
+     * @param earningNum 已汇款额
+     * @param address 已开票金额
+     * @param contractId 合同id
+     */
+    function queryApplyInvoice(applyInvoiceNum,earningNum,address,contractId){
+        if((address + applyInvoiceNum) < earningNum){//已开票金额+待开票(审批)金额不能大于已汇款金额
+            window.location.href = "../crm/apply-invoice/queryContractApplyInvoice.do?contractId="+contractId;
+        }else {
+            alert("已开票金额("+address+")+待开票(审批)金额("+applyInvoiceNum+")不能大于已汇款金额("+earningNum+")");
+        }
+    }
+
 </script>
 
 <style type="text/css">
@@ -107,7 +155,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(0)">所有合同</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
+                &nbsp;&nbsp;<span id="count1" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--本周新增-->
             <div>
@@ -115,7 +163,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1001)">本周新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">6</span>
+                &nbsp;&nbsp;<span id="count2" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--上周新增-->
             <div>
@@ -123,7 +171,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1002)">上周新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">0</span>
+                &nbsp;&nbsp;<span id="count3" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--本月新增-->
             <div>
@@ -131,7 +179,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1003)">本月新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
+                &nbsp;&nbsp;<span id="count4" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--上月新增-->
             <div>
@@ -139,7 +187,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1004)">上月新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">1</span>
+                &nbsp;&nbsp;<span id="count5" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--本季度新增-->
             <div>
@@ -147,7 +195,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1005)">本季度新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">2</span>
+                &nbsp;&nbsp;<span id="count6" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
             <!--上季度新增-->
             <div>
@@ -155,7 +203,7 @@
                 <span style="font-size: 13px;line-height: 2;">
                     &nbsp;&nbsp;<a style="color: #1E9FFF;" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='#1E9FFF'" onclick="queryContract(1006)">上季度新增</a>
                 </span>
-                &nbsp;&nbsp;<span style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;">7</span>
+                &nbsp;&nbsp;<span id="count7" style="text-align: center;background-color: #1E9FFF;display:inline-block;width: 25px;border-radius:2em;"></span>
             </div>
         </div>
     </div>

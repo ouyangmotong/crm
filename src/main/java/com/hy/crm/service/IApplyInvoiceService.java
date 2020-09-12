@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IApplyInvoiceService extends IService<ApplyInvoice> {
 
+    //根据合同查询该合同下待审核的开票申请
+    Integer queryApplyInvoiceNum(Integer contractId);
+
+    //添加
+    void saveApplyInvoice(ApplyInvoice applyInvoice,String accountBank,String bankAccount,String bankAddress,String companyTelephone);
 }

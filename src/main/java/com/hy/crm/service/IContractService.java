@@ -25,4 +25,7 @@ public interface IContractService extends IService<Contract> {
 
     //添加合同
     void saveNewContract(Contract contract,Integer businessId,Emp emp);
+
+    //根据日期范围查询条数
+    Integer queryClassify(Emp emp,Integer range,String[] dates,boolean allDate);
 }

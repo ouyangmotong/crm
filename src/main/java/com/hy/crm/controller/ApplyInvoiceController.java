@@ -1,18 +1,13 @@
 package com.hy.crm.controller;
 
 import com.hy.crm.entity.*;
-import com.hy.crm.service.IApplyInvoiceService;
-import com.hy.crm.service.IClienteleService;
-import com.hy.crm.service.IContractService;
-import com.hy.crm.service.IDeptService;
+import com.hy.crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * <p>
@@ -33,7 +28,18 @@ public class ApplyInvoiceController {
     private IClienteleService clienteleService;
     @Autowired
     private IApplyInvoiceService applyInvoiceService;
+    @Autowired
+    private IInvoiceService iInvoiceService;
+    @Autowired
+    private IEarningaService earningaService;
 
+    /**
+     * 添加前查询
+     * @param model
+     * @param session
+     * @param contractId
+     * @return
+     */
     @RequestMapping("/queryContractApplyInvoice.do")
     public String queryContractApplyInvoice(Model model, HttpSession session, Integer contractId){
         Emp emp = new Emp();
@@ -47,13 +53,25 @@ public class ApplyInvoiceController {
         dept.setDeptId(1001);//写死
         dept.setDeptName("财务部");
 
-        Contract contract = contractService.getById(contractId);
-        Clientele clientele = clienteleService.getById(contract.getClienteleId());
+        Contract contract = contractService.getById(contractId);//当前合同
+        Clientele clientele = clienteleService.getById(contract.getClienteleId());//当前合同的客户
+
+        //收入额
+        Integer earningNum = earningaService.queryEarningNum(contractId);//回款额
+
+        //已开票额
+        Integer address = iInvoiceService.queryAddress(contractId);//开票额
+
+        //待审额
+        Integer applyInvoiceNum = applyInvoiceService.queryApplyInvoiceNum(contractId);//待审额
 
         model.addAttribute("emp", emp);//当前用户
         model.addAttribute("dept", dept);//当前用户
         model.addAttribute("contract", contract);//合同信息
         model.addAttribute("clientele", clientele);//客户信息
+        model.addAttribute("earningNum", earningNum);//收入额
+        model.addAttribute("address", address);//已开票额
+        model.addAttribute("applyInvoiceNum", applyInvoiceNum);//待审额
         return "wry/saveApplyInvoice.html";
     }
 
@@ -74,17 +92,8 @@ public class ApplyInvoiceController {
         emp.setDeptId(1001);
         emp.setEmpName("admin");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        applyInvoice.setApplyDate(sdf.format(new Date()));//申请日期
+        applyInvoiceService.saveApplyInvoice(applyInvoice,accountBank,bankAccount,bankAddress,companyTelephone);
 
-        applyInvoice.setCardNumber(accountBank+""+bankAccount);//开户行银行卡账号
-        applyInvoice.setAddress(bankAddress+""+companyTelephone);//地址电话
-
-        applyInvoice.setInvoiceStatic(1001);//1001为待审核状态
-
-        applyInvoiceService.save(applyInvoice);
-
-        //earningaService.save(earninga);
         return "redirect:../../wry/queryContract.html";
     }
 

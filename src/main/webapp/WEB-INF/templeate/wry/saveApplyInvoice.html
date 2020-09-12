@@ -10,22 +10,24 @@
 <body>
 <div>
     <div style="width: 1100px;margin: 0 auto">
-        <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
-            <div style="float: left;padding-left:10px;">
-                <span style="font-size: 25px;">&nbsp;&nbsp;开票申请单</span>
-            </div>
-            <div style="float: right;">
-                <div class="layui-form-item layui-inline">
-                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
-                        <i class="layui-icon layui-icon-left"></i>返回
-                    </button>
-                    <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
-                        <i class="layui-icon layui-icon-refresh-1"></i>刷新
-                    </button>
+        <form class="layui-form" action="../apply-invoice/saveApplyInvoice.do" method="post">
+            <div class="layui-form-item" style="padding: 1% 1% 0% 1%;">
+                <div style="float: left;padding-left:10px;">
+                    <span style="font-size: 25px;">&nbsp;&nbsp;开票申请单</span>
                 </div>
-            </div>
-            <div class="layui-form-item" style="padding: 2% 1% 1% 1%;">
-                <form class="layui-form" action="../apply-invoice/saveApplyInvoice.do" method="post">
+                <div style="float: right;">
+                    <div id="test5"></div><!-- 优先级 -->
+                    <input type="hidden" id="priorityId" name="priorityId" value="1" />
+                    <div class="layui-form-item layui-inline">
+                        <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="goback()">
+                            <i class="layui-icon layui-icon-left"></i>返回
+                        </button>
+                        <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="refresh()">
+                            <i class="layui-icon layui-icon-refresh-1"></i>刷新
+                        </button>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding: 2% 1% 1% 1%;">
                     <div style="width: 45%;" class="layui-form-item layui-inline">
                         <label class="layui-form-label">主题：</label>
                         <div class="layui-input-inline">
@@ -123,7 +125,7 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <div class="layui-inline">
                                 <label class="layui-form-label">开票金额：</label>
-                                <input type="text" name="contractSum|number" lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="contractSum" lay-verify="required|number|numSum" th:value="${earningNum - address - applyInvoiceNum}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
@@ -136,29 +138,58 @@
                     <!--<div>
                         附件
                     </div>-->
-                    <div class="layui-form-item layui-form-text" style="text-align:center;">
-                        <input type="hidden" th:name="contractId" th:value="${contract.contractId}"><!-- 合同id -->
-                        <input type="hidden" th:name="empId" th:value="${emp.empId}">
-                        <input type="hidden" th:name="deptId" th:value="${dept.deptId}">
-                        <input type="hidden" th:name="clienteleId" th:value="${contract.clienteleId}">
-                        <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">保存</button>
-                    </div>
-                </form>
+                <div class="layui-form-item layui-form-text" style="text-align:center;">
+                    <input type="hidden" id="earningNum" th:value="${earningNum}">
+                    <input type="hidden" id="address" th:value="${address}">
+                    <input type="hidden" id="applyInvoiceNum" th:value="${applyInvoiceNum}">
+                    <input type="hidden" th:name="contractId" th:value="${contract.contractId}"><!-- 合同id -->
+                    <input type="hidden" th:name="empId" th:value="${emp.empId}">
+                    <input type="hidden" th:name="deptId" th:value="${dept.deptId}">
+                    <input type="hidden" th:name="clienteleId" th:value="${contract.clienteleId}">
+                    <button style="width: 85px;height: 35px;" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="*">保存</button>
+                </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../../../layui/layui.js"></script>
 <script>
-    layui.use(['form','laydate'], function(){
+    layui.use(['form','laydate','jquery','rate'], function(){
         var form = layui.form;
         var laydate = layui.laydate;
+        var $ = layui.$;
+        var rate = layui.rate;
 
         //常规用法
         laydate.render({
             elem: '#test1'
+        });
+
+        //金额验证
+        form.verify({
+            numSum: function(value, item){ //value：表单的值、item：表单的DOM对象
+                var earningNum = $("#earningNum").val();//收入额
+                var address = $("#address").val();//已开票额
+                var applyInvoiceNum = $("#applyInvoiceNum").val();//待审额
+                if((parseInt(value) + parseInt(address) + parseInt(applyInvoiceNum)) > earningNum){//输入金额+已开票金额+待审核金额不能大于汇款金额
+                    return '输入金额('+value+')+已开票金额('+address+')+待审核金额('+applyInvoiceNum+')不能大于汇款金额('+earningNum+')';
+                }
+            }
+        });
+
+        //优先级
+        rate.render({
+            elem: '#test5'
+            ,text: true
+            ,length: 3
+            ,value: 1
+            ,theme: '#1E9FFF'
+            ,choose: function(value){
+                $("#priorityId").val(value);
+            }
         });
 
     });

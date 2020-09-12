@@ -58,7 +58,7 @@
                         <div style="width: 45%;" class="layui-form-item layui-inline">
                             <label class="layui-form-label">收入金额：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="earningNum" lay-verify="required|number" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
+                                <input type="text" name="earningNum" lay-verify="required|number|numSum" th:value="${contract.contractSum - earningNum}" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 300px;border-radius:15px;">
                             </div>
                         </div>
                         <div style="width: 45%;" class="layui-form-item layui-inline">
@@ -122,6 +122,8 @@
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text" style="text-align:center;">
+                        <input type="hidden" id="contractSum" th:value="${contract.contractSum}">
+                        <input type="hidden" id="earningNum" th:value="${earningNum}">
                         <input type="hidden" th:name="contractId" th:value="${contract.contractId}"><!-- 合同id -->
                         <input type="hidden" th:name="empId" th:value="${emp.empId}">
                         <input type="hidden" th:name="clienteleId" th:value="${contract.clienteleId}">
@@ -136,13 +138,24 @@
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../../../layui/layui.js"></script>
 <script>
-    layui.use(['form','laydate'], function(){
+    layui.use(['form','laydate','jquery'], function(){
         var form = layui.form;
         var laydate = layui.laydate;
+        var $ = layui.$;
 
         //常规用法
         laydate.render({
             elem: '#test1'
+        });
+
+        form.verify({
+            numSum: function(value, item){ //value：表单的值、item：表单的DOM对象
+                var contractSum = $("#contractSum").val();//合同金额
+                var earningNum = $("#earningNum").val();//已收入金额
+                if((parseInt(value) + parseInt(earningNum)) > contractSum){//汇款金额+已汇款金额不能大于合同金额
+                    return '输入金额('+value+')+已汇款金额('+earningNum+')不能大于合同金额('+contractSum+')';
+                }
+            }
         });
 
     });
