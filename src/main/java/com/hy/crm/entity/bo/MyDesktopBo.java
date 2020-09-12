@@ -27,17 +27,17 @@ public class MyDesktopBo implements Serializable {
     /**
      * 丢单金额
      */
-    private int throwSum;
+    private Float throwSum;
     /**
      * 搁置金额
      */
-    private int shelveSum;
+    private Float shelveSum;
     /**
      * 进行金额
      */
-    private int operationSum;
+    private Float operationSum;
     /**
      * 成交金额
      */
-    private int turnover;
+    private Float turnover;
 }

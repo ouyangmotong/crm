@@ -9,4 +9,5 @@ import com.hy.crm.entity.bo.MyDesktopBo;
  * @Description:
  */
 public interface IMyDesktopService extends IService<MyDesktopBo> {
+    void queryNum();
 }
